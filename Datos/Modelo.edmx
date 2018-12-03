@@ -1,0 +1,2190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CAPACITACION">
+          <Key>
+            <PropertyRef Name="IDCAPACITACION" />
+          </Key>
+          <Property Name="IDCAPACITACION" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="OBJETIVO" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="FECHA" Type="timestamp" Precision="6" Nullable="false" />
+          <Property Name="LUGAR" Type="varchar2" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CITA">
+          <Key>
+            <PropertyRef Name="ID_CITA" />
+          </Key>
+          <Property Name="ID_CITA" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="ASISTENCIA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="RUT_MEDICO" Type="varchar2" MaxLength="9" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="HORA" Type="timestamp" Precision="6" Nullable="false" />
+          <Property Name="ACTIVA" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="CIUDAD">
+          <Key>
+            <PropertyRef Name="IDCIUDAD" />
+          </Key>
+          <Property Name="IDCIUDAD" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="HABILITADA" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="COMUNA">
+          <Key>
+            <PropertyRef Name="IDCOMUNA" />
+          </Key>
+          <Property Name="IDCOMUNA" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="IDCIUDAD" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="HABILITADA" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="DETALLE_EVALUACION">
+          <Key>
+            <PropertyRef Name="RECOMENDACION" />
+          </Key>
+          <Property Name="RECOMENDACION" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="AUTORIZACION" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ID_EVALUACION" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="RUT_SAFE" Type="varchar2" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.DETALLECAPACITACION' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="DETALLECAPACITACION">
+          <Key>
+            <PropertyRef Name="ASISTENCIA" />
+            <PropertyRef Name="ESTADO" />
+            <PropertyRef Name="IDCAPACITACION" />
+            <PropertyRef Name="IDEMPLEADO" />
+          </Key>
+          <Property Name="ASISTENCIA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ESTADO" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="IDCAPACITACION" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="IDEMPLEADO" Type="varchar2" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DIAGNOSTICO">
+          <Key>
+            <PropertyRef Name="ID_DIAGNOSTICO" />
+          </Key>
+          <Property Name="ID_DIAGNOSTICO" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="varchar2" MaxLength="300" Nullable="false" />
+          <Property Name="RUTEMPLEADO" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="HABILITADO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ID_CITA" Type="number" Precision="10" Scale="0" />
+        </EntityType>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="RUTEMPLEADO" />
+          </Key>
+          <Property Name="RUTEMPLEADO" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="PNOMBRE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="APELLIDOP" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="APELLIDOM" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="FNACIMIENTO" Type="date" Nullable="false" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="CLAVE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="NUMERO" Type="number" Precision="9" Scale="0" />
+          <Property Name="RUTEMPRESA" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="HABILITADA" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="EMPLEADOSAFE">
+          <Key>
+            <PropertyRef Name="RUTSAFE" />
+          </Key>
+          <Property Name="RUTSAFE" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="PNOMBRE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="APELLIDOP" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="APELLIDOM" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="FNACIMIENTO" Type="date" Nullable="false" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="CLAVE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="NUMERO" Type="number" Precision="9" Scale="0" />
+          <Property Name="IDTIPO" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="HABILITADA" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="EMPRESA">
+          <Key>
+            <PropertyRef Name="RUTEMPRESA" />
+          </Key>
+          <Property Name="RUTEMPRESA" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="DIRECCION" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="NUMERO" Type="number" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="IDCOMUNA" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="HABILITADA" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="EVALUACION">
+          <Key>
+            <PropertyRef Name="ID_EVALUACION" />
+          </Key>
+          <Property Name="ID_EVALUACION" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="OBSERVACION" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="DERIVADA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="RUT_SAFE" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="ID_TIPO" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="RUT_EMPRESA" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="RUT_EMPLEADO" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="RECOMENDADA" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EXAMEN">
+          <Key>
+            <PropertyRef Name="ID_EXAMEN" />
+          </Key>
+          <Property Name="ID_EXAMEN" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="4000" Nullable="false" />
+          <Property Name="TIPO_DOC" Type="varchar2" MaxLength="4000" Nullable="false" />
+          <Property Name="DOCUMENTO" Type="blob" Nullable="false" />
+          <Property Name="ID_DIAGNOSTICO" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="HABILITADO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ANOTACION" Type="varchar2" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="MEDICO">
+          <Key>
+            <PropertyRef Name="RUT_MEDICO" />
+          </Key>
+          <Property Name="RUT_MEDICO" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="APELLIDOP" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="APELLIDOM" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="FNACIMIENTO" Type="date" Nullable="false" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="CLAVE" Type="varchar2" MaxLength="200" Nullable="false" />
+          <Property Name="TELEFONO" Type="number" Precision="15" Scale="0" Nullable="false" />
+          <Property Name="ACTIVO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="RUTEMPRESA" Type="varchar2" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TIPOEVALUACION">
+          <Key>
+            <PropertyRef Name="IDTIPO" />
+          </Key>
+          <Property Name="IDTIPO" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="HABILITADO" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="TIPOUSUARIO">
+          <Key>
+            <PropertyRef Name="IDTIPO" />
+          </Key>
+          <Property Name="IDTIPO" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="HABILITADA" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.DIAGNOSTICOS_MEDICO_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="DIAGNOSTICOS_MEDICO_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DESCRIPCION" />
+            <PropertyRef Name="CORREO" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="HABILITADO" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="varchar2" MaxLength="300" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="92" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="HABILITADO" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.DIAGNOSTICOS_TRABAJADOR_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="DIAGNOSTICOS_TRABAJADOR_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DESCRIPCION" />
+            <PropertyRef Name="HABILITADO" />
+            <PropertyRef Name="FECHA" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="varchar2" MaxLength="300" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="92" />
+          <Property Name="HABILITADO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="MEDICO" Type="varchar2" MaxLength="92" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.EMPLEADO_SAFE_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="EMPLEADO_SAFE_VIEW">
+          <Key>
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA_NACIMIENTO" />
+            <PropertyRef Name="CORREO" />
+            <PropertyRef Name="TIPO_USUARIO" />
+          </Key>
+          <Property Name="RUT" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="92" />
+          <Property Name="FECHA_NACIMIENTO" Type="date" Nullable="false" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="NUMERO" Type="number" Precision="9" Scale="0" />
+          <Property Name="TIPO_USUARIO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="HABILITADA" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.EMPLEADO_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="EMPLEADO_VIEW">
+          <Key>
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA_NACIMIENTO" />
+            <PropertyRef Name="CORREO" />
+            <PropertyRef Name="EMPRESA" />
+          </Key>
+          <Property Name="RUT" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="92" />
+          <Property Name="FECHA_NACIMIENTO" Type="date" Nullable="false" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="NUMERO" Type="number" Precision="9" Scale="0" />
+          <Property Name="EMPRESA" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="HABILITADA" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.EMPRESA_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="EMPRESA_VIEW">
+          <Key>
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="NOMBRE" />
+            <PropertyRef Name="DIRECCION" />
+            <PropertyRef Name="CORREO" />
+            <PropertyRef Name="NUMERO" />
+            <PropertyRef Name="COMUNA" />
+          </Key>
+          <Property Name="RUT" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="DIRECCION" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="NUMERO" Type="number" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="COMUNA" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="HABILITADA" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.EVALUACION_EMPRESA_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="EVALUACION_EMPRESA_VIEW">
+          <Key>
+            <PropertyRef Name="CLAVE" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBSERVACION" />
+            <PropertyRef Name="DERIVADA" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="EMPRESA" />
+          </Key>
+          <Property Name="CLAVE" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="OBSERVACION" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="DERIVADA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="EMPLEADO" Type="varchar2" MaxLength="61" />
+          <Property Name="TIPO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="EMPRESA" Type="varchar2" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.EVALUACION_PERSONA_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="EVALUACION_PERSONA_VIEW">
+          <Key>
+            <PropertyRef Name="CLAVE" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBSERVACION" />
+            <PropertyRef Name="DERIVADA" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="EMPRESA" />
+          </Key>
+          <Property Name="CLAVE" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="OBSERVACION" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="DERIVADA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="EMPLEADO" Type="varchar2" MaxLength="61" />
+          <Property Name="TIPO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="EMPRESA" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="CLIENTE" Type="varchar2" MaxLength="61" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.EXAMENES_MEDICO_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="EXAMENES_MEDICO_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="DOCUMENTO" />
+            <PropertyRef Name="HABILITADO" />
+            <PropertyRef Name="DESCRIPCION" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="RUT" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="60" />
+          <Property Name="DESCRIPCION" Type="varchar2" MaxLength="2000" Nullable="false" />
+          <Property Name="DOCUMENTO" Type="blob" Nullable="false" />
+          <Property Name="HABILITADO" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.MEDICO_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="MEDICO_VIEW">
+          <Key>
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA_NACIMIENTO" />
+            <PropertyRef Name="CORREO" />
+            <PropertyRef Name="NUMERO" />
+            <PropertyRef Name="RUTEMPRESA" />
+            <PropertyRef Name="HABILITADA" />
+          </Key>
+          <Property Name="RUT" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="92" />
+          <Property Name="FECHA_NACIMIENTO" Type="date" Nullable="false" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="NUMERO" Type="number" Precision="15" Scale="0" Nullable="false" />
+          <Property Name="RUTEMPRESA" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="HABILITADA" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.RECOMENDACIONES_EMPRESA_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="RECOMENDACIONES_EMPRESA_VIEW">
+          <Key>
+            <PropertyRef Name="CLAVE" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBSERVACION" />
+            <PropertyRef Name="RECOMENDADA" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="EMPRESA" />
+          </Key>
+          <Property Name="CLAVE" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="OBSERVACION" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="RECOMENDADA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="TIPO" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="EMPRESA" Type="varchar2" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.RECOMENDACIONES_PERSONA_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="RECOMENDACIONES_PERSONA_VIEW">
+          <Key>
+            <PropertyRef Name="CLAVE" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBSERVACION" />
+            <PropertyRef Name="RECOMENDADA" />
+            <PropertyRef Name="EMPRESA" />
+          </Key>
+          <Property Name="CLAVE" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="OBSERVACION" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="RECOMENDADA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="EMPRESA" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="CLIENTE" Type="varchar2" MaxLength="61" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.RECOMENDADAS_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="RECOMENDADAS_VIEW">
+          <Key>
+            <PropertyRef Name="EVALUACION" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBSERVACION" />
+            <PropertyRef Name="RECOMENDACION" />
+            <PropertyRef Name="AUTORIZADA" />
+            <PropertyRef Name="EMPLEADO" />
+            <PropertyRef Name="EMPRESA" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="CLIENTE" />
+          </Key>
+          <Property Name="EVALUACION" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="OBSERVACION" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="RECOMENDACION" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="AUTORIZADA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="EMPLEADO" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="EMPRESA" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="TIPO" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="CLIENTE" Type="varchar2" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VISTA_CITAS_GENERAL">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="HORA" />
+            <PropertyRef Name="ASISTENCIA" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="RUT" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="92" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="HORA" Type="timestamp" Precision="6" Nullable="false" />
+          <Property Name="ASISTENCIA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ACTIVA" Type="char" MaxLength="1" />
+        </EntityType>
+        <Association Name="MEDICO_FK1">
+          <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
+          <End Role="MEDICO" Type="Self.MEDICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPRESA">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Principal>
+            <Dependent Role="MEDICO">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007075">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="DIAGNOSTICO" Type="Self.DIAGNOSTICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="RUTEMPLEADO" />
+            </Principal>
+            <Dependent Role="DIAGNOSTICO">
+              <PropertyRef Name="RUTEMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007082">
+          <End Role="DIAGNOSTICO" Type="Self.DIAGNOSTICO" Multiplicity="1" />
+          <End Role="EXAMEN" Type="Self.EXAMEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DIAGNOSTICO">
+              <PropertyRef Name="ID_DIAGNOSTICO" />
+            </Principal>
+            <Dependent Role="EXAMEN">
+              <PropertyRef Name="ID_DIAGNOSTICO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007114">
+          <End Role="MEDICO" Type="Self.MEDICO" Multiplicity="0..1" />
+          <End Role="CITA" Type="Self.CITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEDICO">
+              <PropertyRef Name="RUT_MEDICO" />
+            </Principal>
+            <Dependent Role="CITA">
+              <PropertyRef Name="RUT_MEDICO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007115">
+          <End Role="CITA" Type="Self.CITA" Multiplicity="0..1" />
+          <End Role="DIAGNOSTICO" Type="Self.DIAGNOSTICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CITA">
+              <PropertyRef Name="ID_CITA" />
+            </Principal>
+            <Dependent Role="DIAGNOSTICO">
+              <PropertyRef Name="ID_CITA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007133">
+          <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPRESA">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="RUT_EMPRESA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007134">
+          <End Role="TIPOEVALUACION" Type="Self.TIPOEVALUACION" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOEVALUACION">
+              <PropertyRef Name="IDTIPO" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="ID_TIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007135">
+          <End Role="EMPLEADOSAFE" Type="Self.EMPLEADOSAFE" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADOSAFE">
+              <PropertyRef Name="RUTSAFE" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="RUT_SAFE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007140">
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="1" />
+          <End Role="DETALLE_EVALUACION" Type="Self.DETALLE_EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EVALUACION">
+              <PropertyRef Name="ID_EVALUACION" />
+            </Principal>
+            <Dependent Role="DETALLE_EVALUACION">
+              <PropertyRef Name="ID_EVALUACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007141">
+          <End Role="EMPLEADOSAFE" Type="Self.EMPLEADOSAFE" Multiplicity="1" />
+          <End Role="DETALLE_EVALUACION" Type="Self.DETALLE_EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADOSAFE">
+              <PropertyRef Name="RUTSAFE" />
+            </Principal>
+            <Dependent Role="DETALLE_EVALUACION">
+              <PropertyRef Name="RUT_SAFE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DESHABILITAR_CITA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+          <Parameter Name="HABILITADA" Type="char" Mode="In" />
+        </Function>
+        <Function Name="DESHABILITAR_DIAGNOSTICO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+          <Parameter Name="HABILITADA" Type="char" Mode="In" />
+        </Function>
+        <Function Name="DESHABILITAR_EMPLEADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+        </Function>
+        <Function Name="DESHABILITAR_EMPLEADOSAFE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+        </Function>
+        <Function Name="DESHABILITAR_EMPRESA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+        </Function>
+        <Function Name="DESHABILITAR_MEDICO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+        </Function>
+        <Function Name="ELIMINAR_TIPO_EVALUACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="IDTIPOEV" Type="number" Mode="In" />
+          <Parameter Name="ESTADO" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_CAPACITACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="OBJETIVO" Type="varchar2" Mode="In" />
+          <Parameter Name="FECHA" Type="timestamp" Mode="In" />
+          <Parameter Name="LUGAR" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_CITA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ASISTENCIA" Type="char" Mode="In" />
+          <Parameter Name="RUT_MEDICO" Type="varchar2" Mode="In" />
+          <Parameter Name="FECHA" Type="date" Mode="In" />
+          <Parameter Name="HORA" Type="timestamp" Mode="In" />
+          <Parameter Name="ACTIVA" Type="char" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_CIUDAD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_COMUNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+          <Parameter Name="IDCIUDAD" Type="number" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_DETALLE_CAPACITACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID_CAPACITACION" Type="number" Mode="In" />
+          <Parameter Name="RUT_EMPLEADO" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_DETALLE_EVALUACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RECOMENDACION" Type="varchar2" Mode="In" />
+          <Parameter Name="AUTORIZACION" Type="char" Mode="In" />
+          <Parameter Name="IDEVALUACION" Type="number" Mode="In" />
+          <Parameter Name="RUTEMPLEADO" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_DIAGNOSTICO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="DESCRIPCION" Type="varchar2" Mode="In" />
+          <Parameter Name="RUTEMPLEADO" Type="number" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+          <Parameter Name="ID_CITA" Type="number" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_EMPLEADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDO_P" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDO_M" Type="varchar2" Mode="In" />
+          <Parameter Name="F_NACIMIENTO" Type="date" Mode="In" />
+          <Parameter Name="CORREO" Type="varchar2" Mode="In" />
+          <Parameter Name="CLAVE" Type="varchar2" Mode="In" />
+          <Parameter Name="NUMERO" Type="number" Mode="In" />
+          <Parameter Name="RUT_EMPRESA" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_EMPLEADOSAFE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDO_P" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDO_M" Type="varchar2" Mode="In" />
+          <Parameter Name="F_NACIMIENTO" Type="date" Mode="In" />
+          <Parameter Name="CORREO" Type="varchar2" Mode="In" />
+          <Parameter Name="CLAVE" Type="varchar2" Mode="In" />
+          <Parameter Name="NUMERO" Type="number" Mode="In" />
+          <Parameter Name="ID_TIPO_USUARIO" Type="number" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_EMPRESA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+          <Parameter Name="DIRECCION" Type="varchar2" Mode="In" />
+          <Parameter Name="CORREO" Type="varchar2" Mode="In" />
+          <Parameter Name="NUMERO" Type="number" Mode="In" />
+          <Parameter Name="IDCOMUNA" Type="number" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_EVALUACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="FECHA" Type="date" Mode="In" />
+          <Parameter Name="OBSERVACION" Type="varchar2" Mode="In" />
+          <Parameter Name="RUT_SAFE" Type="varchar2" Mode="In" />
+          <Parameter Name="ID_TIPO" Type="number" Mode="In" />
+          <Parameter Name="RUT_EMPRESA" Type="varchar2" Mode="In" />
+          <Parameter Name="RUT_EMPLEADO" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_EXAMEN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+          <Parameter Name="TIPO_DOC" Type="varchar2" Mode="In" />
+          <Parameter Name="DOCUMENTO" Type="blob" Mode="In" />
+          <Parameter Name="ID_DIAGNOSTICO" Type="number" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_MEDICO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT_MEDICO" Type="varchar2" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDOP" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDOM" Type="varchar2" Mode="In" />
+          <Parameter Name="FNACIMIENTO" Type="varchar2" Mode="In" />
+          <Parameter Name="CORREO" Type="varchar2" Mode="In" />
+          <Parameter Name="CLAVE" Type="varchar2" Mode="In" />
+          <Parameter Name="TELEFONO" Type="number" Mode="In" />
+          <Parameter Name="ACTIVO" Type="char" Mode="In" />
+          <Parameter Name="RUTEMPRESA" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_TIPO_EVALUACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_TIPO_USUARIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+          <Parameter Name="HABILITADA" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_ASISTENCIA_CITA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+          <Parameter Name="ASIS" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_CITA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+          <Parameter Name="ASIS" Type="char" Mode="In" />
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="FECHA_CTA" Type="date" Mode="In" />
+          <Parameter Name="HORA_CTA" Type="timestamp" Mode="In" />
+          <Parameter Name="HABILITADA" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_CIUDAD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+          <Parameter Name="NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="ACTIVA" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_COMUNA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+          <Parameter Name="NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="ID_CIUDAD" Type="number" Mode="In" />
+          <Parameter Name="ACTIVA" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_DIAGNOSTICO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+          <Parameter Name="DESCRIPT" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_EMPLEADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDO_P" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDO_M" Type="varchar2" Mode="In" />
+          <Parameter Name="F_NACIMIENTO" Type="date" Mode="In" />
+          <Parameter Name="EMAIL" Type="varchar2" Mode="In" />
+          <Parameter Name="PASWD" Type="varchar2" Mode="In" />
+          <Parameter Name="FONO" Type="number" Mode="In" />
+          <Parameter Name="RUT_EMPRESA" Type="varchar2" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_EMPLEADOSAFE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDO_P" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDO_M" Type="varchar2" Mode="In" />
+          <Parameter Name="F_NACIMIENTO" Type="date" Mode="In" />
+          <Parameter Name="EMAIL" Type="varchar2" Mode="In" />
+          <Parameter Name="PASWD" Type="varchar2" Mode="In" />
+          <Parameter Name="FONO" Type="number" Mode="In" />
+          <Parameter Name="ID_TIPO_USUARIO" Type="number" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_EMPRESA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="DIRECC" Type="varchar2" Mode="In" />
+          <Parameter Name="EMAIL" Type="varchar2" Mode="In" />
+          <Parameter Name="FONO" Type="number" Mode="In" />
+          <Parameter Name="IDCOMNA" Type="number" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_EVALUACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID_EVAL" Type="number" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_EXAMEN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+          <Parameter Name="NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="TIP_DOC" Type="varchar2" Mode="In" />
+          <Parameter Name="DOCMNT" Type="blob" Mode="In" />
+          <Parameter Name="IDDIAGNOSTICO" Type="number" Mode="In" />
+          <Parameter Name="ACTIVO" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_MEDICO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT" Type="varchar2" Mode="In" />
+          <Parameter Name="NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDO_P" Type="varchar2" Mode="In" />
+          <Parameter Name="APELLIDO_M" Type="varchar2" Mode="In" />
+          <Parameter Name="F_NACIMIENTO" Type="varchar2" Mode="In" />
+          <Parameter Name="EMAIL" Type="varchar2" Mode="In" />
+          <Parameter Name="PASWD" Type="varchar2" Mode="In" />
+          <Parameter Name="FONO" Type="number" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+          <Parameter Name="RUT_EMPRESA" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_RECOMENDADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID_EVAL" Type="number" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_TIPO_EVALUACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="IDTIPOEV" Type="number" Mode="In" />
+          <Parameter Name="NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="HABILITADA" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_TIPO_USUARIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="IDTIPOUS" Type="number" Mode="In" />
+          <Parameter Name="NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="HABILITADO" Type="char" Mode="In" />
+        </Function>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="CAPACITACION" EntityType="Self.CAPACITACION" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="CITA" EntityType="Self.CITA" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="CIUDAD" EntityType="Self.CIUDAD" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="COMUNA" EntityType="Self.COMUNA" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="DETALLE_EVALUACION" EntityType="Self.DETALLE_EVALUACION" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="DIAGNOSTICO" EntityType="Self.DIAGNOSTICO" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="EMPLEADOSAFE" EntityType="Self.EMPLEADOSAFE" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="EMPRESA" EntityType="Self.EMPRESA" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="EVALUACION" EntityType="Self.EVALUACION" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="EXAMEN" EntityType="Self.EXAMEN" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="MEDICO" EntityType="Self.MEDICO" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="TIPOEVALUACION" EntityType="Self.TIPOEVALUACION" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="TIPOUSUARIO" EntityType="Self.TIPOUSUARIO" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="DETALLECAPACITACION" EntityType="Self.DETALLECAPACITACION" store:Type="Tables" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"DETALLECAPACITACION"."ASISTENCIA" AS "ASISTENCIA", 
+"DETALLECAPACITACION"."ESTADO" AS "ESTADO", 
+"DETALLECAPACITACION"."IDCAPACITACION" AS "IDCAPACITACION", 
+"DETALLECAPACITACION"."IDEMPLEADO" AS "IDEMPLEADO"
+FROM "SEBA"."DETALLECAPACITACION" "DETALLECAPACITACION"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="DIAGNOSTICOS_MEDICO_VIEW" EntityType="Self.DIAGNOSTICOS_MEDICO_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"DIAGNOSTICOS_MEDICO_VIEW"."ID" AS "ID", 
+"DIAGNOSTICOS_MEDICO_VIEW"."DESCRIPCION" AS "DESCRIPCION", 
+"DIAGNOSTICOS_MEDICO_VIEW"."NOMBRE" AS "NOMBRE", 
+"DIAGNOSTICOS_MEDICO_VIEW"."CORREO" AS "CORREO", 
+"DIAGNOSTICOS_MEDICO_VIEW"."FECHA" AS "FECHA", 
+"DIAGNOSTICOS_MEDICO_VIEW"."HABILITADO" AS "HABILITADO"
+FROM "SEBA"."DIAGNOSTICOS_MEDICO_VIEW" "DIAGNOSTICOS_MEDICO_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="DIAGNOSTICOS_TRABAJADOR_VIEW" EntityType="Self.DIAGNOSTICOS_TRABAJADOR_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"DIAGNOSTICOS_TRABAJADOR_VIEW"."ID" AS "ID", 
+"DIAGNOSTICOS_TRABAJADOR_VIEW"."DESCRIPCION" AS "DESCRIPCION", 
+"DIAGNOSTICOS_TRABAJADOR_VIEW"."NOMBRE" AS "NOMBRE", 
+"DIAGNOSTICOS_TRABAJADOR_VIEW"."HABILITADO" AS "HABILITADO", 
+"DIAGNOSTICOS_TRABAJADOR_VIEW"."FECHA" AS "FECHA", 
+"DIAGNOSTICOS_TRABAJADOR_VIEW"."MEDICO" AS "MEDICO"
+FROM "SEBA"."DIAGNOSTICOS_TRABAJADOR_VIEW" "DIAGNOSTICOS_TRABAJADOR_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EMPLEADO_SAFE_VIEW" EntityType="Self.EMPLEADO_SAFE_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"EMPLEADO_SAFE_VIEW"."RUT" AS "RUT", 
+"EMPLEADO_SAFE_VIEW"."NOMBRE" AS "NOMBRE", 
+"EMPLEADO_SAFE_VIEW"."FECHA_NACIMIENTO" AS "FECHA_NACIMIENTO", 
+"EMPLEADO_SAFE_VIEW"."CORREO" AS "CORREO", 
+"EMPLEADO_SAFE_VIEW"."NUMERO" AS "NUMERO", 
+"EMPLEADO_SAFE_VIEW"."TIPO_USUARIO" AS "TIPO_USUARIO", 
+"EMPLEADO_SAFE_VIEW"."HABILITADA" AS "HABILITADA"
+FROM "SEBA"."EMPLEADO_SAFE_VIEW" "EMPLEADO_SAFE_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EMPLEADO_VIEW" EntityType="Self.EMPLEADO_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"EMPLEADO_VIEW"."RUT" AS "RUT", 
+"EMPLEADO_VIEW"."NOMBRE" AS "NOMBRE", 
+"EMPLEADO_VIEW"."FECHA_NACIMIENTO" AS "FECHA_NACIMIENTO", 
+"EMPLEADO_VIEW"."CORREO" AS "CORREO", 
+"EMPLEADO_VIEW"."NUMERO" AS "NUMERO", 
+"EMPLEADO_VIEW"."EMPRESA" AS "EMPRESA", 
+"EMPLEADO_VIEW"."HABILITADA" AS "HABILITADA"
+FROM "SEBA"."EMPLEADO_VIEW" "EMPLEADO_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EMPRESA_VIEW" EntityType="Self.EMPRESA_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"EMPRESA_VIEW"."RUT" AS "RUT", 
+"EMPRESA_VIEW"."NOMBRE" AS "NOMBRE", 
+"EMPRESA_VIEW"."DIRECCION" AS "DIRECCION", 
+"EMPRESA_VIEW"."CORREO" AS "CORREO", 
+"EMPRESA_VIEW"."NUMERO" AS "NUMERO", 
+"EMPRESA_VIEW"."COMUNA" AS "COMUNA", 
+"EMPRESA_VIEW"."HABILITADA" AS "HABILITADA"
+FROM "SEBA"."EMPRESA_VIEW" "EMPRESA_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EVALUACION_EMPRESA_VIEW" EntityType="Self.EVALUACION_EMPRESA_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"EVALUACION_EMPRESA_VIEW"."CLAVE" AS "CLAVE", 
+"EVALUACION_EMPRESA_VIEW"."FECHA" AS "FECHA", 
+"EVALUACION_EMPRESA_VIEW"."OBSERVACION" AS "OBSERVACION", 
+"EVALUACION_EMPRESA_VIEW"."DERIVADA" AS "DERIVADA", 
+"EVALUACION_EMPRESA_VIEW"."EMPLEADO" AS "EMPLEADO", 
+"EVALUACION_EMPRESA_VIEW"."TIPO" AS "TIPO", 
+"EVALUACION_EMPRESA_VIEW"."EMPRESA" AS "EMPRESA"
+FROM "SEBA"."EVALUACION_EMPRESA_VIEW" "EVALUACION_EMPRESA_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EVALUACION_PERSONA_VIEW" EntityType="Self.EVALUACION_PERSONA_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"EVALUACION_PERSONA_VIEW"."CLAVE" AS "CLAVE", 
+"EVALUACION_PERSONA_VIEW"."FECHA" AS "FECHA", 
+"EVALUACION_PERSONA_VIEW"."OBSERVACION" AS "OBSERVACION", 
+"EVALUACION_PERSONA_VIEW"."DERIVADA" AS "DERIVADA", 
+"EVALUACION_PERSONA_VIEW"."EMPLEADO" AS "EMPLEADO", 
+"EVALUACION_PERSONA_VIEW"."TIPO" AS "TIPO", 
+"EVALUACION_PERSONA_VIEW"."EMPRESA" AS "EMPRESA", 
+"EVALUACION_PERSONA_VIEW"."CLIENTE" AS "CLIENTE"
+FROM "SEBA"."EVALUACION_PERSONA_VIEW" "EVALUACION_PERSONA_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EXAMENES_MEDICO_VIEW" EntityType="Self.EXAMENES_MEDICO_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"EXAMENES_MEDICO_VIEW"."ID" AS "ID", 
+"EXAMENES_MEDICO_VIEW"."RUT" AS "RUT", 
+"EXAMENES_MEDICO_VIEW"."NOMBRE" AS "NOMBRE", 
+"EXAMENES_MEDICO_VIEW"."DESCRIPCION" AS "DESCRIPCION", 
+"EXAMENES_MEDICO_VIEW"."DOCUMENTO" AS "DOCUMENTO", 
+"EXAMENES_MEDICO_VIEW"."HABILITADO" AS "HABILITADO"
+FROM "SEBA"."EXAMENES_MEDICO_VIEW" "EXAMENES_MEDICO_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MEDICO_VIEW" EntityType="Self.MEDICO_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"MEDICO_VIEW"."RUT" AS "RUT", 
+"MEDICO_VIEW"."NOMBRE" AS "NOMBRE", 
+"MEDICO_VIEW"."FECHA_NACIMIENTO" AS "FECHA_NACIMIENTO", 
+"MEDICO_VIEW"."CORREO" AS "CORREO", 
+"MEDICO_VIEW"."NUMERO" AS "NUMERO", 
+"MEDICO_VIEW"."RUTEMPRESA" AS "RUTEMPRESA", 
+"MEDICO_VIEW"."HABILITADA" AS "HABILITADA"
+FROM "SEBA"."MEDICO_VIEW" "MEDICO_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RECOMENDACIONES_EMPRESA_VIEW" EntityType="Self.RECOMENDACIONES_EMPRESA_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"RECOMENDACIONES_EMPRESA_VIEW"."CLAVE" AS "CLAVE", 
+"RECOMENDACIONES_EMPRESA_VIEW"."FECHA" AS "FECHA", 
+"RECOMENDACIONES_EMPRESA_VIEW"."OBSERVACION" AS "OBSERVACION", 
+"RECOMENDACIONES_EMPRESA_VIEW"."RECOMENDADA" AS "RECOMENDADA", 
+"RECOMENDACIONES_EMPRESA_VIEW"."TIPO" AS "TIPO", 
+"RECOMENDACIONES_EMPRESA_VIEW"."EMPRESA" AS "EMPRESA"
+FROM "SEBA"."RECOMENDACIONES_EMPRESA_VIEW" "RECOMENDACIONES_EMPRESA_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RECOMENDACIONES_PERSONA_VIEW" EntityType="Self.RECOMENDACIONES_PERSONA_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"RECOMENDACIONES_PERSONA_VIEW"."CLAVE" AS "CLAVE", 
+"RECOMENDACIONES_PERSONA_VIEW"."FECHA" AS "FECHA", 
+"RECOMENDACIONES_PERSONA_VIEW"."OBSERVACION" AS "OBSERVACION", 
+"RECOMENDACIONES_PERSONA_VIEW"."RECOMENDADA" AS "RECOMENDADA", 
+"RECOMENDACIONES_PERSONA_VIEW"."EMPRESA" AS "EMPRESA", 
+"RECOMENDACIONES_PERSONA_VIEW"."CLIENTE" AS "CLIENTE"
+FROM "SEBA"."RECOMENDACIONES_PERSONA_VIEW" "RECOMENDACIONES_PERSONA_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RECOMENDADAS_VIEW" EntityType="Self.RECOMENDADAS_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"RECOMENDADAS_VIEW"."EVALUACION" AS "EVALUACION", 
+"RECOMENDADAS_VIEW"."FECHA" AS "FECHA", 
+"RECOMENDADAS_VIEW"."OBSERVACION" AS "OBSERVACION", 
+"RECOMENDADAS_VIEW"."RECOMENDACION" AS "RECOMENDACION", 
+"RECOMENDADAS_VIEW"."AUTORIZADA" AS "AUTORIZADA", 
+"RECOMENDADAS_VIEW"."EMPLEADO" AS "EMPLEADO", 
+"RECOMENDADAS_VIEW"."EMPRESA" AS "EMPRESA", 
+"RECOMENDADAS_VIEW"."TIPO" AS "TIPO", 
+"RECOMENDADAS_VIEW"."CLIENTE" AS "CLIENTE"
+FROM "SEBA"."RECOMENDADAS_VIEW" "RECOMENDADAS_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VISTA_CITAS_GENERAL" EntityType="Self.VISTA_CITAS_GENERAL" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"VISTA_CITAS_GENERAL"."ID" AS "ID", 
+"VISTA_CITAS_GENERAL"."RUT" AS "RUT", 
+"VISTA_CITAS_GENERAL"."NOMBRE" AS "NOMBRE", 
+"VISTA_CITAS_GENERAL"."FECHA" AS "FECHA", 
+"VISTA_CITAS_GENERAL"."HORA" AS "HORA", 
+"VISTA_CITAS_GENERAL"."ASISTENCIA" AS "ASISTENCIA", 
+"VISTA_CITAS_GENERAL"."ACTIVA" AS "ACTIVA"
+FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="MEDICO_FK1" Association="Self.MEDICO_FK1">
+            <End Role="EMPRESA" EntitySet="EMPRESA" />
+            <End Role="MEDICO" EntitySet="MEDICO" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007075" Association="Self.SYS_C007075">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="DIAGNOSTICO" EntitySet="DIAGNOSTICO" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007082" Association="Self.SYS_C007082">
+            <End Role="DIAGNOSTICO" EntitySet="DIAGNOSTICO" />
+            <End Role="EXAMEN" EntitySet="EXAMEN" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007114" Association="Self.SYS_C007114">
+            <End Role="MEDICO" EntitySet="MEDICO" />
+            <End Role="CITA" EntitySet="CITA" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007115" Association="Self.SYS_C007115">
+            <End Role="CITA" EntitySet="CITA" />
+            <End Role="DIAGNOSTICO" EntitySet="DIAGNOSTICO" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007133" Association="Self.SYS_C007133">
+            <End Role="EMPRESA" EntitySet="EMPRESA" />
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007134" Association="Self.SYS_C007134">
+            <End Role="TIPOEVALUACION" EntitySet="TIPOEVALUACION" />
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007135" Association="Self.SYS_C007135">
+            <End Role="EMPLEADOSAFE" EntitySet="EMPLEADOSAFE" />
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007140" Association="Self.SYS_C007140">
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+            <End Role="DETALLE_EVALUACION" EntitySet="DETALLE_EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007141" Association="Self.SYS_C007141">
+            <End Role="EMPLEADOSAFE" EntitySet="EMPLEADOSAFE" />
+            <End Role="DETALLE_EVALUACION" EntitySet="DETALLE_EVALUACION" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CAPACITACION">
+          <Key>
+            <PropertyRef Name="IDCAPACITACION" />
+          </Key>
+          <Property Name="IDCAPACITACION" Type="Int32" Nullable="false" />
+          <Property Name="OBJETIVO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="LUGAR" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CITA">
+          <Key>
+            <PropertyRef Name="ID_CITA" />
+          </Key>
+          <Property Name="ID_CITA" Type="Int32" Nullable="false" />
+          <Property Name="ASISTENCIA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="RUT_MEDICO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="HORA" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="ACTIVA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="MEDICO" Relationship="Self.SYS_C007215" FromRole="CITA" ToRole="MEDICO" />
+          <NavigationProperty Name="DIAGNOSTICO" Relationship="Self.SYS_C007219" FromRole="CITA" ToRole="DIAGNOSTICO" />
+        </EntityType>
+        <EntityType Name="CIUDAD">
+          <Key>
+            <PropertyRef Name="IDCIUDAD" />
+          </Key>
+          <Property Name="IDCIUDAD" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="COMUNA">
+          <Key>
+            <PropertyRef Name="IDCOMUNA" />
+          </Key>
+          <Property Name="IDCOMUNA" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDCIUDAD" Type="Int32" Nullable="false" />
+          <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DETALLE_EVALUACION">
+          <Key>
+            <PropertyRef Name="RECOMENDACION" />
+          </Key>
+          <Property Name="RECOMENDACION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AUTORIZACION" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ID_EVALUACION" Type="Int32" Nullable="false" />
+          <Property Name="RUT_SAFE" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EVALUACION" Relationship="Self.SYS_C007216" FromRole="DETALLE_EVALUACION" ToRole="EVALUACION" />
+          <NavigationProperty Name="EMPLEADOSAFE" Relationship="Self.SYS_C007217" FromRole="DETALLE_EVALUACION" ToRole="EMPLEADOSAFE" />
+        </EntityType>
+        <EntityType Name="DIAGNOSTICO">
+          <Key>
+            <PropertyRef Name="ID_DIAGNOSTICO" />
+          </Key>
+          <Property Name="ID_DIAGNOSTICO" Type="Int32" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RUTEMPLEADO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HABILITADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ID_CITA" Type="Int32" />
+          <NavigationProperty Name="CITA" Relationship="Self.SYS_C007219" FromRole="DIAGNOSTICO" ToRole="CITA" />
+          <NavigationProperty Name="EMPLEADO" Relationship="Self.SYS_C007218" FromRole="DIAGNOSTICO" ToRole="EMPLEADO" />
+          <NavigationProperty Name="EXAMEN" Relationship="Self.SYS_C007223" FromRole="DIAGNOSTICO" ToRole="EXAMEN" />
+        </EntityType>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="RUTEMPLEADO" />
+          </Key>
+          <Property Name="RUTEMPLEADO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PNOMBRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDOP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDOM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FNACIMIENTO" Type="DateTime" Nullable="false" />
+          <Property Name="CORREO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLAVE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NUMERO" Type="Int32" />
+          <Property Name="RUTEMPRESA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="DIAGNOSTICO" Relationship="Self.SYS_C007218" FromRole="EMPLEADO" ToRole="DIAGNOSTICO" />
+        </EntityType>
+        <EntityType Name="EMPLEADOSAFE">
+          <Key>
+            <PropertyRef Name="RUTSAFE" />
+          </Key>
+          <Property Name="RUTSAFE" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PNOMBRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDOP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDOM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FNACIMIENTO" Type="DateTime" Nullable="false" />
+          <Property Name="CORREO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLAVE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NUMERO" Type="Int32" />
+          <Property Name="IDTIPO" Type="Int32" Nullable="false" />
+          <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="DETALLE_EVALUACION" Relationship="Self.SYS_C007217" FromRole="EMPLEADOSAFE" ToRole="DETALLE_EVALUACION" />
+          <NavigationProperty Name="EVALUACION" Relationship="Self.SYS_C007222" FromRole="EMPLEADOSAFE" ToRole="EVALUACION" />
+        </EntityType>
+        <EntityType Name="EMPRESA">
+          <Key>
+            <PropertyRef Name="RUTEMPRESA" />
+          </Key>
+          <Property Name="RUTEMPRESA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DIRECCION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CORREO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NUMERO" Type="Int64" Nullable="false" />
+          <Property Name="IDCOMUNA" Type="Int32" Nullable="false" />
+          <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="MEDICO" Relationship="Self.MEDICO_FK1" FromRole="EMPRESA" ToRole="MEDICO" />
+          <NavigationProperty Name="EVALUACION" Relationship="Self.SYS_C007220" FromRole="EMPRESA" ToRole="EVALUACION" />
+        </EntityType>
+        <EntityType Name="EVALUACION">
+          <Key>
+            <PropertyRef Name="ID_EVALUACION" />
+          </Key>
+          <Property Name="ID_EVALUACION" Type="Int32" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="OBSERVACION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DERIVADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="RUT_SAFE" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="RUT_EMPRESA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RUT_EMPLEADO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RECOMENDADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DETALLE_EVALUACION" Relationship="Self.SYS_C007216" FromRole="EVALUACION" ToRole="DETALLE_EVALUACION" />
+          <NavigationProperty Name="EMPLEADOSAFE" Relationship="Self.SYS_C007222" FromRole="EVALUACION" ToRole="EMPLEADOSAFE" />
+          <NavigationProperty Name="EMPRESA" Relationship="Self.SYS_C007220" FromRole="EVALUACION" ToRole="EMPRESA" />
+          <NavigationProperty Name="TIPOEVALUACION" Relationship="Self.SYS_C007221" FromRole="EVALUACION" ToRole="TIPOEVALUACION" />
+        </EntityType>
+        <EntityType Name="EXAMEN">
+          <Key>
+            <PropertyRef Name="ID_EXAMEN" />
+          </Key>
+          <Property Name="ID_EXAMEN" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TIPO_DOC" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOCUMENTO" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ID_DIAGNOSTICO" Type="Int32" Nullable="false" />
+          <Property Name="HABILITADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DIAGNOSTICO" Relationship="Self.SYS_C007223" FromRole="EXAMEN" ToRole="DIAGNOSTICO" />
+          <Property Name="ANOTACION" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MEDICO">
+          <Key>
+            <PropertyRef Name="RUT_MEDICO" />
+          </Key>
+          <Property Name="RUT_MEDICO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDOP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDOM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FNACIMIENTO" Type="DateTime" Nullable="false" />
+          <Property Name="CORREO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLAVE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TELEFONO" Type="Int64" Nullable="false" />
+          <Property Name="ACTIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="RUTEMPRESA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CITA" Relationship="Self.SYS_C007215" FromRole="MEDICO" ToRole="CITA" />
+          <NavigationProperty Name="EMPRESA" Relationship="Self.MEDICO_FK1" FromRole="MEDICO" ToRole="EMPRESA" />
+        </EntityType>
+        <EntityType Name="TIPOEVALUACION">
+          <Key>
+            <PropertyRef Name="IDTIPO" />
+          </Key>
+          <Property Name="IDTIPO" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HABILITADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="EVALUACION" Relationship="Self.SYS_C007221" FromRole="TIPOEVALUACION" ToRole="EVALUACION" />
+        </EntityType>
+        <EntityType Name="TIPOUSUARIO">
+          <Key>
+            <PropertyRef Name="IDTIPO" />
+          </Key>
+          <Property Name="IDTIPO" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DETALLECAPACITACION">
+          <Key>
+            <PropertyRef Name="ASISTENCIA" />
+            <PropertyRef Name="ESTADO" />
+            <PropertyRef Name="IDCAPACITACION" />
+            <PropertyRef Name="IDEMPLEADO" />
+          </Key>
+          <Property Name="ASISTENCIA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ESTADO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDCAPACITACION" Type="Int32" Nullable="false" />
+          <Property Name="IDEMPLEADO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EMPLEADO_SAFE_VIEW">
+          <Key>
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA_NACIMIENTO" />
+            <PropertyRef Name="CORREO" />
+            <PropertyRef Name="TIPO_USUARIO" />
+          </Key>
+          <Property Name="RUT" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="92" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_NACIMIENTO" Type="DateTime" Nullable="false" />
+          <Property Name="CORREO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NUMERO" Type="Int32" />
+          <Property Name="TIPO_USUARIO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EMPLEADO_VIEW">
+          <Key>
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA_NACIMIENTO" />
+            <PropertyRef Name="CORREO" />
+            <PropertyRef Name="EMPRESA" />
+          </Key>
+          <Property Name="RUT" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="92" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_NACIMIENTO" Type="DateTime" Nullable="false" />
+          <Property Name="CORREO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NUMERO" Type="Int32" />
+          <Property Name="EMPRESA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EMPRESA_VIEW">
+          <Key>
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="NOMBRE" />
+            <PropertyRef Name="DIRECCION" />
+            <PropertyRef Name="CORREO" />
+            <PropertyRef Name="NUMERO" />
+            <PropertyRef Name="COMUNA" />
+          </Key>
+          <Property Name="RUT" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DIRECCION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CORREO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NUMERO" Type="Int64" Nullable="false" />
+          <Property Name="COMUNA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EVALUACION_EMPRESA_VIEW">
+          <Key>
+            <PropertyRef Name="CLAVE" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBSERVACION" />
+            <PropertyRef Name="DERIVADA" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="EMPRESA" />
+          </Key>
+          <Property Name="CLAVE" Type="Int32" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="OBSERVACION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DERIVADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="EMPLEADO" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="TIPO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMPRESA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EVALUACION_PERSONA_VIEW">
+          <Key>
+            <PropertyRef Name="CLAVE" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBSERVACION" />
+            <PropertyRef Name="DERIVADA" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="EMPRESA" />
+          </Key>
+          <Property Name="CLAVE" Type="Int32" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="OBSERVACION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DERIVADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="EMPLEADO" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="TIPO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMPRESA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLIENTE" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MEDICO_VIEW">
+          <Key>
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA_NACIMIENTO" />
+            <PropertyRef Name="CORREO" />
+            <PropertyRef Name="NUMERO" />
+            <PropertyRef Name="RUTEMPRESA" />
+            <PropertyRef Name="HABILITADA" />
+          </Key>
+          <Property Name="RUT" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="92" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_NACIMIENTO" Type="DateTime" Nullable="false" />
+          <Property Name="CORREO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NUMERO" Type="Int64" Nullable="false" />
+          <Property Name="RUTEMPRESA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RECOMENDACIONES_EMPRESA_VIEW">
+          <Key>
+            <PropertyRef Name="CLAVE" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBSERVACION" />
+            <PropertyRef Name="RECOMENDADA" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="EMPRESA" />
+          </Key>
+          <Property Name="CLAVE" Type="Int32" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="OBSERVACION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RECOMENDADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TIPO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMPRESA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RECOMENDACIONES_PERSONA_VIEW">
+          <Key>
+            <PropertyRef Name="CLAVE" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBSERVACION" />
+            <PropertyRef Name="RECOMENDADA" />
+            <PropertyRef Name="EMPRESA" />
+          </Key>
+          <Property Name="CLAVE" Type="Int32" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="OBSERVACION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RECOMENDADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="EMPRESA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLIENTE" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="RECOMENDADAS_VIEW">
+          <Key>
+            <PropertyRef Name="EVALUACION" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBSERVACION" />
+            <PropertyRef Name="RECOMENDACION" />
+            <PropertyRef Name="AUTORIZADA" />
+            <PropertyRef Name="EMPLEADO" />
+            <PropertyRef Name="EMPRESA" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="CLIENTE" />
+          </Key>
+          <Property Name="EVALUACION" Type="Int32" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="OBSERVACION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RECOMENDACION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AUTORIZADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="EMPLEADO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMPRESA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TIPO" Type="Int32" Nullable="false" />
+          <Property Name="CLIENTE" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VISTA_CITAS_GENERAL">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="HORA" />
+            <PropertyRef Name="ASISTENCIA" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="RUT" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="92" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="HORA" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="ASISTENCIA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ACTIVA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <Association Name="SYS_C007215">
+          <End Role="MEDICO" Type="Self.MEDICO" Multiplicity="0..1" />
+          <End Role="CITA" Type="Self.CITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEDICO">
+              <PropertyRef Name="RUT_MEDICO" />
+            </Principal>
+            <Dependent Role="CITA">
+              <PropertyRef Name="RUT_MEDICO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007219">
+          <End Role="CITA" Type="Self.CITA" Multiplicity="0..1" />
+          <End Role="DIAGNOSTICO" Type="Self.DIAGNOSTICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CITA">
+              <PropertyRef Name="ID_CITA" />
+            </Principal>
+            <Dependent Role="DIAGNOSTICO">
+              <PropertyRef Name="ID_CITA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007216">
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="1" />
+          <End Role="DETALLE_EVALUACION" Type="Self.DETALLE_EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EVALUACION">
+              <PropertyRef Name="ID_EVALUACION" />
+            </Principal>
+            <Dependent Role="DETALLE_EVALUACION">
+              <PropertyRef Name="ID_EVALUACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007217">
+          <End Role="EMPLEADOSAFE" Type="Self.EMPLEADOSAFE" Multiplicity="1" />
+          <End Role="DETALLE_EVALUACION" Type="Self.DETALLE_EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADOSAFE">
+              <PropertyRef Name="RUTSAFE" />
+            </Principal>
+            <Dependent Role="DETALLE_EVALUACION">
+              <PropertyRef Name="RUT_SAFE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007218">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="DIAGNOSTICO" Type="Self.DIAGNOSTICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="RUTEMPLEADO" />
+            </Principal>
+            <Dependent Role="DIAGNOSTICO">
+              <PropertyRef Name="RUTEMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007223">
+          <End Role="DIAGNOSTICO" Type="Self.DIAGNOSTICO" Multiplicity="1" />
+          <End Role="EXAMEN" Type="Self.EXAMEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DIAGNOSTICO">
+              <PropertyRef Name="ID_DIAGNOSTICO" />
+            </Principal>
+            <Dependent Role="EXAMEN">
+              <PropertyRef Name="ID_DIAGNOSTICO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007222">
+          <End Role="EMPLEADOSAFE" Type="Self.EMPLEADOSAFE" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADOSAFE">
+              <PropertyRef Name="RUTSAFE" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="RUT_SAFE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MEDICO_FK1">
+          <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
+          <End Role="MEDICO" Type="Self.MEDICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPRESA">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Principal>
+            <Dependent Role="MEDICO">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007220">
+          <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPRESA">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="RUT_EMPRESA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C007221">
+          <End Role="TIPOEVALUACION" Type="Self.TIPOEVALUACION" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOEVALUACION">
+              <PropertyRef Name="IDTIPO" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="ID_TIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CAPACITACION" EntityType="Self.CAPACITACION" />
+          <EntitySet Name="CITA" EntityType="Self.CITA" />
+          <EntitySet Name="CIUDAD" EntityType="Self.CIUDAD" />
+          <EntitySet Name="COMUNA" EntityType="Self.COMUNA" />
+          <EntitySet Name="DETALLE_EVALUACION" EntityType="Self.DETALLE_EVALUACION" />
+          <EntitySet Name="DIAGNOSTICO" EntityType="Self.DIAGNOSTICO" />
+          <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" />
+          <EntitySet Name="EMPLEADOSAFE" EntityType="Self.EMPLEADOSAFE" />
+          <EntitySet Name="EMPRESA" EntityType="Self.EMPRESA" />
+          <EntitySet Name="EVALUACION" EntityType="Self.EVALUACION" />
+          <EntitySet Name="EXAMEN" EntityType="Self.EXAMEN" />
+          <EntitySet Name="MEDICO" EntityType="Self.MEDICO" />
+          <EntitySet Name="TIPOEVALUACION" EntityType="Self.TIPOEVALUACION" />
+          <EntitySet Name="TIPOUSUARIO" EntityType="Self.TIPOUSUARIO" />
+          <EntitySet Name="DETALLECAPACITACION" EntityType="Self.DETALLECAPACITACION" />
+          <EntitySet Name="EMPLEADO_SAFE_VIEW" EntityType="Self.EMPLEADO_SAFE_VIEW" />
+          <EntitySet Name="EMPLEADO_VIEW" EntityType="Self.EMPLEADO_VIEW" />
+          <EntitySet Name="EMPRESA_VIEW" EntityType="Self.EMPRESA_VIEW" />
+          <EntitySet Name="EVALUACION_EMPRESA_VIEW" EntityType="Self.EVALUACION_EMPRESA_VIEW" />
+          <EntitySet Name="EVALUACION_PERSONA_VIEW" EntityType="Self.EVALUACION_PERSONA_VIEW" />
+          <EntitySet Name="MEDICO_VIEW" EntityType="Self.MEDICO_VIEW" />
+          <EntitySet Name="RECOMENDACIONES_EMPRESA_VIEW" EntityType="Self.RECOMENDACIONES_EMPRESA_VIEW" />
+          <EntitySet Name="RECOMENDACIONES_PERSONA_VIEW" EntityType="Self.RECOMENDACIONES_PERSONA_VIEW" />
+          <EntitySet Name="RECOMENDADAS_VIEW" EntityType="Self.RECOMENDADAS_VIEW" />
+          <EntitySet Name="VISTA_CITAS_GENERAL" EntityType="Self.VISTA_CITAS_GENERAL" />
+          <AssociationSet Name="SYS_C007215" Association="Self.SYS_C007215">
+            <End Role="MEDICO" EntitySet="MEDICO" />
+            <End Role="CITA" EntitySet="CITA" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007219" Association="Self.SYS_C007219">
+            <End Role="CITA" EntitySet="CITA" />
+            <End Role="DIAGNOSTICO" EntitySet="DIAGNOSTICO" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007216" Association="Self.SYS_C007216">
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+            <End Role="DETALLE_EVALUACION" EntitySet="DETALLE_EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007217" Association="Self.SYS_C007217">
+            <End Role="EMPLEADOSAFE" EntitySet="EMPLEADOSAFE" />
+            <End Role="DETALLE_EVALUACION" EntitySet="DETALLE_EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007218" Association="Self.SYS_C007218">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="DIAGNOSTICO" EntitySet="DIAGNOSTICO" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007223" Association="Self.SYS_C007223">
+            <End Role="DIAGNOSTICO" EntitySet="DIAGNOSTICO" />
+            <End Role="EXAMEN" EntitySet="EXAMEN" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007222" Association="Self.SYS_C007222">
+            <End Role="EMPLEADOSAFE" EntitySet="EMPLEADOSAFE" />
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="MEDICO_FK1" Association="Self.MEDICO_FK1">
+            <End Role="EMPRESA" EntitySet="EMPRESA" />
+            <End Role="MEDICO" EntitySet="MEDICO" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007220" Association="Self.SYS_C007220">
+            <End Role="EMPRESA" EntitySet="EMPRESA" />
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C007221" Association="Self.SYS_C007221">
+            <End Role="TIPOEVALUACION" EntitySet="TIPOEVALUACION" />
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+          </AssociationSet>
+          <FunctionImport Name="INGRESAR_CAPACITACION">
+            <Parameter Name="OBJETIVO" Mode="In" Type="String" />
+            <Parameter Name="FECHA" Mode="In" Type="DateTime" />
+            <Parameter Name="LUGAR" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_CITA">
+            <Parameter Name="ASISTENCIA" Mode="In" Type="String" />
+            <Parameter Name="RUT_MEDICO" Mode="In" Type="String" />
+            <Parameter Name="FECHA" Mode="In" Type="DateTime" />
+            <Parameter Name="HORA" Mode="In" Type="DateTime" />
+            <Parameter Name="ACTIVA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_CIUDAD">
+          <Parameter Name="NOMBRE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_COMUNA">
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="IDCIUDAD" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_DETALLE_CAPACITACION">
+            <Parameter Name="ID_CAPACITACION" Mode="In" Type="Decimal" />
+            <Parameter Name="RUT_EMPLEADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_DETALLE_EVALUACION">
+            <Parameter Name="RECOMENDACION" Mode="In" Type="String" />
+            <Parameter Name="AUTORIZACION" Mode="In" Type="String" />
+            <Parameter Name="IDEVALUACION" Mode="In" Type="Decimal" />
+            <Parameter Name="RUTEMPLEADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_DIAGNOSTICO">
+            <Parameter Name="DESCRIPCION" Mode="In" Type="String" />
+            <Parameter Name="RUTEMPLEADO" Mode="In" Type="Decimal" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+            <Parameter Name="ID_CITA" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_EMPLEADO">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO_P" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO_M" Mode="In" Type="String" />
+            <Parameter Name="F_NACIMIENTO" Mode="In" Type="DateTime" />
+            <Parameter Name="CORREO" Mode="In" Type="String" />
+            <Parameter Name="CLAVE" Mode="In" Type="String" />
+            <Parameter Name="NUMERO" Mode="In" Type="Decimal" />
+            <Parameter Name="RUT_EMPRESA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_EMPLEADOSAFE">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO_P" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO_M" Mode="In" Type="String" />
+            <Parameter Name="F_NACIMIENTO" Mode="In" Type="DateTime" />
+            <Parameter Name="CORREO" Mode="In" Type="String" />
+            <Parameter Name="CLAVE" Mode="In" Type="String" />
+            <Parameter Name="NUMERO" Mode="In" Type="Decimal" />
+            <Parameter Name="ID_TIPO_USUARIO" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_EMPRESA">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="DIRECCION" Mode="In" Type="String" />
+            <Parameter Name="CORREO" Mode="In" Type="String" />
+            <Parameter Name="NUMERO" Mode="In" Type="Decimal" />
+            <Parameter Name="IDCOMUNA" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_EVALUACION">
+            <Parameter Name="FECHA" Mode="In" Type="DateTime" />
+            <Parameter Name="OBSERVACION" Mode="In" Type="String" />
+            <Parameter Name="RUT_SAFE" Mode="In" Type="String" />
+            <Parameter Name="ID_TIPO" Mode="In" Type="Decimal" />
+            <Parameter Name="RUT_EMPRESA" Mode="In" Type="String" />
+            <Parameter Name="RUT_EMPLEADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_EXAMEN">
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="TIPO_DOC" Mode="In" Type="String" />
+            <Parameter Name="DOCUMENTO" Mode="In" Type="Binary" />
+            <Parameter Name="ID_DIAGNOSTICO" Mode="In" Type="Decimal" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_MEDICO">
+            <Parameter Name="RUT_MEDICO" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="APELLIDOP" Mode="In" Type="String" />
+            <Parameter Name="APELLIDOM" Mode="In" Type="String" />
+            <Parameter Name="FNACIMIENTO" Mode="In" Type="String" />
+            <Parameter Name="CORREO" Mode="In" Type="String" />
+            <Parameter Name="CLAVE" Mode="In" Type="String" />
+            <Parameter Name="TELEFONO" Mode="In" Type="Decimal" />
+            <Parameter Name="ACTIVO" Mode="In" Type="String" />
+            <Parameter Name="RUTEMPRESA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_TIPO_EVALUACION">
+          <Parameter Name="NOMBRE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_TIPO_USUARIO">
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="HABILITADA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_CITA">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="ASIS" Mode="In" Type="String" />
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="FECHA_CTA" Mode="In" Type="DateTime" />
+            <Parameter Name="HORA_CTA" Mode="In" Type="DateTime" />
+            <Parameter Name="HABILITADA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_CIUDAD">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="NAME" Mode="In" Type="String" />
+            <Parameter Name="ACTIVA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_COMUNA">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="NAME" Mode="In" Type="String" />
+            <Parameter Name="ID_CIUDAD" Mode="In" Type="Decimal" />
+            <Parameter Name="ACTIVA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_DIAGNOSTICO">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="DESCRIPT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_EMPLEADO">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO_P" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO_M" Mode="In" Type="String" />
+            <Parameter Name="F_NACIMIENTO" Mode="In" Type="DateTime" />
+            <Parameter Name="EMAIL" Mode="In" Type="String" />
+            <Parameter Name="PASWD" Mode="In" Type="String" />
+            <Parameter Name="FONO" Mode="In" Type="Decimal" />
+            <Parameter Name="RUT_EMPRESA" Mode="In" Type="String" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_EMPLEADOSAFE">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO_P" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO_M" Mode="In" Type="String" />
+            <Parameter Name="F_NACIMIENTO" Mode="In" Type="DateTime" />
+            <Parameter Name="EMAIL" Mode="In" Type="String" />
+            <Parameter Name="PASWD" Mode="In" Type="String" />
+            <Parameter Name="FONO" Mode="In" Type="Decimal" />
+            <Parameter Name="ID_TIPO_USUARIO" Mode="In" Type="Decimal" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_EMPRESA">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="NAME" Mode="In" Type="String" />
+            <Parameter Name="DIRECC" Mode="In" Type="String" />
+            <Parameter Name="EMAIL" Mode="In" Type="String" />
+            <Parameter Name="FONO" Mode="In" Type="Decimal" />
+            <Parameter Name="IDCOMNA" Mode="In" Type="Decimal" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_EVALUACION">
+          <Parameter Name="ID_EVAL" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_EXAMEN">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="NAME" Mode="In" Type="String" />
+            <Parameter Name="TIP_DOC" Mode="In" Type="String" />
+            <Parameter Name="DOCMNT" Mode="In" Type="Binary" />
+            <Parameter Name="IDDIAGNOSTICO" Mode="In" Type="Decimal" />
+            <Parameter Name="ACTIVO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_MEDICO">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="NAME" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO_P" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO_M" Mode="In" Type="String" />
+            <Parameter Name="F_NACIMIENTO" Mode="In" Type="String" />
+            <Parameter Name="EMAIL" Mode="In" Type="String" />
+            <Parameter Name="PASWD" Mode="In" Type="String" />
+            <Parameter Name="FONO" Mode="In" Type="Decimal" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+            <Parameter Name="RUT_EMPRESA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_RECOMENDADO">
+          <Parameter Name="ID_EVAL" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_TIPO_USUARIO">
+            <Parameter Name="IDTIPOUS" Mode="In" Type="Decimal" />
+            <Parameter Name="NAME" Mode="In" Type="String" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DESHABILITAR_EMPLEADO">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DESHABILITAR_EMPLEADOSAFE">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DESHABILITAR_MEDICO">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DESHABILITAR_EMPRESA">
+            <Parameter Name="RUT" Mode="In" Type="String" />
+            <Parameter Name="HABILITADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DESHABILITAR_CITA">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="HABILITADA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_ASISTENCIA_CITA">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="ASIS" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="DIAGNOSTICOS_MEDICO_VIEW" EntityType="Model.DIAGNOSTICOS_MEDICO_VIEW" />
+          <EntitySet Name="DIAGNOSTICOS_TRABAJADOR_VIEW" EntityType="Model.DIAGNOSTICOS_TRABAJADOR_VIEW" />
+          <FunctionImport Name="MODIFICAR_TIPO_EVALUACION">
+            <Parameter Name="IDTIPOEV" Mode="In" Type="Decimal" />
+            <Parameter Name="NAME" Mode="In" Type="String" />
+            <Parameter Name="HABILITADA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ELIMINAR_TIPO_EVALUACION">
+            <Parameter Name="IDTIPOEV" Mode="In" Type="Decimal" />
+            <Parameter Name="ESTADO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DESHABILITAR_DIAGNOSTICO">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="HABILITADA" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="EXAMENES_MEDICO_VIEW" EntityType="Model.EXAMENES_MEDICO_VIEW" />
+        </EntityContainer>
+        <EntityType Name="DIAGNOSTICOS_MEDICO_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DESCRIPCION" />
+            <PropertyRef Name="HABILITADO" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="CORREO" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="92" FixedLength="false" Unicode="false" />
+          <Property Name="HABILITADO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="CORREO" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DIAGNOSTICOS_TRABAJADOR_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DESCRIPCION" />
+            <PropertyRef Name="HABILITADO" />
+            <PropertyRef Name="FECHA" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="92" FixedLength="false" Unicode="false" />
+          <Property Name="HABILITADO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="MEDICO" Type="String" MaxLength="92" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EXAMENES_MEDICO_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="DESCRIPCION" />
+            <PropertyRef Name="DOCUMENTO" />
+            <PropertyRef Name="HABILITADO" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="RUT" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="DOCUMENTO" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="HABILITADO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="CAPACITACION">
+            <EntityTypeMapping TypeName="Model.CAPACITACION">
+              <MappingFragment StoreEntitySet="CAPACITACION">
+                <ScalarProperty Name="IDCAPACITACION" ColumnName="IDCAPACITACION" />
+                <ScalarProperty Name="OBJETIVO" ColumnName="OBJETIVO" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="LUGAR" ColumnName="LUGAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CITA">
+            <EntityTypeMapping TypeName="Model.CITA">
+              <MappingFragment StoreEntitySet="CITA">
+                <ScalarProperty Name="ID_CITA" ColumnName="ID_CITA" />
+                <ScalarProperty Name="ASISTENCIA" ColumnName="ASISTENCIA" />
+                <ScalarProperty Name="RUT_MEDICO" ColumnName="RUT_MEDICO" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="HORA" ColumnName="HORA" />
+                <ScalarProperty Name="ACTIVA" ColumnName="ACTIVA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CIUDAD">
+            <EntityTypeMapping TypeName="Model.CIUDAD">
+              <MappingFragment StoreEntitySet="CIUDAD">
+                <ScalarProperty Name="IDCIUDAD" ColumnName="IDCIUDAD" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="HABILITADA" ColumnName="HABILITADA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COMUNA">
+            <EntityTypeMapping TypeName="Model.COMUNA">
+              <MappingFragment StoreEntitySet="COMUNA">
+                <ScalarProperty Name="IDCOMUNA" ColumnName="IDCOMUNA" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="IDCIUDAD" ColumnName="IDCIUDAD" />
+                <ScalarProperty Name="HABILITADA" ColumnName="HABILITADA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLE_EVALUACION">
+            <EntityTypeMapping TypeName="Model.DETALLE_EVALUACION">
+              <MappingFragment StoreEntitySet="DETALLE_EVALUACION">
+                <ScalarProperty Name="RECOMENDACION" ColumnName="RECOMENDACION" />
+                <ScalarProperty Name="AUTORIZACION" ColumnName="AUTORIZACION" />
+                <ScalarProperty Name="ID_EVALUACION" ColumnName="ID_EVALUACION" />
+                <ScalarProperty Name="RUT_SAFE" ColumnName="RUT_SAFE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DIAGNOSTICO">
+            <EntityTypeMapping TypeName="Model.DIAGNOSTICO">
+              <MappingFragment StoreEntitySet="DIAGNOSTICO">
+                <ScalarProperty Name="ID_DIAGNOSTICO" ColumnName="ID_DIAGNOSTICO" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="RUTEMPLEADO" ColumnName="RUTEMPLEADO" />
+                <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+                <ScalarProperty Name="ID_CITA" ColumnName="ID_CITA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLEADO">
+            <EntityTypeMapping TypeName="Model.EMPLEADO">
+              <MappingFragment StoreEntitySet="EMPLEADO">
+                <ScalarProperty Name="RUTEMPLEADO" ColumnName="RUTEMPLEADO" />
+                <ScalarProperty Name="PNOMBRE" ColumnName="PNOMBRE" />
+                <ScalarProperty Name="APELLIDOP" ColumnName="APELLIDOP" />
+                <ScalarProperty Name="APELLIDOM" ColumnName="APELLIDOM" />
+                <ScalarProperty Name="FNACIMIENTO" ColumnName="FNACIMIENTO" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="RUTEMPRESA" ColumnName="RUTEMPRESA" />
+                <ScalarProperty Name="HABILITADA" ColumnName="HABILITADA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLEADOSAFE">
+            <EntityTypeMapping TypeName="Model.EMPLEADOSAFE">
+              <MappingFragment StoreEntitySet="EMPLEADOSAFE">
+                <ScalarProperty Name="RUTSAFE" ColumnName="RUTSAFE" />
+                <ScalarProperty Name="PNOMBRE" ColumnName="PNOMBRE" />
+                <ScalarProperty Name="APELLIDOP" ColumnName="APELLIDOP" />
+                <ScalarProperty Name="APELLIDOM" ColumnName="APELLIDOM" />
+                <ScalarProperty Name="FNACIMIENTO" ColumnName="FNACIMIENTO" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="IDTIPO" ColumnName="IDTIPO" />
+                <ScalarProperty Name="HABILITADA" ColumnName="HABILITADA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPRESA">
+            <EntityTypeMapping TypeName="Model.EMPRESA">
+              <MappingFragment StoreEntitySet="EMPRESA">
+                <ScalarProperty Name="RUTEMPRESA" ColumnName="RUTEMPRESA" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="IDCOMUNA" ColumnName="IDCOMUNA" />
+                <ScalarProperty Name="HABILITADA" ColumnName="HABILITADA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EVALUACION">
+            <EntityTypeMapping TypeName="Model.EVALUACION">
+              <MappingFragment StoreEntitySet="EVALUACION">
+                <ScalarProperty Name="ID_EVALUACION" ColumnName="ID_EVALUACION" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
+                <ScalarProperty Name="DERIVADA" ColumnName="DERIVADA" />
+                <ScalarProperty Name="RUT_SAFE" ColumnName="RUT_SAFE" />
+                <ScalarProperty Name="ID_TIPO" ColumnName="ID_TIPO" />
+                <ScalarProperty Name="RUT_EMPRESA" ColumnName="RUT_EMPRESA" />
+                <ScalarProperty Name="RUT_EMPLEADO" ColumnName="RUT_EMPLEADO" />
+                <ScalarProperty Name="RECOMENDADA" ColumnName="RECOMENDADA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EXAMEN">
+            <EntityTypeMapping TypeName="Model.EXAMEN">
+              <MappingFragment StoreEntitySet="EXAMEN">
+                <ScalarProperty Name="ANOTACION" ColumnName="ANOTACION" />
+                <ScalarProperty Name="ID_EXAMEN" ColumnName="ID_EXAMEN" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="TIPO_DOC" ColumnName="TIPO_DOC" />
+                <ScalarProperty Name="DOCUMENTO" ColumnName="DOCUMENTO" />
+                <ScalarProperty Name="ID_DIAGNOSTICO" ColumnName="ID_DIAGNOSTICO" />
+                <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MEDICO">
+            <EntityTypeMapping TypeName="Model.MEDICO">
+              <MappingFragment StoreEntitySet="MEDICO">
+                <ScalarProperty Name="RUT_MEDICO" ColumnName="RUT_MEDICO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="APELLIDOP" ColumnName="APELLIDOP" />
+                <ScalarProperty Name="APELLIDOM" ColumnName="APELLIDOM" />
+                <ScalarProperty Name="FNACIMIENTO" ColumnName="FNACIMIENTO" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="RUTEMPRESA" ColumnName="RUTEMPRESA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPOEVALUACION">
+            <EntityTypeMapping TypeName="Model.TIPOEVALUACION">
+              <MappingFragment StoreEntitySet="TIPOEVALUACION">
+                <ScalarProperty Name="IDTIPO" ColumnName="IDTIPO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPOUSUARIO">
+            <EntityTypeMapping TypeName="Model.TIPOUSUARIO">
+              <MappingFragment StoreEntitySet="TIPOUSUARIO">
+                <ScalarProperty Name="IDTIPO" ColumnName="IDTIPO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="HABILITADA" ColumnName="HABILITADA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLECAPACITACION">
+            <EntityTypeMapping TypeName="Model.DETALLECAPACITACION">
+              <MappingFragment StoreEntitySet="DETALLECAPACITACION">
+                <ScalarProperty Name="ASISTENCIA" ColumnName="ASISTENCIA" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="IDCAPACITACION" ColumnName="IDCAPACITACION" />
+                <ScalarProperty Name="IDEMPLEADO" ColumnName="IDEMPLEADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLEADO_SAFE_VIEW">
+            <EntityTypeMapping TypeName="Model.EMPLEADO_SAFE_VIEW">
+              <MappingFragment StoreEntitySet="EMPLEADO_SAFE_VIEW">
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="FECHA_NACIMIENTO" ColumnName="FECHA_NACIMIENTO" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="TIPO_USUARIO" ColumnName="TIPO_USUARIO" />
+                <ScalarProperty Name="HABILITADA" ColumnName="HABILITADA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLEADO_VIEW">
+            <EntityTypeMapping TypeName="Model.EMPLEADO_VIEW">
+              <MappingFragment StoreEntitySet="EMPLEADO_VIEW">
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="FECHA_NACIMIENTO" ColumnName="FECHA_NACIMIENTO" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+                <ScalarProperty Name="HABILITADA" ColumnName="HABILITADA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPRESA_VIEW">
+            <EntityTypeMapping TypeName="Model.EMPRESA_VIEW">
+              <MappingFragment StoreEntitySet="EMPRESA_VIEW">
+                <ScalarProperty Name="HABILITADA" ColumnName="HABILITADA" />
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="COMUNA" ColumnName="COMUNA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EVALUACION_EMPRESA_VIEW">
+            <EntityTypeMapping TypeName="Model.EVALUACION_EMPRESA_VIEW">
+              <MappingFragment StoreEntitySet="EVALUACION_EMPRESA_VIEW">
+                <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
+                <ScalarProperty Name="DERIVADA" ColumnName="DERIVADA" />
+                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EVALUACION_PERSONA_VIEW">
+            <EntityTypeMapping TypeName="Model.EVALUACION_PERSONA_VIEW">
+              <MappingFragment StoreEntitySet="EVALUACION_PERSONA_VIEW">
+                <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
+                <ScalarProperty Name="DERIVADA" ColumnName="DERIVADA" />
+                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+                <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MEDICO_VIEW">
+            <EntityTypeMapping TypeName="Model.MEDICO_VIEW">
+              <MappingFragment StoreEntitySet="MEDICO_VIEW">
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="FECHA_NACIMIENTO" ColumnName="FECHA_NACIMIENTO" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="RUTEMPRESA" ColumnName="RUTEMPRESA" />
+                <ScalarProperty Name="HABILITADA" ColumnName="HABILITADA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RECOMENDACIONES_EMPRESA_VIEW">
+            <EntityTypeMapping TypeName="Model.RECOMENDACIONES_EMPRESA_VIEW">
+              <MappingFragment StoreEntitySet="RECOMENDACIONES_EMPRESA_VIEW">
+                <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
+                <ScalarProperty Name="RECOMENDADA" ColumnName="RECOMENDADA" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RECOMENDACIONES_PERSONA_VIEW">
+            <EntityTypeMapping TypeName="Model.RECOMENDACIONES_PERSONA_VIEW">
+              <MappingFragment StoreEntitySet="RECOMENDACIONES_PERSONA_VIEW">
+                <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
+                <ScalarProperty Name="RECOMENDADA" ColumnName="RECOMENDADA" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+                <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RECOMENDADAS_VIEW">
+            <EntityTypeMapping TypeName="Model.RECOMENDADAS_VIEW">
+              <MappingFragment StoreEntitySet="RECOMENDADAS_VIEW">
+                <ScalarProperty Name="EVALUACION" ColumnName="EVALUACION" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
+                <ScalarProperty Name="RECOMENDACION" ColumnName="RECOMENDACION" />
+                <ScalarProperty Name="AUTORIZADA" ColumnName="AUTORIZADA" />
+                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VISTA_CITAS_GENERAL">
+            <EntityTypeMapping TypeName="Model.VISTA_CITAS_GENERAL">
+              <MappingFragment StoreEntitySet="VISTA_CITAS_GENERAL">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="HORA" ColumnName="HORA" />
+                <ScalarProperty Name="ASISTENCIA" ColumnName="ASISTENCIA" />
+                <ScalarProperty Name="ACTIVA" ColumnName="ACTIVA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="INGRESAR_CAPACITACION" FunctionName="Model.Store.INGRESAR_CAPACITACION" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_CITA" FunctionName="Model.Store.INGRESAR_CITA" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_CIUDAD" FunctionName="Model.Store.INGRESAR_CIUDAD" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_COMUNA" FunctionName="Model.Store.INGRESAR_COMUNA" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_DETALLE_CAPACITACION" FunctionName="Model.Store.INGRESAR_DETALLE_CAPACITACION" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_DETALLE_EVALUACION" FunctionName="Model.Store.INGRESAR_DETALLE_EVALUACION" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_DIAGNOSTICO" FunctionName="Model.Store.INGRESAR_DIAGNOSTICO" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_EMPLEADO" FunctionName="Model.Store.INGRESAR_EMPLEADO" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_EMPLEADOSAFE" FunctionName="Model.Store.INGRESAR_EMPLEADOSAFE" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_EMPRESA" FunctionName="Model.Store.INGRESAR_EMPRESA" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_EVALUACION" FunctionName="Model.Store.INGRESAR_EVALUACION" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_EXAMEN" FunctionName="Model.Store.INGRESAR_EXAMEN" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_MEDICO" FunctionName="Model.Store.INGRESAR_MEDICO" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_TIPO_EVALUACION" FunctionName="Model.Store.INGRESAR_TIPO_EVALUACION" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_TIPO_USUARIO" FunctionName="Model.Store.INGRESAR_TIPO_USUARIO" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_CITA" FunctionName="Model.Store.MODIFICAR_CITA" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_CIUDAD" FunctionName="Model.Store.MODIFICAR_CIUDAD" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_COMUNA" FunctionName="Model.Store.MODIFICAR_COMUNA" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_DIAGNOSTICO" FunctionName="Model.Store.MODIFICAR_DIAGNOSTICO" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_EMPLEADO" FunctionName="Model.Store.MODIFICAR_EMPLEADO" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_EMPLEADOSAFE" FunctionName="Model.Store.MODIFICAR_EMPLEADOSAFE" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_EMPRESA" FunctionName="Model.Store.MODIFICAR_EMPRESA" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_EVALUACION" FunctionName="Model.Store.MODIFICAR_EVALUACION" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_EXAMEN" FunctionName="Model.Store.MODIFICAR_EXAMEN" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_MEDICO" FunctionName="Model.Store.MODIFICAR_MEDICO" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_RECOMENDADO" FunctionName="Model.Store.MODIFICAR_RECOMENDADO" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_TIPO_USUARIO" FunctionName="Model.Store.MODIFICAR_TIPO_USUARIO" />
+          <FunctionImportMapping FunctionImportName="DESHABILITAR_EMPLEADO" FunctionName="Model.Store.DESHABILITAR_EMPLEADO" />
+          <FunctionImportMapping FunctionImportName="DESHABILITAR_EMPLEADOSAFE" FunctionName="Model.Store.DESHABILITAR_EMPLEADOSAFE" />
+          <FunctionImportMapping FunctionImportName="DESHABILITAR_MEDICO" FunctionName="Model.Store.DESHABILITAR_MEDICO" />
+          <FunctionImportMapping FunctionImportName="DESHABILITAR_EMPRESA" FunctionName="Model.Store.DESHABILITAR_EMPRESA" />
+          <FunctionImportMapping FunctionImportName="DESHABILITAR_CITA" FunctionName="Model.Store.DESHABILITAR_CITA" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_ASISTENCIA_CITA" FunctionName="Model.Store.MODIFICAR_ASISTENCIA_CITA" />
+          <EntitySetMapping Name="DIAGNOSTICOS_MEDICO_VIEW">
+            <EntityTypeMapping TypeName="Model.DIAGNOSTICOS_MEDICO_VIEW">
+              <MappingFragment StoreEntitySet="DIAGNOSTICOS_MEDICO_VIEW">
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DIAGNOSTICOS_TRABAJADOR_VIEW">
+            <EntityTypeMapping TypeName="Model.DIAGNOSTICOS_TRABAJADOR_VIEW">
+              <MappingFragment StoreEntitySet="DIAGNOSTICOS_TRABAJADOR_VIEW">
+                <ScalarProperty Name="MEDICO" ColumnName="MEDICO" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="MODIFICAR_TIPO_EVALUACION" FunctionName="Model.Store.MODIFICAR_TIPO_EVALUACION" />
+          <FunctionImportMapping FunctionImportName="ELIMINAR_TIPO_EVALUACION" FunctionName="Model.Store.ELIMINAR_TIPO_EVALUACION" />
+          <FunctionImportMapping FunctionImportName="DESHABILITAR_DIAGNOSTICO" FunctionName="Model.Store.DESHABILITAR_DIAGNOSTICO" />
+          <EntitySetMapping Name="EXAMENES_MEDICO_VIEW">
+            <EntityTypeMapping TypeName="Model.EXAMENES_MEDICO_VIEW">
+              <MappingFragment StoreEntitySet="EXAMENES_MEDICO_VIEW">
+                <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+                <ScalarProperty Name="DOCUMENTO" ColumnName="DOCUMENTO" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
