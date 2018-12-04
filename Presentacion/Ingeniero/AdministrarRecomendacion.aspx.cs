@@ -17,7 +17,7 @@ namespace Presentacion.Ingeniero
             {
                 RellenarTipoEvaluacion();
             }
-
+             
             lblAlerta.Visible = false;
         }
 
