@@ -12,13 +12,15 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class RECOMENDACIONES_PERSONA_VIEW
+    public partial class EVALUACIONES_VIEW
     {
         public int CLAVE { get; set; }
         public System.DateTime FECHA { get; set; }
         public string OBSERVACION { get; set; }
-        public string RECOMENDADA { get; set; }
+        public string DERIVADA { get; set; }
+        public string EMPLEADO { get; set; }
+        public string TIPO { get; set; }
         public string EMPRESA { get; set; }
-        public string CLIENTE { get; set; }
+        public string RECOMENDADA { get; set; }
     }
 }

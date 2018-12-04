@@ -21,7 +21,6 @@ namespace Datos
         public string AUTORIZADA { get; set; }
         public string EMPLEADO { get; set; }
         public string EMPRESA { get; set; }
-        public int TIPO { get; set; }
-        public string CLIENTE { get; set; }
+        public string TIPO { get; set; }
     }
 }

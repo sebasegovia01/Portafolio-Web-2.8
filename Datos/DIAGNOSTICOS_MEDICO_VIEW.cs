@@ -17,8 +17,8 @@ namespace Datos
         public int ID { get; set; }
         public string DESCRIPCION { get; set; }
         public string NOMBRE { get; set; }
-        public string HABILITADO { get; set; }
-        public System.DateTime FECHA { get; set; }
         public string CORREO { get; set; }
+        public System.DateTime FECHA { get; set; }
+        public string HABILITADO { get; set; }
     }
 }

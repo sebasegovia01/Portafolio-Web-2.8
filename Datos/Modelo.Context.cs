@@ -43,19 +43,125 @@ namespace Datos
         public DbSet<TIPOEVALUACION> TIPOEVALUACION { get; set; }
         public DbSet<TIPOUSUARIO> TIPOUSUARIO { get; set; }
         public DbSet<DETALLECAPACITACION> DETALLECAPACITACION { get; set; }
+        public DbSet<DIAGNOSTICOS_MEDICO_VIEW> DIAGNOSTICOS_MEDICO_VIEW { get; set; }
+        public DbSet<DIAGNOSTICOS_TRABAJADOR_VIEW> DIAGNOSTICOS_TRABAJADOR_VIEW { get; set; }
         public DbSet<EMPLEADO_SAFE_VIEW> EMPLEADO_SAFE_VIEW { get; set; }
         public DbSet<EMPLEADO_VIEW> EMPLEADO_VIEW { get; set; }
         public DbSet<EMPRESA_VIEW> EMPRESA_VIEW { get; set; }
-        public DbSet<EVALUACION_EMPRESA_VIEW> EVALUACION_EMPRESA_VIEW { get; set; }
-        public DbSet<EVALUACION_PERSONA_VIEW> EVALUACION_PERSONA_VIEW { get; set; }
+        public DbSet<EVALUACIONES_VIEW> EVALUACIONES_VIEW { get; set; }
+        public DbSet<EXAMENES_MEDICO_VIEW> EXAMENES_MEDICO_VIEW { get; set; }
         public DbSet<MEDICO_VIEW> MEDICO_VIEW { get; set; }
-        public DbSet<RECOMENDACIONES_EMPRESA_VIEW> RECOMENDACIONES_EMPRESA_VIEW { get; set; }
-        public DbSet<RECOMENDACIONES_PERSONA_VIEW> RECOMENDACIONES_PERSONA_VIEW { get; set; }
         public DbSet<RECOMENDADAS_VIEW> RECOMENDADAS_VIEW { get; set; }
         public DbSet<VISTA_CITAS_GENERAL> VISTA_CITAS_GENERAL { get; set; }
-        public DbSet<DIAGNOSTICOS_MEDICO_VIEW> DIAGNOSTICOS_MEDICO_VIEW { get; set; }
-        public DbSet<DIAGNOSTICOS_TRABAJADOR_VIEW> DIAGNOSTICOS_TRABAJADOR_VIEW { get; set; }
-        public DbSet<EXAMENES_MEDICO_VIEW> EXAMENES_MEDICO_VIEW { get; set; }
+    
+        public virtual int DESHABILITAR_CITA(Nullable<decimal> iD, string hABILITADA)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(decimal));
+    
+            var hABILITADAParameter = hABILITADA != null ?
+                new ObjectParameter("HABILITADA", hABILITADA) :
+                new ObjectParameter("HABILITADA", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_CITA", iDParameter, hABILITADAParameter);
+        }
+    
+        public virtual int DESHABILITAR_DIAGNOSTICO(Nullable<decimal> iD, string hABILITADA)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(decimal));
+    
+            var hABILITADAParameter = hABILITADA != null ?
+                new ObjectParameter("HABILITADA", hABILITADA) :
+                new ObjectParameter("HABILITADA", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_DIAGNOSTICO", iDParameter, hABILITADAParameter);
+        }
+    
+        public virtual int DESHABILITAR_EMPLEADO(string rUT, string hABILITADO)
+        {
+            var rUTParameter = rUT != null ?
+                new ObjectParameter("RUT", rUT) :
+                new ObjectParameter("RUT", typeof(string));
+    
+            var hABILITADOParameter = hABILITADO != null ?
+                new ObjectParameter("HABILITADO", hABILITADO) :
+                new ObjectParameter("HABILITADO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_EMPLEADO", rUTParameter, hABILITADOParameter);
+        }
+    
+        public virtual int DESHABILITAR_EMPLEADOSAFE(string rUT, string hABILITADO)
+        {
+            var rUTParameter = rUT != null ?
+                new ObjectParameter("RUT", rUT) :
+                new ObjectParameter("RUT", typeof(string));
+    
+            var hABILITADOParameter = hABILITADO != null ?
+                new ObjectParameter("HABILITADO", hABILITADO) :
+                new ObjectParameter("HABILITADO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_EMPLEADOSAFE", rUTParameter, hABILITADOParameter);
+        }
+    
+        public virtual int DESHABILITAR_EMPRESA(string rUT, string hABILITADO)
+        {
+            var rUTParameter = rUT != null ?
+                new ObjectParameter("RUT", rUT) :
+                new ObjectParameter("RUT", typeof(string));
+    
+            var hABILITADOParameter = hABILITADO != null ?
+                new ObjectParameter("HABILITADO", hABILITADO) :
+                new ObjectParameter("HABILITADO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_EMPRESA", rUTParameter, hABILITADOParameter);
+        }
+    
+        public virtual int DESHABILITAR_MEDICO(string rUT, string hABILITADO)
+        {
+            var rUTParameter = rUT != null ?
+                new ObjectParameter("RUT", rUT) :
+                new ObjectParameter("RUT", typeof(string));
+    
+            var hABILITADOParameter = hABILITADO != null ?
+                new ObjectParameter("HABILITADO", hABILITADO) :
+                new ObjectParameter("HABILITADO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_MEDICO", rUTParameter, hABILITADOParameter);
+        }
+    
+        public virtual int ELIMINAR_EVALUACION(Nullable<decimal> iD_EV)
+        {
+            var iD_EVParameter = iD_EV.HasValue ?
+                new ObjectParameter("ID_EV", iD_EV) :
+                new ObjectParameter("ID_EV", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ELIMINAR_EVALUACION", iD_EVParameter);
+        }
+    
+        public virtual int ELIMINAR_EXAMEN(Nullable<decimal> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ELIMINAR_EXAMEN", iDParameter);
+        }
+    
+        public virtual int ELIMINAR_TIPO_EVALUACION(Nullable<decimal> iDTIPOEV, string eSTADO)
+        {
+            var iDTIPOEVParameter = iDTIPOEV.HasValue ?
+                new ObjectParameter("IDTIPOEV", iDTIPOEV) :
+                new ObjectParameter("IDTIPOEV", typeof(decimal));
+    
+            var eSTADOParameter = eSTADO != null ?
+                new ObjectParameter("ESTADO", eSTADO) :
+                new ObjectParameter("ESTADO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ELIMINAR_TIPO_EVALUACION", iDTIPOEVParameter, eSTADOParameter);
+        }
     
         public virtual int INGRESAR_CAPACITACION(string oBJETIVO, Nullable<System.DateTime> fECHA, string lUGAR)
         {
@@ -287,7 +393,7 @@ namespace Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INGRESAR_EMPRESA", rUTParameter, nOMBREParameter, dIRECCIONParameter, cORREOParameter, nUMEROParameter, iDCOMUNAParameter);
         }
     
-        public virtual int INGRESAR_EVALUACION(Nullable<System.DateTime> fECHA, string oBSERVACION, string rUT_SAFE, Nullable<decimal> iD_TIPO, string rUT_EMPRESA, string rUT_EMPLEADO)
+        public virtual int INGRESAR_EVALUACION(Nullable<System.DateTime> fECHA, string oBSERVACION, string rUT_SAFE, Nullable<decimal> iD_TIPO, string rUT_EMPRESA)
         {
             var fECHAParameter = fECHA.HasValue ?
                 new ObjectParameter("FECHA", fECHA) :
@@ -309,14 +415,10 @@ namespace Datos
                 new ObjectParameter("RUT_EMPRESA", rUT_EMPRESA) :
                 new ObjectParameter("RUT_EMPRESA", typeof(string));
     
-            var rUT_EMPLEADOParameter = rUT_EMPLEADO != null ?
-                new ObjectParameter("RUT_EMPLEADO", rUT_EMPLEADO) :
-                new ObjectParameter("RUT_EMPLEADO", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INGRESAR_EVALUACION", fECHAParameter, oBSERVACIONParameter, rUT_SAFEParameter, iD_TIPOParameter, rUT_EMPRESAParameter, rUT_EMPLEADOParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INGRESAR_EVALUACION", fECHAParameter, oBSERVACIONParameter, rUT_SAFEParameter, iD_TIPOParameter, rUT_EMPRESAParameter);
         }
     
-        public virtual int INGRESAR_EXAMEN(string nOMBRE, string tIPO_DOC, byte[] dOCUMENTO, Nullable<decimal> iD_DIAGNOSTICO, string hABILITADO)
+        public virtual int INGRESAR_EXAMEN(string nOMBRE, string tIPO_DOC, byte[] dOCUMENTO, Nullable<decimal> iD_DIAGNOSTICO, string hABILITADO, string aNOTACION)
         {
             var nOMBREParameter = nOMBRE != null ?
                 new ObjectParameter("NOMBRE", nOMBRE) :
@@ -338,7 +440,11 @@ namespace Datos
                 new ObjectParameter("HABILITADO", hABILITADO) :
                 new ObjectParameter("HABILITADO", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INGRESAR_EXAMEN", nOMBREParameter, tIPO_DOCParameter, dOCUMENTOParameter, iD_DIAGNOSTICOParameter, hABILITADOParameter);
+            var aNOTACIONParameter = aNOTACION != null ?
+                new ObjectParameter("ANOTACION", aNOTACION) :
+                new ObjectParameter("ANOTACION", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INGRESAR_EXAMEN", nOMBREParameter, tIPO_DOCParameter, dOCUMENTOParameter, iD_DIAGNOSTICOParameter, hABILITADOParameter, aNOTACIONParameter);
         }
     
         public virtual int INGRESAR_MEDICO(string rUT_MEDICO, string nOMBRE, string aPELLIDOP, string aPELLIDOM, string fNACIMIENTO, string cORREO, string cLAVE, Nullable<decimal> tELEFONO, string aCTIVO, string rUTEMPRESA)
@@ -406,6 +512,19 @@ namespace Datos
                 new ObjectParameter("HABILITADA", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INGRESAR_TIPO_USUARIO", nOMBREParameter, hABILITADAParameter);
+        }
+    
+        public virtual int MODIFICAR_ASISTENCIA_CITA(Nullable<decimal> iD, string aSIS)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(decimal));
+    
+            var aSISParameter = aSIS != null ?
+                new ObjectParameter("ASIS", aSIS) :
+                new ObjectParameter("ASIS", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_ASISTENCIA_CITA", iDParameter, aSISParameter);
         }
     
         public virtual int MODIFICAR_CITA(Nullable<decimal> iD, string aSIS, string rUT, Nullable<System.DateTime> fECHA_CTA, Nullable<System.DateTime> hORA_CTA, string hABILITADA)
@@ -611,16 +730,45 @@ namespace Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_EMPRESA", rUTParameter, nAMEParameter, dIRECCParameter, eMAILParameter, fONOParameter, iDCOMNAParameter, hABILITADOParameter);
         }
     
-        public virtual int MODIFICAR_EVALUACION(Nullable<decimal> iD_EVAL)
+        public virtual int MODIFICAR_ESTADO_EVALUACION(Nullable<decimal> iD_EVAL)
         {
             var iD_EVALParameter = iD_EVAL.HasValue ?
                 new ObjectParameter("ID_EVAL", iD_EVAL) :
                 new ObjectParameter("ID_EVAL", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_EVALUACION", iD_EVALParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_ESTADO_EVALUACION", iD_EVALParameter);
         }
     
-        public virtual int MODIFICAR_EXAMEN(Nullable<decimal> iD, string nAME, string tIP_DOC, byte[] dOCMNT, Nullable<decimal> iDDIAGNOSTICO, string aCTIVO)
+        public virtual int MODIFICAR_EVALUACION(Nullable<decimal> iD_EVAL, Nullable<System.DateTime> fECHA, string oBSERV, string rUTSAFE, Nullable<decimal> iDTIPO, string rUT_EMPRESA)
+        {
+            var iD_EVALParameter = iD_EVAL.HasValue ?
+                new ObjectParameter("ID_EVAL", iD_EVAL) :
+                new ObjectParameter("ID_EVAL", typeof(decimal));
+    
+            var fECHAParameter = fECHA.HasValue ?
+                new ObjectParameter("FECHA", fECHA) :
+                new ObjectParameter("FECHA", typeof(System.DateTime));
+    
+            var oBSERVParameter = oBSERV != null ?
+                new ObjectParameter("OBSERV", oBSERV) :
+                new ObjectParameter("OBSERV", typeof(string));
+    
+            var rUTSAFEParameter = rUTSAFE != null ?
+                new ObjectParameter("RUTSAFE", rUTSAFE) :
+                new ObjectParameter("RUTSAFE", typeof(string));
+    
+            var iDTIPOParameter = iDTIPO.HasValue ?
+                new ObjectParameter("IDTIPO", iDTIPO) :
+                new ObjectParameter("IDTIPO", typeof(decimal));
+    
+            var rUT_EMPRESAParameter = rUT_EMPRESA != null ?
+                new ObjectParameter("RUT_EMPRESA", rUT_EMPRESA) :
+                new ObjectParameter("RUT_EMPRESA", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_EVALUACION", iD_EVALParameter, fECHAParameter, oBSERVParameter, rUTSAFEParameter, iDTIPOParameter, rUT_EMPRESAParameter);
+        }
+    
+        public virtual int MODIFICAR_EXAMEN(Nullable<decimal> iD, string nAME, string tIP_DOC, byte[] dOCMNT, Nullable<decimal> iDDIAGNOSTICO, string aCTIVO, string aNOTACIONES)
         {
             var iDParameter = iD.HasValue ?
                 new ObjectParameter("ID", iD) :
@@ -646,7 +794,11 @@ namespace Datos
                 new ObjectParameter("ACTIVO", aCTIVO) :
                 new ObjectParameter("ACTIVO", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_EXAMEN", iDParameter, nAMEParameter, tIP_DOCParameter, dOCMNTParameter, iDDIAGNOSTICOParameter, aCTIVOParameter);
+            var aNOTACIONESParameter = aNOTACIONES != null ?
+                new ObjectParameter("ANOTACIONES", aNOTACIONES) :
+                new ObjectParameter("ANOTACIONES", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_EXAMEN", iDParameter, nAMEParameter, tIP_DOCParameter, dOCMNTParameter, iDDIAGNOSTICOParameter, aCTIVOParameter, aNOTACIONESParameter);
         }
     
         public virtual int MODIFICAR_MEDICO(string rUT, string nAME, string aPELLIDO_P, string aPELLIDO_M, string f_NACIMIENTO, string eMAIL, string pASWD, Nullable<decimal> fONO, string hABILITADO, string rUT_EMPRESA)
@@ -703,101 +855,6 @@ namespace Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_RECOMENDADO", iD_EVALParameter);
         }
     
-        public virtual int MODIFICAR_TIPO_USUARIO(Nullable<decimal> iDTIPOUS, string nAME, string hABILITADO)
-        {
-            var iDTIPOUSParameter = iDTIPOUS.HasValue ?
-                new ObjectParameter("IDTIPOUS", iDTIPOUS) :
-                new ObjectParameter("IDTIPOUS", typeof(decimal));
-    
-            var nAMEParameter = nAME != null ?
-                new ObjectParameter("NAME", nAME) :
-                new ObjectParameter("NAME", typeof(string));
-    
-            var hABILITADOParameter = hABILITADO != null ?
-                new ObjectParameter("HABILITADO", hABILITADO) :
-                new ObjectParameter("HABILITADO", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_TIPO_USUARIO", iDTIPOUSParameter, nAMEParameter, hABILITADOParameter);
-        }
-    
-        public virtual int DESHABILITAR_EMPLEADO(string rUT, string hABILITADO)
-        {
-            var rUTParameter = rUT != null ?
-                new ObjectParameter("RUT", rUT) :
-                new ObjectParameter("RUT", typeof(string));
-    
-            var hABILITADOParameter = hABILITADO != null ?
-                new ObjectParameter("HABILITADO", hABILITADO) :
-                new ObjectParameter("HABILITADO", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_EMPLEADO", rUTParameter, hABILITADOParameter);
-        }
-    
-        public virtual int DESHABILITAR_EMPLEADOSAFE(string rUT, string hABILITADO)
-        {
-            var rUTParameter = rUT != null ?
-                new ObjectParameter("RUT", rUT) :
-                new ObjectParameter("RUT", typeof(string));
-    
-            var hABILITADOParameter = hABILITADO != null ?
-                new ObjectParameter("HABILITADO", hABILITADO) :
-                new ObjectParameter("HABILITADO", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_EMPLEADOSAFE", rUTParameter, hABILITADOParameter);
-        }
-    
-        public virtual int DESHABILITAR_MEDICO(string rUT, string hABILITADO)
-        {
-            var rUTParameter = rUT != null ?
-                new ObjectParameter("RUT", rUT) :
-                new ObjectParameter("RUT", typeof(string));
-    
-            var hABILITADOParameter = hABILITADO != null ?
-                new ObjectParameter("HABILITADO", hABILITADO) :
-                new ObjectParameter("HABILITADO", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_MEDICO", rUTParameter, hABILITADOParameter);
-        }
-    
-        public virtual int DESHABILITAR_EMPRESA(string rUT, string hABILITADO)
-        {
-            var rUTParameter = rUT != null ?
-                new ObjectParameter("RUT", rUT) :
-                new ObjectParameter("RUT", typeof(string));
-    
-            var hABILITADOParameter = hABILITADO != null ?
-                new ObjectParameter("HABILITADO", hABILITADO) :
-                new ObjectParameter("HABILITADO", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_EMPRESA", rUTParameter, hABILITADOParameter);
-        }
-    
-        public virtual int DESHABILITAR_CITA(Nullable<decimal> iD, string hABILITADA)
-        {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(decimal));
-    
-            var hABILITADAParameter = hABILITADA != null ?
-                new ObjectParameter("HABILITADA", hABILITADA) :
-                new ObjectParameter("HABILITADA", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_CITA", iDParameter, hABILITADAParameter);
-        }
-    
-        public virtual int MODIFICAR_ASISTENCIA_CITA(Nullable<decimal> iD, string aSIS)
-        {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(decimal));
-    
-            var aSISParameter = aSIS != null ?
-                new ObjectParameter("ASIS", aSIS) :
-                new ObjectParameter("ASIS", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_ASISTENCIA_CITA", iDParameter, aSISParameter);
-        }
-    
         public virtual int MODIFICAR_TIPO_EVALUACION(Nullable<decimal> iDTIPOEV, string nAME, string hABILITADA)
         {
             var iDTIPOEVParameter = iDTIPOEV.HasValue ?
@@ -815,30 +872,47 @@ namespace Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_TIPO_EVALUACION", iDTIPOEVParameter, nAMEParameter, hABILITADAParameter);
         }
     
-        public virtual int ELIMINAR_TIPO_EVALUACION(Nullable<decimal> iDTIPOEV, string eSTADO)
+        public virtual int MODIFICAR_TIPO_USUARIO(Nullable<decimal> iDTIPOUS, string nAME, string hABILITADO)
         {
-            var iDTIPOEVParameter = iDTIPOEV.HasValue ?
-                new ObjectParameter("IDTIPOEV", iDTIPOEV) :
-                new ObjectParameter("IDTIPOEV", typeof(decimal));
+            var iDTIPOUSParameter = iDTIPOUS.HasValue ?
+                new ObjectParameter("IDTIPOUS", iDTIPOUS) :
+                new ObjectParameter("IDTIPOUS", typeof(decimal));
     
-            var eSTADOParameter = eSTADO != null ?
-                new ObjectParameter("ESTADO", eSTADO) :
-                new ObjectParameter("ESTADO", typeof(string));
+            var nAMEParameter = nAME != null ?
+                new ObjectParameter("NAME", nAME) :
+                new ObjectParameter("NAME", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ELIMINAR_TIPO_EVALUACION", iDTIPOEVParameter, eSTADOParameter);
+            var hABILITADOParameter = hABILITADO != null ?
+                new ObjectParameter("HABILITADO", hABILITADO) :
+                new ObjectParameter("HABILITADO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_TIPO_USUARIO", iDTIPOUSParameter, nAMEParameter, hABILITADOParameter);
         }
     
-        public virtual int DESHABILITAR_DIAGNOSTICO(Nullable<decimal> iD, string hABILITADA)
+        public virtual int ELIMINAR_DETALLE_EVALUACION(Nullable<decimal> iD_EV)
         {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(decimal));
+            var iD_EVParameter = iD_EV.HasValue ?
+                new ObjectParameter("ID_EV", iD_EV) :
+                new ObjectParameter("ID_EV", typeof(decimal));
     
-            var hABILITADAParameter = hABILITADA != null ?
-                new ObjectParameter("HABILITADA", hABILITADA) :
-                new ObjectParameter("HABILITADA", typeof(string));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ELIMINAR_DETALLE_EVALUACION", iD_EVParameter);
+        }
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DESHABILITAR_DIAGNOSTICO", iDParameter, hABILITADAParameter);
+        public virtual int MODIFICAR_DETALLE_EVALUACION(Nullable<decimal> iD_EVAL, string rECOMND, string aUTORITATION)
+        {
+            var iD_EVALParameter = iD_EVAL.HasValue ?
+                new ObjectParameter("ID_EVAL", iD_EVAL) :
+                new ObjectParameter("ID_EVAL", typeof(decimal));
+    
+            var rECOMNDParameter = rECOMND != null ?
+                new ObjectParameter("RECOMND", rECOMND) :
+                new ObjectParameter("RECOMND", typeof(string));
+    
+            var aUTORITATIONParameter = aUTORITATION != null ?
+                new ObjectParameter("AUTORITATION", aUTORITATION) :
+                new ObjectParameter("AUTORITATION", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_DETALLE_EVALUACION", iD_EVALParameter, rECOMNDParameter, aUTORITATIONParameter);
         }
     }
 }

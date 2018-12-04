@@ -22,7 +22,6 @@ namespace Presentacion.Supervisor
                 RellenarEmpresa();
                 ddlTipoEvaluacion.Items.Insert(0, new ListItem("Seleccione tipo evaluación", "0"));
                 ddlEmpresa.Items.Insert(0, new ListItem("Seleccione empresa", "0"));
-                ddlEmpleado.Items.Insert(0, new ListItem("Seleccione empleado", "0"));
             }
 
             if (Session["usuario"] == null || (int)Session["tipo"] != 2)
@@ -45,7 +44,6 @@ namespace Presentacion.Supervisor
                 eva.rutSafe = Session["rut"].ToString();
                 eva.idTipo = int.Parse(ddlTipoEvaluacion.SelectedValue);
                 eva.rutEmpresa = ddlEmpresa.SelectedValue;
-                eva.rutEmpleado = ddlEmpleado.SelectedValue;
 
                 if (eva.Insertar())
                 {
@@ -92,41 +90,6 @@ namespace Presentacion.Supervisor
             {
                 return true;
             }
-        }
-
-        protected void ddlTipoEvaluacion_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (int.Parse(ddlTipoEvaluacion.SelectedValue) == 2)
-            {
-                ddlEmpleado.SelectedValue = "0";
-                lblEmpleado.Visible = false;
-                ddlEmpleado.Visible = false;
-            }
-            else
-            {
-                lblEmpleado.Visible = true;
-                ddlEmpleado.Visible = true;
-            }
-        }
-
-        protected void ddlEmpresa_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            RellenarEmpleados();
-        }
-
-
-        public void RellenarEmpleados()
-        {
-            Empleado emp = new Empleado();
-            Empresa emprs = new Empresa();
-            emprs.rutEmpresa = ddlEmpresa.SelectedValue;
-            emprs.Leer();
-
-            ddlEmpleado.DataSource = emp.ListarUsuariosPorEmpresa(emprs.nombre);
-            ddlEmpleado.DataTextField = "NOMBRE";
-            ddlEmpleado.DataValueField = "RUT";
-            ddlEmpleado.DataBind();
-            ddlEmpleado.Items.Insert(0, new ListItem("Seleccione empleado", "0"));
         }
 
         public void RellenarEmpresa()

@@ -11,13 +11,17 @@
     <!-- Bootstrap Styles-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
-    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- Morris Chart Styles-->
     <link href="../assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
     <!-- Custom Styles-->
     <link href="../assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+     <!-- jQuery Js -->
+    <script src="../assets/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="../assets/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -129,16 +133,13 @@
                                 <div class="panel-body">   
                                     <form id="form1" runat="server">
                                     
-                                        <div class="col-lg-12">                          
+                                        <div class="col-lg-12">      
                                             <div class="form-group">
-                                                <label for="">Tipo*</label><br />
+                                                <label for="">Tipo</label><br />
                                                 <asp:DropDownList ID="ddlTipo" runat="server" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlTipo_SelectedIndexChanged">
-                                                    <asp:ListItem Selected="True" Value="0">Selecciona tipo</asp:ListItem>
-                                                    <asp:ListItem Value="1">Persona</asp:ListItem>
-                                                    <asp:ListItem Value="2">Empresa</asp:ListItem>
                                                 </asp:DropDownList>
-
-                                                <label for="">Estado*</label><br />
+                                                <br />
+                                                <label for="">Estado</label><br />
                                                 <asp:DropDownList ID="ddlTipoEvaluacion" runat="server" class="form-control" OnSelectedIndexChanged="ddlTipoEvaluacion_SelectedIndexChanged" AutoPostBack="True">
                                                     <asp:ListItem Selected="True" Value="falso">Selecciona estado</asp:ListItem>
                                                     <asp:ListItem Value="1">Derivada</asp:ListItem>
@@ -146,49 +147,74 @@
                                                 </asp:DropDownList>
 
                                                 <br />
-
-                                                <asp:GridView ID="gvEvaluaciones" class="table table-striped table-bordered table-hover" EmptyDataText="No se han encontrado resultados." runat="server" AutoGenerateColumns="False" OnRowCommand="gvEvaluaciones_RowCommand">
+                                                <asp:GridView ID="gvEvaluaciones" class="table table-striped table-bordered table-hover" EmptyDataText="No se han encontrado resultados." runat="server" AutoGenerateColumns="False" OnRowCommand="gvEvaluaciones_RowCommand" OnRowDataBound="gvEvaluaciones_RowDataBound">
                                                     <Columns>
-                                                        <asp:BoundField DataField="FECHA" HeaderText="FECHA" SortExpression="FECHA" />
-                                                        <asp:BoundField DataField="OBSERVACION" HeaderText="OBSERVACIÓN" SortExpression="OBSERVACIÓN" />
-                                                        <asp:BoundField DataField="DERIVADA" HeaderText="DERIVADA" SortExpression="DERIVADA" />
-                                                        <asp:BoundField DataField="EMPLEADO" HeaderText="EMPLEADO" SortExpression="EMPLEADO" /> 
-                                                        <asp:BoundField DataField="EMPRESA" HeaderText="EMPRESA" SortExpression="EMPRESA" />
-                                                        <asp:BoundField DataField="CLIENTE" HeaderText="CLIENTE" SortExpression="CLIENTE" />
-                                                        <asp:TemplateField headertext="DERIVACIÓN">
+                                                        <asp:BoundField DataField="FECHA" HeaderText="Fecha" SortExpression="FECHA" />
+                                                        <asp:BoundField DataField="OBSERVACION" HeaderText="Observación" SortExpression="OBSERVACIÓN" />
+                                                        <asp:BoundField DataField="EMPLEADO" HeaderText="Empleado" SortExpression="EMPLEADO" /> 
+                                                        <asp:BoundField DataField="EMPRESA" HeaderText="Empresa" SortExpression="EMPRESA" />
+                                                        <asp:BoundField DataField="TIPO" HeaderText="Tipo Evaluación" SortExpression="TIPO" />
+                                                        <asp:BoundField DataField="DERIVADA" HeaderText="Estado" SortExpression="DERIVADA" />
+                                                        <asp:TemplateField headertext="Opciones" >
                                                             <ItemTemplate>
-                                                                <asp:LinkButton CommandName="Enviar" CommandArgument='<%# Eval("CLAVE") %>' class="btn btn-primary" OnClientClick="return Confirmar();" runat="server">Derivar</asp:LinkButton>
+                                                                <asp:LinkButton CommandName="Derivar" CommandArgument='<%# Eval("CLAVE") %>' class="btn btn-primary" OnClientClick="return Confirmar();" runat="server"><i class="fa fa-check"></i> Derivar</asp:LinkButton>
+                                                            <asp:LinkButton CommandName="Modificar" CommandArgument='<%# Eval("CLAVE") %>' class="btn btn-info" runat="server"><i class="fa fa-edit"></i> Modificar</asp:LinkButton>
+                                                            <asp:LinkButton CommandName="Eliminar" CommandArgument='<%# Eval("CLAVE") %>' class="btn btn-danger" runat="server"><i class="fa fa-trash"></i></asp:LinkButton>
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
                                                     </Columns>
                                                     </asp:GridView>
 
-                                                <asp:GridView ID="gvEmpresa" class="table table-striped table-bordered table-hover" EmptyDataText="No se han encontrado resultados." runat="server" AutoGenerateColumns="False" OnRowCommand="gvEmpresa_RowCommand">
-                                                    <Columns>
-                                                        <asp:BoundField DataField="FECHA" HeaderText="FECHA" SortExpression="FECHA" />
-                                                        <asp:BoundField DataField="OBSERVACION" HeaderText="OBSERVACION" SortExpression="OBSERVACION" />
-                                                        <asp:BoundField DataField="DERIVADA" HeaderText="DERIVADA" SortExpression="DERIVADA" />
-                                                        <asp:BoundField DataField="EMPLEADO" HeaderText="EMPLEADO" SortExpression="EMPLEADO" /> 
-                                                        <asp:BoundField DataField="EMPRESA" HeaderText="EMPRESA" SortExpression="EMPRESA" />
-                                                        <asp:TemplateField headertext="DERIVACIÓN">
-                                                            <ItemTemplate>
-                                                                <asp:LinkButton CommandName="Enviar" CommandArgument='<%# Eval("CLAVE") %>' class="btn btn-primary" OnClientClick="return Confirmar();" runat="server">Derivar</asp:LinkButton>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                    </Columns>
-                                                    </asp:GridView>
-
-                                            </div>
+                                            </div>     
                                         </div>
                                         <asp:Label ID="lblAlerta" runat="server" Visible="true" Font-Bold="True" ForeColor="Red"></asp:Label>
                                         
-                                    </form>
+                                    
 
                                 </div>                       
                         </div>                 
                  </div><!--/ROW -->
                  
-
+                                    <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"> Modificar Evaluación</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+              <asp:HiddenField ID="hdnId" runat="server" />
+             </div>
+          <div class="form-group">
+                <label for="">Empleado SAFE</label>
+              <asp:DropDownList ID="cmbEmpleadoSafe" class="form-control" runat="server"></asp:DropDownList>
+            </div>
+                <div class="form-group">
+                <label for="">Empresa</label>
+              <asp:DropDownList ID="cmbEmpresa" class="form-control" runat="server"></asp:DropDownList>
+            </div>           
+            <div class="form-group">
+                <label for="">Fecha</label>
+                <input id="dtFecha" type="date" class="form-control" runat="server" />
+            </div>
+            <div class="form-group">
+                <label for="">Observación</label>
+                <textarea id="txtObservacion" cols="20" rows="2" runat="server" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="">Tipo</label>
+                <asp:DropDownList ID="cmbTipo" class="form-control" runat="server"></asp:DropDownList>
+                 </div>
+        </div>
+        <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+           <button type="button" class="btn btn-success" runat="server" onserverclick="btnModificar_Click"><i class="fa fa-floppy-o"></i> Guardar</button>
+         </div>
+      </div>
+    </div>
+  </div><!-- close modal -->
+                </form>
 				<footer><p>Portafolio 2018</p></footer>
             </div>
             <!-- /. PAGE INNER  -->
@@ -197,10 +223,6 @@
     </div>
     <!-- /. WRAPPER  -->
     <!-- JS Scripts-->
-    <!-- jQuery Js -->
-    <script src="../assets/js/jquery-1.10.2.js"></script>
-    <!-- Bootstrap Js -->
-    <script src="../assets/js/bootstrap.min.js"></script>
     <!-- Metis Menu Js -->
     <script src="../assets/js/jquery.metisMenu.js"></script>
     <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>

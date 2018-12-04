@@ -136,8 +136,8 @@
                                              <asp:TemplateField headertext="">
                                                             <ItemTemplate>
                                                                 <asp:LinkButton CommandName="Modificar" CommandArgument='<%# Eval("RUT") %>' class="btn btn-info" runat="server"><i class="fa fa-edit"></i> Modificar</asp:LinkButton>
-                                                                <asp:Button ID="btnHabilitar" runat="server" text="" CssClass="" CommandName="Deshabilitar" CommandArgument='<%# Eval("RUT") %>' OnClientClick="return Confirmar();" />
-                                                                 </ItemTemplate>
+                                                                <asp:LinkButton ID="btnHabilitar" runat="server" text="" CssClass="" CommandName="" CommandArgument='<%# Eval("RUT") %>' OnClientClick="return Confirmar();"></asp:LinkButton>
+                                                            </ItemTemplate>
                                                         </asp:TemplateField> </Columns>
                                         </asp:GridView>
                                     </div>

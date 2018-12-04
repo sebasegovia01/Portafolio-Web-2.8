@@ -26,7 +26,6 @@ namespace Datos
         public string RUT_SAFE { get; set; }
         public int ID_TIPO { get; set; }
         public string RUT_EMPRESA { get; set; }
-        public string RUT_EMPLEADO { get; set; }
         public string RECOMENDADA { get; set; }
     
         public virtual ICollection<DETALLE_EVALUACION> DETALLE_EVALUACION { get; set; }

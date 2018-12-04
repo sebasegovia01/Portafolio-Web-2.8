@@ -39,7 +39,7 @@ namespace Presentacion.Administrador
                 TipoEvaluacion te = new TipoEvaluacion();
                 te.idTipo = int.Parse(id);
                 if (te.Leer())
-                {
+                {  //Modificar
                     hdnId.Value = id;
                     actionType.Value = "1";
                     txtNombre.Text = te.nombre;
@@ -47,10 +47,11 @@ namespace Presentacion.Administrador
                     btnModificar.InnerHtml = "<i class='fa fa-floppy-o'></i> Guardar";
                 }
                 else
-                {
+                {  //Añadir nuevo
                     hdnId.Value = "0";
+                    actionType.Value = "0";
                     modalTitle.InnerText = "Agrega Nuevo Tipo Evaluación";
-                    //btnModificar.InnerText = " Guardar";
+                    txtNombre.Text = string.Empty;
                     btnModificar.InnerHtml = "<i class='fa fa-floppy-o'></i> Guardar";
                 }
 
@@ -181,7 +182,7 @@ namespace Presentacion.Administrador
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            switch (hdnId.Value)
+            switch (actionType.Value)
             {
                 //Añadir nuevo
                 case "0":

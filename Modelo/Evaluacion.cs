@@ -16,20 +16,24 @@ namespace Modelo
         public int idTipo { get; set; }
         public string rutEmpresa { get; set; }
         public string rutEmpleado { get; set; }
+        public string derivada { get; set; }
+        public string recomendada { get; set; }
 
         public Evaluacion()
         {
             idEvaluacion = 0;
             fecha = new DateTime();
-            observacion = "";
-            rutSafe = "";
+            observacion = string.Empty;
+            rutSafe = string.Empty;
             idTipo = 0;
-            rutEmpresa = "";
-            rutEmpleado = "";
+            rutEmpresa =string.Empty;
+            rutEmpleado = string.Empty;
+            derivada = string.Empty;
+            recomendada = string.Empty;
         }
 
         public Evaluacion(int idEvaluacion, DateTime fecha, string observacion, string rutSafe,
-            int idTipo, string rutEmpresa, string rutEmpleado)
+            int idTipo, string rutEmpresa, string rutEmpleado, string derivar, string recomenda)
         {
             this.idEvaluacion = idEvaluacion;
             this.fecha = fecha;
@@ -38,13 +42,15 @@ namespace Modelo
             this.idTipo = idTipo;
             this.rutEmpresa = rutEmpresa;
             this.rutEmpleado = rutEmpleado;
+            this.derivada = derivar;
+            this.recomendada = recomenda;
         }
 
         public bool Leer()
         {
             try
             {
-                Datos.EVALUACION eva = Conexion.Entidades.EVALUACION.First(
+                Datos.EVALUACION eva = Conexion.Entidades.EVALUACION.AsNoTracking().First(
                     u => u.ID_EVALUACION == this.idEvaluacion);
                 this.idEvaluacion = eva.ID_EVALUACION;
                 this.fecha = eva.FECHA;
@@ -52,7 +58,8 @@ namespace Modelo
                 this.rutSafe = eva.RUT_SAFE;
                 this.idTipo = eva.ID_TIPO;
                 this.rutEmpresa = eva.RUT_EMPRESA;
-                this.rutEmpleado = eva.RUT_EMPLEADO;
+                this.derivada = eva.DERIVADA;
+                this.recomendada = eva.RECOMENDADA;
                 return true;
             }
             catch (Exception ex)
@@ -65,13 +72,13 @@ namespace Modelo
         {
             try
             {
-                if (Leer() == true)
+                if (Leer())
                 {
                     return false;
                 }
                 else
                 {
-                    Conexion.Entidades.INGRESAR_EVALUACION(this.fecha, this.observacion, this.rutSafe, this.idTipo, this.rutEmpresa, this.rutEmpleado);
+                    Conexion.Entidades.INGRESAR_EVALUACION(this.fecha, this.observacion, this.rutSafe, this.idTipo, this.rutEmpresa);
                     Conexion.Entidades.SaveChanges();
                     return true;
                 }
@@ -82,20 +89,42 @@ namespace Modelo
             }
         }
 
+        public bool Modificar()
+        {
+            try
+            {
+                Conexion.Entidades.MODIFICAR_EVALUACION(this.idEvaluacion,this.fecha,this.observacion,this.rutSafe,this.idTipo,this.rutEmpresa);
+                Conexion.Entidades.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool Eliminar()
+        {
+            try
+            {
+                Conexion.Entidades.ELIMINAR_EVALUACION(this.idEvaluacion);
+                Conexion.Entidades.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
+
         public bool Cambiar_Estado()
         {
             try
             {
-                if (Leer() == true)
-                {
-                    Conexion.Entidades.MODIFICAR_EVALUACION(this.idEvaluacion);
+                    Conexion.Entidades.MODIFICAR_ESTADO_EVALUACION(this.idEvaluacion);
                     Conexion.Entidades.SaveChanges();
                     return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
             catch (Exception ex)
             {
@@ -107,16 +136,9 @@ namespace Modelo
         {
             try
             {
-                if (Leer() == true)
-                {
                     Conexion.Entidades.MODIFICAR_RECOMENDADO(this.idEvaluacion);
                     Conexion.Entidades.SaveChanges();
                     return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
             catch (Exception ex)
             {
@@ -128,7 +150,7 @@ namespace Modelo
         {
             List<dynamic> dervs = new List<dynamic>();
 
-            foreach (EVALUACION evs in Conexion.Entidades.EVALUACION.Where(
+            foreach (EVALUACION evs in Conexion.Entidades.EVALUACION.AsNoTracking().Where(
                 d => d.ID_EVALUACION.Equals(id)))
             {
                 EVALUACION eva = new EVALUACION();
@@ -140,7 +162,6 @@ namespace Modelo
                 eva.RUT_SAFE = evs.RUT_SAFE;
                 eva.ID_TIPO = evs.ID_TIPO;
                 eva.RUT_EMPRESA = evs.RUT_EMPRESA;
-                eva.RUT_EMPLEADO = evs.RUT_EMPLEADO;
                 eva.RECOMENDADA = eva.RECOMENDADA;
 
                 dervs.Add(eva);
@@ -150,39 +171,14 @@ namespace Modelo
 
         }
 
-        public List<dynamic> EvaluacionesPersona(string tipo_derivacion)
+        public List<dynamic> EvaluacionesPorTipo(string tipo_evaluacion, string derivacion)
         {
             List<dynamic> dervs = new List<dynamic>();
 
-            foreach (EVALUACION_PERSONA_VIEW evs in Conexion.Entidades.EVALUACION_PERSONA_VIEW.Where(
-                d => d.DERIVADA.Equals(tipo_derivacion)))
+            foreach (EVALUACIONES_VIEW evs in Conexion.Entidades.EVALUACIONES_VIEW.AsNoTracking().Where(
+                d => d.TIPO.Equals(tipo_evaluacion) && d.DERIVADA.Equals(derivacion)))
             {
-                EVALUACION_PERSONA_VIEW eva = new EVALUACION_PERSONA_VIEW();
-
-                eva.CLAVE = evs.CLAVE;
-                eva.FECHA = evs.FECHA;
-                eva.OBSERVACION = evs.OBSERVACION;
-                eva.DERIVADA = evs.DERIVADA;
-                eva.EMPLEADO = evs.EMPLEADO;
-                eva.TIPO = evs.TIPO;
-                eva.EMPRESA = evs.EMPRESA;
-                eva.CLIENTE = evs.CLIENTE;
-
-                dervs.Add(eva);
-            }
-
-            return dervs;
-
-        }
-
-        public List<dynamic> EvaluacionesEmpresa(string tipo_derivacion)
-        {
-            List<dynamic> dervs = new List<dynamic>();
-
-            foreach (EVALUACION_EMPRESA_VIEW evs in Conexion.Entidades.EVALUACION_EMPRESA_VIEW.Where(
-                d => d.DERIVADA.Equals(tipo_derivacion)))
-            {
-                EVALUACION_EMPRESA_VIEW eva = new EVALUACION_EMPRESA_VIEW();
+                EVALUACIONES_VIEW eva = new EVALUACIONES_VIEW();
 
                 eva.CLAVE = evs.CLAVE;
                 eva.FECHA = evs.FECHA;
@@ -196,55 +192,31 @@ namespace Modelo
             }
 
             return dervs;
-
         }
 
 
-        public List<dynamic> RecomendacionPersona(string recomendada)
+        public List<dynamic> EvaluacionesPorRecomendacion(string tipo_evaluacion, string recomendacion)
         {
-            List<dynamic> dervs = new List<dynamic>();
+            List<dynamic> evaluaciones = new List<dynamic>();
 
-            foreach (RECOMENDACIONES_PERSONA_VIEW evs in Conexion.Entidades.RECOMENDACIONES_PERSONA_VIEW.Where(
-                d => d.RECOMENDADA.Equals(recomendada)))
+            foreach (EVALUACIONES_VIEW ev in Conexion.Entidades.EVALUACIONES_VIEW.AsNoTracking().Where(
+                d => d.TIPO.Equals(tipo_evaluacion) && d.RECOMENDADA.Equals(recomendacion) && d.DERIVADA.Equals("1")))
             {
-                RECOMENDACIONES_PERSONA_VIEW eva = new RECOMENDACIONES_PERSONA_VIEW();
+                EVALUACIONES_VIEW evaluacion = new EVALUACIONES_VIEW();
 
-                eva.CLAVE = evs.CLAVE;
-                eva.FECHA = evs.FECHA;
-                eva.OBSERVACION = evs.OBSERVACION;
-                eva.RECOMENDADA = evs.RECOMENDADA;
-                eva.EMPRESA = evs.EMPRESA;
-                eva.CLIENTE = evs.CLIENTE;
+                evaluacion.CLAVE = ev.CLAVE;
+                evaluacion.FECHA = ev.FECHA;
+                evaluacion.OBSERVACION = ev.OBSERVACION;
+                evaluacion.DERIVADA = ev.DERIVADA;
+                evaluacion.EMPLEADO = ev.EMPLEADO;
+                evaluacion.TIPO = ev.TIPO;
+                evaluacion.EMPRESA = ev.EMPRESA;
+                evaluacion.RECOMENDADA = ev.RECOMENDADA;
 
-                dervs.Add(eva);
+                evaluaciones.Add(ev);
             }
 
-            return dervs;
-
+            return evaluaciones;
         }
-
-        public List<dynamic> RecomendacionEmpresa(string recomendada)
-        {
-            List<dynamic> dervs = new List<dynamic>();
-
-            foreach (RECOMENDACIONES_EMPRESA_VIEW evs in Conexion.Entidades.RECOMENDACIONES_EMPRESA_VIEW.Where(
-                d => d.RECOMENDADA.Equals(recomendada)))
-            {
-                RECOMENDACIONES_EMPRESA_VIEW eva = new RECOMENDACIONES_EMPRESA_VIEW();
-
-                eva.CLAVE = evs.CLAVE;
-                eva.FECHA = evs.FECHA;
-                eva.OBSERVACION = evs.OBSERVACION;
-                eva.RECOMENDADA = evs.RECOMENDADA;
-                eva.EMPRESA = evs.EMPRESA;
-
-                dervs.Add(eva);
-            }
-
-            return dervs;
-
-        }
-
-
     }
 }

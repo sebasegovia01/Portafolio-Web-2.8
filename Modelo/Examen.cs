@@ -31,7 +31,7 @@ namespace Modelo
      {
             try
             {
-                Conexion.Entidades.INGRESAR_EXAMEN(this.nombre,this.tipo_doc,this.documento,this.id_diagnostico,this.habilitado);
+                Conexion.Entidades.INGRESAR_EXAMEN(this.nombre,this.tipo_doc,this.documento,this.id_diagnostico,this.habilitado, this.anotacion);
                 Conexion.Entidades.SaveChanges();
                 return true;
             }
@@ -64,6 +64,34 @@ namespace Modelo
             }
         }
 
+        public bool Modificar()
+        {
+            try
+            {
+                Conexion.Entidades.MODIFICAR_EXAMEN(this.id_examen, this.nombre, this.tipo_doc, this.documento, this.id_diagnostico, this.habilitado, this.anotacion);
+                Conexion.Entidades.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool Eliminar()
+        {
+            try
+            {
+                Conexion.Entidades.ELIMINAR_EXAMEN(this.id_examen);
+                Conexion.Entidades.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
 
      public List<dynamic> ListarExamenesGeneralMedico()
      {

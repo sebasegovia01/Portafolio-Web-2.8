@@ -164,7 +164,6 @@
 	"RUT_SAFE" VARCHAR2(9) NOT NULL ENABLE,
 	"ID_TIPO" NUMBER(10,0) NOT NULL ENABLE,
 	"RUT_EMPRESA" VARCHAR2(9) NOT NULL ENABLE,
-	"RUT_EMPLEADO" VARCHAR2(9) NOT NULL ENABLE,
 	"RECOMENDADA" CHAR(1) NOT NULL ENABLE,
 	PRIMARY KEY ("ID_EVALUACION") ENABLE
    );
@@ -178,6 +177,7 @@
 	"DOCUMENTO" BLOB NOT NULL ENABLE,
 	"ID_DIAGNOSTICO" NUMBER(10,0) NOT NULL ENABLE,
 	"HABILITADO" CHAR(1) NOT NULL ENABLE,
+	"ANOTACION" VARCHAR2(2000),
 	CONSTRAINT "PK_ID_EXAMEN" PRIMARY KEY ("ID_EXAMEN") ENABLE
    );
 --
@@ -217,8 +217,8 @@
 --
 CREATE OR REPLACE VIEW "DIAGNOSTICOS_MEDICO_VIEW" 
   AS 
-  SELECT dg.id_diagnostico ID, dg.descripcion as DESCRIPCION, e.pnombre || ' ' || e.apellidop || ' ' || e.apellidom AS NOMBRE, dg.habilitado as HABILITADO,
-  cta.fecha
+  SELECT dg.id_diagnostico ID, dg.descripcion as DESCRIPCION, e.pnombre || ' ' || e.apellidop || ' ' || e.apellidom AS NOMBRE,
+e.correo as CORREO, cta.fecha as FECHA, dg.habilitado as HABILITADO
 FROM DIAGNOSTICO dg, CITA cta, EMPLEADO e
 WHERE dg.id_cita = cta.id_cita AND e.rutempleado = dg.rutempleado;
 --
@@ -258,32 +258,28 @@ emp.habilitada as HABILITADA
 from empresa emp, comuna comu
 where emp.idcomuna = comu.idcomuna;
 --
--- EVALUACION_EMPRESA_VIEW
+-- EVALUACIONES_VIEW
 --
-CREATE OR REPLACE VIEW "EVALUACION_EMPRESA_VIEW" 
+CREATE OR REPLACE VIEW "EVALUACIONES_VIEW" 
   AS 
-  select EVA.ID_EVALUACION CLAVE,eva.fecha FECHA, eva.observacion as OBSERVACION, DERIVADA, 
-       emps.pnombre || ' ' || emps.apellidop as "EMPLEADO", tip.nombre TIPO,
-       empr.nombre EMPRESA
-from evaluacion eva, tipoevaluacion tip, empresa empr, empleadosafe emps
-where eva.rut_safe = emps.rutsafe
-and eva.id_tipo = tip.idtipo
-and eva.rut_empresa = empr.rutempresa
-AND tip.nombre = 'Instalación';
---
--- EVALUACION_PERSONA_VIEW
---
-CREATE OR REPLACE VIEW "EVALUACION_PERSONA_VIEW" 
-  AS 
-  select EVA.ID_EVALUACION CLAVE,eva.fecha FECHA, eva.observacion as OBSERVACION, DERIVADA, 
-       emps.pnombre || ' ' || emps.apellidop as "EMPLEADO", tip.nombre TIPO,
-       empr.nombre EMPRESA, emp.pnombre || ' ' || emp.apellidop as CLIENTE
+  select distinct EVA.ID_EVALUACION as CLAVE,eva.fecha as FECHA, eva.observacion as OBSERVACION, eva.derivada as DERIVADA, 
+       eva.recomendada AS RECOMENDADA, emps.pnombre || ' ' || emps.apellidop as EMPLEADO, tip.nombre as TIPO,
+       empr.nombre as EMPRESA
 from evaluacion eva, tipoevaluacion tip, empresa empr, empleado emp, empleadosafe emps
 where eva.rut_safe = emps.rutsafe
 and eva.id_tipo = tip.idtipo
 and eva.rut_empresa = empr.rutempresa
-and eva.rut_empleado = emp.rutempleado
-and nvl(eva.rut_empleado,0) != 0;
+and eva.rut_safe = emps.rutsafe
+and nvl(eva.RUT_SAFE,0) != 0;
+--
+-- EXAMENES_MEDICO_VIEW
+--
+CREATE OR REPLACE VIEW "EXAMENES_MEDICO_VIEW" 
+  AS 
+  SELECT ex.id_examen AS ID, emp.rutempleado AS RUT, emp.pnombre || '' || emp.apellidop as NOMBRE, ex.anotacion as DESCRIPCION,
+   ex.documento, ex.habilitado
+   FROM EXAMEN ex, DIAGNOSTICO dg, EMPLEADO emp
+   WHERE dg.ID_DIAGNOSTICO = ex.ID_DIAGNOSTICO AND dg.RUTEMPLEADO = emp.rutempleado;
 --
 -- MEDICO_VIEW
 --
@@ -293,41 +289,14 @@ CREATE OR REPLACE VIEW "MEDICO_VIEW"
 fnacimiento FECHA_NACIMIENTO, CORREO, TELEFONO as NUMERO, RUTEMPRESA, ACTIVO AS HABILITADA
 from medico;
 --
--- RECOMENDACIONES_EMPRESA_VIEW
---
-CREATE OR REPLACE VIEW "RECOMENDACIONES_EMPRESA_VIEW" 
-  AS 
-  select EVA.ID_EVALUACION CLAVE,eva.fecha FECHA, eva.observacion as OBSERVACION, RECOMENDADA, 
-        tip.nombre TIPO, empr.nombre EMPRESA
-from evaluacion eva, tipoevaluacion tip, empresa empr, empleadosafe emps
-where eva.rut_safe = emps.rutsafe
-and eva.id_tipo = tip.idtipo
-and eva.rut_empresa = empr.rutempresa
-AND tip.nombre = 'Instalación'
-and eva.derivada = 1;
---
--- RECOMENDACIONES_PERSONA_VIEW
---
-CREATE OR REPLACE VIEW "RECOMENDACIONES_PERSONA_VIEW" 
-  AS 
-  select EVA.ID_EVALUACION CLAVE, eva.fecha FECHA, eva.observacion as OBSERVACION, RECOMENDADA, 
-  empr.nombre EMPRESA, emp.pnombre || ' ' || emp.apellidop as CLIENTE
-from evaluacion eva, tipoevaluacion tip, empresa empr, empleado emp, empleadosafe emps
-where eva.rut_safe = emps.rutsafe
-and eva.id_tipo = tip.idtipo
-and eva.rut_empresa = empr.rutempresa
-and eva.rut_empleado = emp.rutempleado
-and nvl(eva.rut_empleado,0) != 0
-and eva.derivada = 1;
---
 -- RECOMENDADAS_VIEW
 --
 CREATE OR REPLACE VIEW "RECOMENDADAS_VIEW" 
   AS 
   select eva.id_evaluacion EVALUACION, EVA.FECHA, eva.observacion, det.recomendacion, det.autorizacion AUTORIZADA,
-        eva.rut_safe EMPLEADO, eva.rut_empresa EMPRESA, eva.id_tipo TIPO, eva.rut_empleado CLIENTE
-from evaluacion eva, detalle_evaluacion det
-where eva.id_evaluacion = det.id_evaluacion;
+        eva.rut_safe EMPLEADO, eva.rut_empresa EMPRESA, tp.nombre TIPO
+from evaluacion eva, detalle_evaluacion det, tipoevaluacion tp
+where eva.id_evaluacion = det.id_evaluacion and eva.id_tipo = tp.idtipo;
 --
 -- VISTA_CITAS_GENERAL
 --
@@ -337,15 +306,6 @@ CREATE OR REPLACE VIEW "VISTA_CITAS_GENERAL"
 cta.HORA, cta.asistencia, cta.activa
 FROM MEDICO med, CITA cta
 WHERE cta.rut_medico = med.rut_medico;
---
--- VISTA_EMPLEADOS
---
-CREATE OR REPLACE VIEW "VISTA_EMPLEADOS" 
-  AS 
-  SELECT rutsafe RUT, pnombre || ' ' || apellidop || ' ' || apellidom as NOMBRE, 
-fnacimiento FECHA_NACIMIENTO, correo, numero, tip.nombre as TIPO_USUARIO 
-from empleadosafe emp, tipousuario tip
-where emp.idtipo = tip.idtipo;
 --
 -- SYS_C007109
 --
@@ -426,7 +386,7 @@ ALTER TABLE "CITA" ADD  FOREIGN KEY ("RUT_MEDICO") REFERENCES "MEDICO"("RUT_MEDI
 --
 -- SYS_C007140
 --
-ALTER TABLE "DETALLE_EVALUACION" ADD  FOREIGN KEY ("ID_EVALUACION") REFERENCES "EVALUACION"("ID_EVALUACION") ENABLE;
+ALTER TABLE "DETALLE_EVALUACION" ADD CONSTRAINT "SYS_C007140" FOREIGN KEY ("ID_EVALUACION") REFERENCES "EVALUACION"("ID_EVALUACION") ON DELETE CASCADE ENABLE;
 
 --
 -- SYS_C007141
@@ -480,6 +440,17 @@ BEGIN
   END;
 /
 --
+-- DESHABILITAR_DIAGNOSTICO
+--
+CREATE OR REPLACE PROCEDURE "DESHABILITAR_DIAGNOSTICO" (id NUMBER, habilitada CHAR)
+IS
+BEGIN
+  UPDATE DIAGNOSTICO
+  SET HABILITADO = habilitada
+      WHERE ID_DIAGNOSTICO = id;
+  END;
+/
+--
 -- DESHABILITAR_EMPLEADO
 --
 CREATE OR REPLACE PROCEDURE "DESHABILITAR_EMPLEADO" (rut VARCHAR2, habilitado char)
@@ -521,6 +492,49 @@ BEGIN
  UPDATE MEDICO
   SET ACTIVO = habilitado
   WHERE RUT_MEDICO = rut;
+END;
+/
+--
+-- ELIMINAR_DETALLE_EVALUACION
+--
+CREATE OR REPLACE PROCEDURE "ELIMINAR_DETALLE_EVALUACION" (id_ev number)
+IS
+BEGIN
+    DELETE
+    FROM EVALUACION
+        WHERE ID_EVALUACION = id_ev;
+END;
+/
+--
+-- ELIMINAR_EVALUACION
+--
+CREATE OR REPLACE PROCEDURE "ELIMINAR_EVALUACION" (id_ev number)
+IS
+BEGIN
+    DELETE
+    FROM EVALUACION
+        WHERE ID_EVALUACION = id_ev;
+END;
+/
+--
+-- ELIMINAR_EXAMEN
+--
+CREATE OR REPLACE PROCEDURE "ELIMINAR_EXAMEN" (id number)
+IS
+BEGIN
+    DELETE FROM EXAMEN
+        WHERE ID_EXAMEN = id;
+END;
+/
+--
+-- ELIMINAR_TIPO_EVALUACION
+--
+CREATE OR REPLACE PROCEDURE "ELIMINAR_TIPO_EVALUACION" (idtipoev NUMBER, estado VARCHAR)
+IS
+BEGIN
+   UPDATE TIPOEVALUACION
+  SET HABILITADO = estado 
+  WHERE IDTIPO = idtipoev;
 END;
 /
 --
@@ -648,25 +662,22 @@ END;
 -- INGRESAR_EVALUACION
 --
 CREATE OR REPLACE PROCEDURE "INGRESAR_EVALUACION" (FECHA DATE, OBSERVACION VARCHAR, RUT_SAFE VARCHAR, 
-                    ID_TIPO NUMERIC, RUT_EMPRESA VARCHAR, RUT_EMPLEADO VARCHAR)
+                    ID_TIPO NUMERIC, RUT_EMPRESA VARCHAR)
 IS
 BEGIN
-  insert into EVALUACION(ID_EVALUACION, FECHA, OBSERVACION, DERIVADA, RUT_SAFE, ID_TIPO, RUT_EMPRESA, RUT_EMPLEADO, RECOMENDADA) 
-  values(EVALUACION_SEQUENCE.nextval, to_date(FECHA,'DD/MM/YY'),OBSERVACION, 0, RUT_SAFE, ID_TIPO, RUT_EMPRESA, RUT_EMPLEADO,'0');
+  insert into EVALUACION(ID_EVALUACION, FECHA, OBSERVACION, DERIVADA, RUT_SAFE, ID_TIPO, RUT_EMPRESA, RECOMENDADA) 
+  values(EVALUACION_SEQUENCE.nextval, to_date(FECHA,'DD/MM/YY'),OBSERVACION, 0, RUT_SAFE, ID_TIPO, RUT_EMPRESA,'0');
 END;
-
-
 /
 --
 -- INGRESAR_EXAMEN
 --
-CREATE OR REPLACE PROCEDURE "INGRESAR_EXAMEN" (NOMBRE VARCHAR2, TIPO_DOC VARCHAR2, DOCUMENTO BLOB, ID_DIAGNOSTICO NUMERIC, HABILITADO CHAR)
+CREATE OR REPLACE PROCEDURE "INGRESAR_EXAMEN" (NOMBRE VARCHAR2, TIPO_DOC VARCHAR2, DOCUMENTO BLOB, ID_DIAGNOSTICO NUMERIC, HABILITADO CHAR, ANOTACION VARCHAR2)
 IS
 BEGIN
-    INSERT INTO EXAMEN VALUES(EXAMEN_SEQUENCE.NEXTVAL, NOMBRE, TIPO_DOC, DOCUMENTO, ID_DIAGNOSTICO, HABILITADO);
+    INSERT INTO EXAMEN (ID_EXAMEN, NOMBRE, TIPO_DOC, DOCUMENTO, ID_DIAGNOSTICO, HABILITADO, ANOTACION)
+    values (EXAMEN_SEQUENCE.NEXTVAL, NOMBRE, TIPO_DOC, DOCUMENTO, ID_DIAGNOSTICO, HABILITADO, ANOTACION);
 END;
-
-
 /
 --
 -- INGRESAR_MEDICO
@@ -763,16 +774,25 @@ END;
 
 /
 --
+-- MODIFICAR_DETALLE_EVALUACION
+--
+CREATE OR REPLACE PROCEDURE "MODIFICAR_DETALLE_EVALUACION" (ID_EVAL NUMBER, recomnd VARCHAR2, autoritation VARCHAR2)
+IS
+BEGIN
+  UPDATE DETALLE_EVALUACION 
+  SET RECOMENDACION = recomnd,
+  AUTORIZACION = autoritation
+  WHERE id_evaluacion = ID_EVAL;
+END;
+/
+--
 -- MODIFICAR_DIAGNOSTICO
 --
-CREATE OR REPLACE PROCEDURE "MODIFICAR_DIAGNOSTICO" (id number, descript VARCHAR, rut_empleado NUMERIC, activo CHAR, idcita NUMERIC)
+CREATE OR REPLACE PROCEDURE "MODIFICAR_DIAGNOSTICO" (id number, descript VARCHAR)
 IS
 BEGIN
     UPDATE DIAGNOSTICO
-    SET DESCRIPCION = descript,
-        RUTEMPLEADO = rut_empleado,
-        HABILITADO = activo,
-        ID_CITA = idcita
+    SET DESCRIPCION = descript
         WHERE ID_DIAGNOSTICO = id;
 END;
 
@@ -841,22 +861,37 @@ END;
 
 /
 --
--- MODIFICAR_EVALUACION
+-- MODIFICAR_ESTADO_EVALUACION
 --
-CREATE OR REPLACE PROCEDURE "MODIFICAR_EVALUACION" (ID_EVAL NUMBER)
+CREATE OR REPLACE PROCEDURE "MODIFICAR_ESTADO_EVALUACION" (ID_EVAL NUMBER)
 IS
 BEGIN
   UPDATE EVALUACION 
   SET derivada = 1
   WHERE id_evaluacion = ID_EVAL;
 END;
-
-
+/
+--
+-- MODIFICAR_EVALUACION
+--
+CREATE OR REPLACE PROCEDURE "MODIFICAR_EVALUACION" (ID_EVAL NUMBER, fecha DATE, observ VARCHAR2, rutSafe VARCHAR2, idTipo NUMBER, rut_empresa VARCHAR2)
+IS
+BEGIN
+  UPDATE EVALUACION 
+  SET FECHA = fecha,
+  OBSERVACION =observ,
+  DERIVADA = 0,
+  RUT_SAFE = rutSafe,
+  ID_TIPO = idTipo,
+  RUT_EMPRESA = rut_empresa,
+  recomendada = 0
+  WHERE id_evaluacion = ID_EVAL;
+END;
 /
 --
 -- MODIFICAR_EXAMEN
 --
-CREATE OR REPLACE PROCEDURE "MODIFICAR_EXAMEN" (id number, name VARCHAR2, tip_doc VARCHAR2, docmnt BLOB, iddiagnostico NUMERIC, activo CHAR)
+CREATE OR REPLACE PROCEDURE "MODIFICAR_EXAMEN" (id number, name VARCHAR2, tip_doc VARCHAR2, docmnt BLOB, iddiagnostico NUMERIC, activo CHAR, anotaciones VARCHAR2)
 IS
 BEGIN
     UPDATE EXAMEN
@@ -864,11 +899,10 @@ BEGIN
         TIPO_DOC = tip_doc,
         DOCUMENTO = docmnt,
         ID_DIAGNOSTICO = iddiagnostico,
-        HABILITADO = activo
+        HABILITADO = activo,
+        ANOTACION = anotaciones
         WHERE ID_EXAMEN = id;
 END;
-
-
 /
 --
 -- MODIFICAR_MEDICO
@@ -903,6 +937,19 @@ BEGIN
   WHERE id_evaluacion = ID_EVAL;
 END;
 
+
+/
+--
+-- MODIFICAR_TIPO_EVALUACION
+--
+CREATE OR REPLACE PROCEDURE "MODIFICAR_TIPO_EVALUACION" (idtipoev NUMBER, name VARCHAR2, habilitada CHAR)
+IS
+BEGIN
+  UPDATE TIPOEVALUACION
+  SET NOMBRE = name, 
+  HABILITADO = habilitada 
+  WHERE IDTIPO = idtipoev;
+END;
 
 /
 --

@@ -156,8 +156,7 @@
                                                  <asp:TemplateField headertext="">
                                                             <ItemTemplate>
                                                                 <asp:LinkButton CommandName="Modificar" CommandArgument='<%# Eval("RUT") %>' class="btn btn-info" runat="server"><i class="fa fa-edit"></i> Modificar</asp:LinkButton>
-                                                                <asp:Button ID="btnHabilitar" runat="server" text="" CssClass="" CommandName="Deshabilitar" CommandArgument='<%# Eval("RUT") %>' OnClientClick="return Confirmar();" />
-                                                                 </ItemTemplate>
+                                                               <asp:LinkButton ID="btnHabilitar" runat="server" text="" CssClass="" CommandName="" CommandArgument='<%# Eval("RUT") %>' OnClientClick="return Confirmar();"></asp:LinkButton></ItemTemplate>
                                                         </asp:TemplateField>
                                                  </Columns>
                                         </asp:GridView>
@@ -184,11 +183,14 @@
           <div class="form-group">
               <asp:HiddenField ID="hdtipoEmpleado" runat="server" />
               <asp:HiddenField ID="hdnRut" runat="server" />
-              <asp:HiddenField ID="hdnEmpresa" runat="server" />
              </div>
             <div class="form-group" runat="server" id="tipoUsuarioLabel">
                 <label for="">Tipo Usuario</label>
                 <asp:DropDownList ID="dpTipoUsuarios" class="form-control" runat="server"></asp:DropDownList>
+            </div>
+            <div class="form-group" runat="server" id="tipoEmpresaLabel">
+                <label for="">Empresa</label>
+                <asp:DropDownList ID="dpEmpresa" class="form-control" runat="server"></asp:DropDownList>
             </div>
           <div class="form-group">
                 <label for="">Nombre</label>

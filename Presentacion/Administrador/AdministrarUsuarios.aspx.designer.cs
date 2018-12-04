@@ -85,15 +85,6 @@ namespace Presentacion.Administrador {
         protected global::System.Web.UI.WebControls.HiddenField hdnRut;
         
         /// <summary>
-        /// Control hdnEmpresa.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnEmpresa;
-        
-        /// <summary>
         /// Control tipoUsuarioLabel.
         /// </summary>
         /// <remarks>
@@ -110,6 +101,24 @@ namespace Presentacion.Administrador {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList dpTipoUsuarios;
+        
+        /// <summary>
+        /// Control tipoEmpresaLabel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tipoEmpresaLabel;
+        
+        /// <summary>
+        /// Control dpEmpresa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dpEmpresa;
         
         /// <summary>
         /// Control txtNombre.

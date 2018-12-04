@@ -4,45 +4,42 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="73b48f9cb6924e308242b82d7fe9f5e8" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.CAPACITACION" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+      <Diagram DiagramId="2dd87bb9acef4aba8c4a94e708d4de3b" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.CAPACITACION" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.CITA" Width="1.5" PointX="8.25" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.CIUDAD" Width="1.5" PointX="8.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.COMUNA" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CIUDAD" Width="1.5" PointX="8.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.COMUNA" Width="1.5" PointX="2.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.DETALLE_EVALUACION" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.DIAGNOSTICO" Width="1.5" PointX="10.5" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.EMPLEADO" Width="1.5" PointX="8.25" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.EMPLEADOSAFE" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.EMPRESA" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EVALUACION" Width="1.5" PointX="6" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EVALUACION" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.EXAMEN" Width="1.5" PointX="12.75" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.MEDICO" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.TIPOEVALUACION" Width="1.5" PointX="3.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.TIPOUSUARIO" Width="1.5" PointX="10.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DETALLECAPACITACION" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EMPLEADO_SAFE_VIEW" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EMPLEADO_VIEW" Width="1.5" PointX="6.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EMPRESA_VIEW" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EVALUACION_EMPRESA_VIEW" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EVALUACION_PERSONA_VIEW" Width="1.5" PointX="12.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MEDICO_VIEW" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.RECOMENDACIONES_EMPRESA_VIEW" Width="1.5" PointX="12.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.RECOMENDACIONES_PERSONA_VIEW" Width="1.5" PointX="14.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.RECOMENDADAS_VIEW" Width="1.5" PointX="14.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.VISTA_CITAS_GENERAL" Width="1.5" PointX="14.75" PointY="8.75" IsExpanded="true" />
-        <AssociationConnector Association="Model.SYS_C007215" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.SYS_C007219" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.SYS_C007216" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.SYS_C007217" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.SYS_C007218" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.SYS_C007223" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.SYS_C007222" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.TIPOUSUARIO" Width="1.5" PointX="10.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DETALLECAPACITACION" Width="1.5" PointX="10.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DIAGNOSTICOS_MEDICO_VIEW" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DIAGNOSTICOS_TRABAJADOR_VIEW" Width="1.5" PointX="2.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EMPLEADO_SAFE_VIEW" Width="1.5" PointX="4.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EMPLEADO_VIEW" Width="1.5" PointX="6.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EMPRESA_VIEW" Width="1.5" PointX="8.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EVALUACIONES_VIEW" Width="1.5" PointX="10.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EXAMENES_MEDICO_VIEW" Width="1.5" PointX="12.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MEDICO_VIEW" Width="1.5" PointX="12.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.RECOMENDADAS_VIEW" Width="1.5" PointX="12.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.VISTA_CITAS_GENERAL" Width="1.5" PointX="14.75" PointY="1.875" IsExpanded="true" />
+        <AssociationConnector Association="Model.SYS_C007114" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C007115" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C007140" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C007141" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C007075" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C007082" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C007135" ManuallyRouted="false" />
         <AssociationConnector Association="Model.MEDICO_FK1" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.SYS_C007220" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.SYS_C007221" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Model.DIAGNOSTICOS_MEDICO_VIEW" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.DIAGNOSTICOS_TRABAJADOR_VIEW" Width="1.5" PointX="15.75" PointY="12.75" />
-        <EntityTypeShape EntityType="Model.EXAMENES_MEDICO_VIEW" Width="1.5" PointX="13.375" PointY="15.75" />
+        <AssociationConnector Association="Model.SYS_C007133" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C007134" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

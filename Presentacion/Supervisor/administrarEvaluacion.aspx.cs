@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.OracleClient;
 using System.Data.OleDb;
 using Modelo;
+using System.Text;
 
 namespace Presentacion.Supervisor
 {
@@ -24,123 +25,242 @@ namespace Presentacion.Supervisor
             {
                 lblNombreUs.Text = Convert.ToString(Session["usuario"]);
             }
+
+            if (!IsPostBack)
+            {
+                RellenarTipoEvaluacion(0); 
+            }
+
+            lblAlerta.Visible = false;
         }
 
         protected void ddlTipoEvaluacion_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //No Derivadas
             if (ddlTipoEvaluacion.SelectedValue == "0")
             {
                 gvEvaluaciones.Visible = false;
-                gvEmpresa.Visible = false;
-                RellenarNoDerivados(ddlTipoEvaluacion.SelectedValue);
+                RellenarNoDerivados(ddlTipo.SelectedItem.Text);
             }
+            //Derivadas
             else if (ddlTipoEvaluacion.SelectedValue == "1")
             {
                 gvEvaluaciones.Visible = false;
-                gvEmpresa.Visible = false;
-                RellenarDerivados(ddlTipoEvaluacion.SelectedValue);
+                RellenarDerivados(ddlTipo.SelectedItem.Text);
             }
             else
             {
                 gvEvaluaciones.Visible = false;
-                gvEmpresa.Visible = false;
             }
         }
 
-        public void RellenarNoDerivados(string valor)
+        private void RellenarNoDerivados(string tipo_evaluacion)
         {
             Evaluacion eva = new Evaluacion();
 
-            if (int.Parse(ddlTipoEvaluacion.SelectedValue) == 0 && int.Parse(ddlTipo.SelectedValue) == 1)
-            {
-                gvEvaluaciones.DataSource = eva.EvaluacionesPersona(valor);
-                gvEvaluaciones.DataBind();
-                gvEmpresa.Visible = false;
-                gvEvaluaciones.Visible = true;
-            }
-            else if (int.Parse(ddlTipoEvaluacion.SelectedValue) == 0 && int.Parse(ddlTipo.SelectedValue) == 2)
-            {
-                gvEmpresa.DataSource = eva.EvaluacionesEmpresa(valor);
-                gvEmpresa.DataBind();
-                gvEmpresa.Visible = true;
-                gvEvaluaciones.Visible = false;
-            }
+
+            gvEvaluaciones.DataSource = eva.EvaluacionesPorTipo(tipo_evaluacion, "0");
+            gvEvaluaciones.DataBind();
+            //Se muestran opciones
+            gvEvaluaciones.Columns[6].Visible = true;
+            gvEvaluaciones.Visible = true;
         }
 
-        public void RellenarDerivados(string valor)
+        private void RellenarDerivados(string tipo_evaluacion)
         {
             Evaluacion eva = new Evaluacion();
 
-            if (int.Parse(ddlTipoEvaluacion.SelectedValue) == 1 && int.Parse(ddlTipo.SelectedValue) == 1)
+            gvEvaluaciones.DataSource = eva.EvaluacionesPorTipo(tipo_evaluacion, "1");
+            gvEvaluaciones.DataBind();
+            //Se ocultan opciones
+            gvEvaluaciones.Columns[6].Visible = false;
+            gvEvaluaciones.Visible = true;
+        }
+
+        private void RellenarTipoEvaluacion(int tipoLista)
+        {
+            TipoEvaluacion tpe = new TipoEvaluacion();
+
+            if (tipoLista == 0)
             {
-                gvEvaluaciones.DataSource = eva.EvaluacionesPersona(valor);
-                gvEvaluaciones.DataBind();
-                gvEmpresa.Visible = false;
-                gvEvaluaciones.Visible = true;
+                ddlTipo.DataSource = tpe.ListaTipoEvaluacionComboBox();
+                ddlTipo.DataTextField = "NOMBRE";
+                ddlTipo.DataValueField = "IDTIPO";
+                ddlTipo.DataBind();
+                ddlTipo.Items.Insert(0, new ListItem("Selecciona tipo", "0"));
             }
-            else if (int.Parse(ddlTipoEvaluacion.SelectedValue) == 1 && int.Parse(ddlTipo.SelectedValue) == 2)
+            else
+            {
+                cmbTipo.DataSource = tpe.ListaTipoEvaluacionComboBox();
+                cmbTipo.DataTextField = "NOMBRE";
+                cmbTipo.DataValueField = "IDTIPO";
+                cmbTipo.DataBind();
+                cmbTipo.Items.Insert(0, new ListItem("Selecciona tipo", "0"));
+            }
+            
+        }
+
+        private void RellenarUsuariosSafe()
+        {
+            EmpleadoSafe ems = new EmpleadoSafe();
+            cmbEmpleadoSafe.DataSource = ems.ListarUsuarios();
+            cmbEmpleadoSafe.DataTextField = "NOMBRE";
+            cmbEmpleadoSafe.DataValueField = "RUT";
+            cmbEmpleadoSafe.DataBind();
+            cmbEmpleadoSafe.Items.Insert(0, new ListItem("Selecciona usuario","0"));
+        }
+
+        private void RellenarEmpresas()
+        {
+            Empresa em = new Empresa();
+            cmbEmpresa.DataSource = em.ListarEmpresaTabla();
+            cmbEmpresa.DataTextField = "NOMBRE";
+            cmbEmpresa.DataValueField = "RUT";
+            cmbEmpresa.DataBind();
+            cmbEmpresa.Items.Insert(0, new ListItem("Selecciona empresa","0"));
+        }
+
+        private void DesplegarModal(string id)
+        {
+            const string ScriptKey = "modal";
+            if (!ClientScript.IsStartupScriptRegistered(this.GetType(), ScriptKey))
             {
 
-                gvEmpresa.DataSource = eva.EvaluacionesEmpresa(valor);
-                gvEmpresa.DataBind();
-                gvEmpresa.Visible = true;
-                gvEvaluaciones.Visible = false;
+                //Se cargan listas
+                RellenarUsuariosSafe();
+                RellenarEmpresas();
+                RellenarTipoEvaluacion(1);
+                //se llenar campos con Evaluación seleccionada
+                Evaluacion e = new Evaluacion();
+                e.idEvaluacion = int.Parse(id);
+                e.Leer();
+                hdnId.Value = id;
+                dtFecha.Value = e.fecha.ToString("yyyy-MM-dd");
+                txtObservacion.InnerText = e.observacion;
+                cmbEmpleadoSafe.SelectedValue = e.rutSafe;
+                cmbTipo.SelectedValue = e.idTipo.ToString();
+                cmbEmpresa.SelectedValue = e.rutEmpresa;
+
+                StringBuilder fn = new StringBuilder();
+                fn.Append("$(document).ready(function () {");
+                fn.Append("$('#myModal').modal();");
+                fn.Append("});");
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+        ScriptKey, fn.ToString(), true);
             }
         }
-        
 
         protected void gvEvaluaciones_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Enviar")
-            {
-                int id = Convert.ToInt32(e.CommandArgument);
-                Evaluacion ev = new Evaluacion();
-                ev.idEvaluacion = id;
+            int id = Convert.ToInt32(e.CommandArgument);
 
-                if (ev.Cambiar_Estado())
-                {
-                    lblAlerta.ForeColor = System.Drawing.Color.Green;
-                    lblAlerta.Text = "Evaluación enviada con exito!";
-                    lblAlerta.Visible = true;
-                    RellenarNoDerivados("0");
-                }
-                else
-                {
-                    lblAlerta.ForeColor = System.Drawing.Color.Red;
-                    lblAlerta.Text = "Error al enviar evaluación";
-                    lblAlerta.Visible = true;
-                }
+            switch (e.CommandName)
+            {
+                case "Derivar":
+
+                    Evaluacion ev = new Evaluacion();
+                    ev.idEvaluacion = id;
+
+                    if (ev.Cambiar_Estado())
+                    {
+                        lblAlerta.ForeColor = System.Drawing.Color.Green;
+                        lblAlerta.Text = "Evaluación enviada con exito, porfavor espere...";
+                        Response.AddHeader("REFRESH", "2;URL=administrarEvaluacion.aspx");
+                        lblAlerta.Visible = true;
+                        RellenarNoDerivados("0");
+                    }
+                    else
+                    {
+                        lblAlerta.ForeColor = System.Drawing.Color.Red;
+                        lblAlerta.Text = "Error al enviar evaluación";
+                        lblAlerta.Visible = true;
+                    }
+
+                    break;
+
+                case "Modificar":
+
+                    id = Convert.ToInt32(e.CommandArgument);
+                    DesplegarModal(id.ToString());
+
+                    break;
+                case "Eliminar":
+                    EliminarEvaluacion(id);
+
+                    break;
+
+                default:
+                    break;
             }
+
         }
 
-        protected void gvEmpresa_RowCommand(object sender, GridViewCommandEventArgs e)
+        private void EliminarEvaluacion(int id)
         {
-            if (e.CommandName == "Enviar")
+            Evaluacion ev = new Evaluacion();
+            ev.idEvaluacion = id;
+            if (ev.Eliminar())
             {
-                int id = Convert.ToInt32(e.CommandArgument);
-                Evaluacion ev = new Evaluacion();
-                ev.idEvaluacion = id;
-
-                if (ev.Cambiar_Estado())
-                {
-                    lblAlerta.ForeColor = System.Drawing.Color.Green;
-                    lblAlerta.Text = "Evaluación enviada con exito!";
-                    lblAlerta.Visible = true;
-                    RellenarNoDerivados("0");
-                }
-                else
-                {
-                    lblAlerta.ForeColor = System.Drawing.Color.Red;
-                    lblAlerta.Text = "Error al enviar evaluación";
-                    lblAlerta.Visible = true;
-                }
+                lblAlerta.Text = "Evaluación Eliminada, porfavor espere...";
+                lblAlerta.Visible = true;
+                Response.AddHeader("REFRESH", "2;URL=administrarEvaluacion.aspx");
+            }
+            else
+            {
+                lblAlerta.Text = "Error al eliminar";
+                lblAlerta.Visible = true;
             }
         }
 
         protected void ddlTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
             gvEvaluaciones.Visible = false;
-            gvEmpresa.Visible = false;
+            ddlTipoEvaluacion.SelectedValue = "falso";
         }
+
+        protected void gvEvaluaciones_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                //Remueve hora de fecha en celda[0]
+                e.Row.Cells[0].Text = e.Row.Cells[0].Text.Substring(0, 10);
+
+                if (e.Row.Cells[5].Text.Equals("1"))
+                {
+                    e.Row.Cells[5].Text = "Derivada";
+                }
+                else
+                {
+                    e.Row.Cells[5].Text = "No Derivada";
+                }
+            }
+        }
+
+        protected void btnModificar_Click(object sender, EventArgs E)
+        {
+            Evaluacion ev = new Evaluacion();
+            ev.idEvaluacion = int.Parse(hdnId.Value);
+            ev.fecha = DateTime.Parse(dtFecha.Value);
+            ev.observacion = txtObservacion.InnerText;
+            ev.rutSafe = cmbEmpleadoSafe.SelectedValue;
+            ev.idTipo = int.Parse(cmbTipo.SelectedValue);
+            ev.rutEmpresa = cmbEmpresa.SelectedValue;
+            ev.derivada = "0";
+            ev.recomendada = "0";
+
+            if (ev.Modificar())
+            {
+                lblAlerta.Text = "Datos Modificados con exito, porfavor espere";
+                lblAlerta.Visible = true;
+                Response.AddHeader("REFRESH", "2;URL=administrarEvaluacion.aspx");
+            }
+            else
+            {
+                lblAlerta.Text = "Error al modificar rvaluación";
+                lblAlerta.Visible = true;
+            }
+
+        }
+
     }
 }

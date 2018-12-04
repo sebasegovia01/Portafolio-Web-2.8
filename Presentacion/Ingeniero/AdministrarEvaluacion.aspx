@@ -11,14 +11,19 @@
     <!-- Bootstrap Styles-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
-    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- Morris Chart Styles-->
     <link href="../assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
     <!-- Custom Styles-->
     <link href="../assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-
+    <!-- jQuery Js -->
+    <script src="../assets/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <!-- DataTables Js-->
+     <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
 </head>
 
 <body>
@@ -64,7 +69,7 @@
                     </li>
                 <li>
                     <a class="active-menu" href="#"><i class="glyphicon glyphicon-list-alt"></i> Evaluaciones<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
+                    <ul class="nav nav-second-level collapse in">
                         <li>
                             <a href="administrarEvaluacion.aspx">Administrar evaluaciones</a>
                             <a href="AdministrarRecomendacion.aspx">Administrar recomendación</a>
@@ -97,14 +102,11 @@
                                     
                                         <div class="col-lg-12">                          
                                             <div class="form-group">
-                                                <label for="">Tipo*</label><br />
+                                                <label for="">Tipo</label><br />
                                                 <asp:DropDownList ID="ddlTipo" runat="server" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlTipo_SelectedIndexChanged">
-                                                    <asp:ListItem Selected="True" Value="0">Selecciona tipo</asp:ListItem>
-                                                    <asp:ListItem Value="1">Persona</asp:ListItem>
-                                                    <asp:ListItem Value="2">Empresa</asp:ListItem>
                                                 </asp:DropDownList>
-
-                                                <label for="">Estado*</label><br />
+                                                <br />
+                                                <label for="">Estado</label><br />
                                                 <asp:DropDownList ID="ddlEstado" runat="server" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged">
                                                     <asp:ListItem Selected="True" Value="falso">Selecciona estado</asp:ListItem>
                                                     <asp:ListItem Value="0">No recomendada</asp:ListItem>
@@ -113,29 +115,18 @@
 
                                                 <br />
 
-                                                <asp:GridView ID="gvPersonas" class="table table-striped table-bordered table-hover" EmptyDataText="No se han encontrado resultados." runat="server" AutoGenerateColumns="False" OnRowCommand="gvEvaluaciones_RowCommand">
+                                                <asp:GridView ID="gvEvaluaciones" class="table table-striped table-bordered table-hover" EmptyDataText="No se han encontrado resultados." runat="server" AutoGenerateColumns="False" OnRowCommand="gvEvaluaciones_RowCommand" OnRowDataBound="gvEvaluaciones_RowDataBound">
                                                     <Columns>
-                                                        <asp:BoundField DataField="FECHA" HeaderText="FECHA" SortExpression="FECHA" />
-                                                        <asp:BoundField DataField="OBSERVACION" HeaderText="OBSERVACION" SortExpression="OBSERVACION" />
-                                                        <asp:BoundField DataField="RECOMENDADA" HeaderText="RECOMENDADA" SortExpression="RECOMENDADA" />
-                                                        <asp:BoundField DataField="CLIENTE" HeaderText="CLIENTE" SortExpression="CLIENTE" />
-                                                        <asp:TemplateField headertext="RECOMENDAR">
+                                                        <asp:BoundField DataField="FECHA" HeaderText="Fecha" SortExpression="FECHA" />
+                                                        <asp:BoundField DataField="OBSERVACION" HeaderText="Observación" SortExpression="OBSERVACION" />
+                                                        <asp:BoundField DataField="EMPRESA" HeaderText="Empresa" SortExpression="Empresa" />
+                                                        <asp:BoundField DataField="EMPLEADO" HeaderText="Empleado" SortExpression="EMPLEADO" />
+                                                       <asp:BoundField DataField="TIPO" HeaderText="Tipo Evaluación" SortExpression="TIPO" />
+                                                         <asp:BoundField DataField="RECOMENDADA" HeaderText="Estado" SortExpression="RECOMENDADA" />
+                                                        <asp:TemplateField headertext="Opciones">
                                                             <ItemTemplate>
-                                                                <asp:LinkButton CommandName="Enviar" CommandArgument='<%# Eval("CLAVE") %>' class="btn btn-primary" OnClientClick="return Confirmar();" runat="server">Recomendar</asp:LinkButton>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                    </Columns>
-                                                    </asp:GridView>
-
-                                                <asp:GridView ID="gvEmpresa" class="table table-striped table-bordered table-hover" EmptyDataText="No se han encontrado resultados." runat="server" AutoGenerateColumns="False" OnRowCommand="gvEmpresa_RowCommand">
-                                                    <Columns>
-                                                        <asp:BoundField DataField="FECHA" HeaderText="FECHA" SortExpression="FECHA" />
-                                                        <asp:BoundField DataField="OBSERVACION" HeaderText="OBSERVACION" SortExpression="OBSERVACION" />
-                                                        <asp:BoundField DataField="RECOMENDADA" HeaderText="RECOMENDADA" SortExpression="RECOMENDADA" />
-                                                        <asp:BoundField DataField="EMPRESA" HeaderText="EMPRESA" SortExpression="EMPRESA" />
-                                                        <asp:TemplateField headertext="RECOMENDAR">
-                                                            <ItemTemplate>
-                                                                <asp:LinkButton CommandName="Enviar" CommandArgument='<%# Eval("CLAVE") %>' class="btn btn-primary" OnClientClick="return Confirmar();" runat="server">Recomendar</asp:LinkButton>
+                                                                <asp:LinkButton ID="btnRecomendar" CommandName="Recomendar" CommandArgument='<%# Eval("CLAVE") %>' class="btn btn-primary" runat="server"><i class="fa fa-check"></i> Recomendar</asp:LinkButton>
+                                                                <asp:LinkButton CommandName="Eliminar" CommandArgument='<%# Eval("CLAVE") %>' class="btn btn-danger" OnClientClick="return Confirmar();" runat="server"><i class="fa fa-trash"></i></asp:LinkButton>
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
                                                     </Columns>
@@ -145,7 +136,44 @@
                                         </div>
                                         <asp:Label ID="lblAlerta" runat="server" Visible="true" Font-Bold="True" ForeColor="Red"></asp:Label>
                                         
-                                    </form>
+
+
+
+                                                                           <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="titulo" class="modal-title" runat="server"> Modificar Evaluación</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+              <asp:HiddenField ID="hdnId" runat="server" />
+             </div>
+              <div class="form-group" id="formObservacion" runat="server">
+                <label for="">Observación</label>
+                <textarea id="txtObservacionRec" cols="20" rows="2" runat="server" class="form-control"></textarea>
+            </div> 
+              <div class="form-group">
+                <label for="">Recomendación</label>
+                <textarea id="txtRecomendación" cols="20" rows="2" runat="server" class="form-control"></textarea>
+            </div>
+              <div class="form-group">
+                <label for="">Autorización</label>
+                <asp:DropDownList ID="cmbAutorizacion" class="form-control" runat="server">
+                    <asp:ListItem Value="empty">Selecciona opcion</asp:ListItem>
+                    <asp:ListItem Value="1">Si</asp:ListItem>
+                    <asp:ListItem Value="0">No</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+        <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+           <button type="button" class="btn btn-success" runat="server" onserverclick="btnModificar_Click"><i class="fa fa-floppy-o"></i> Guardar</button>
+         </div>
+      </div>
+    </div>
+  </div><!-- close modal -->
+                                    </form><!-- /FORM -->
 
                                 </div>                       
                         </div>                 
@@ -160,16 +188,11 @@
     </div>
     <!-- /. WRAPPER  -->
     <!-- JS Scripts-->
-    <!-- jQuery Js -->
-    <script src="../assets/js/jquery-1.10.2.js"></script>
-    <!-- Bootstrap Js -->
-    <script src="../assets/js/bootstrap.min.js"></script>
     <!-- Metis Menu Js -->
     <script src="../assets/js/jquery.metisMenu.js"></script>
-     <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
      <script>
          function Confirmar(){
-             return confirm('¿Desea ingresar su recomendación?') == true;
+             return confirm('¿Desea eliminar esta evaluación?') == true;
          }
     </script>
     <!-- Morris Chart Js -->

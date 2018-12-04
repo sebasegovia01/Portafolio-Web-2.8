@@ -130,12 +130,12 @@
                                     <div class="col-lg-6">                          
                                         <div class="form-group">
                                             <label for="">Tipo Evaluación*</label><br />
-                                            <asp:DropDownList ID="ddlTipoEvaluacion" runat="server" class="form-control" OnSelectedIndexChanged="ddlTipoEvaluacion_SelectedIndexChanged" AutoPostBack="True">
+                                            <asp:DropDownList ID="ddlTipoEvaluacion" runat="server" class="form-control" AutoPostBack="True">
                                             </asp:DropDownList>
                                         </div>
                                         <div class="form-group">
                                             <label for="">Empresa*</label><br />
-                                            <asp:DropDownList ID="ddlEmpresa" runat="server" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlEmpresa_SelectedIndexChanged">
+                                            <asp:DropDownList ID="ddlEmpresa" runat="server" class="form-control" AutoPostBack="True">
                                             </asp:DropDownList>
                                         </div>
                                         <div class="form-group">
@@ -147,13 +147,7 @@
                                         <div class="form-group">
                                             <label for="">Fecha*</label>
                                             <asp:TextBox type="date" class="form-control" ID="dtFecha" runat="server"></asp:TextBox>
-                                        </div>
-                                        <div class="form-group">
-                                                <asp:Label ID="lblEmpleado" runat="server" Text="Empleado*"></asp:Label>
-                                                <br />
-                                                <asp:DropDownList ID="ddlEmpleado" runat="server" class="form-control">
-                                                </asp:DropDownList>
-                                        </div>         
+                                        </div>      
                                 </div>
                                 <div class="col-lg-12">
                                     <button type="button" class="btn btn-primary" runat="server" onserverclick="btnAgregar_Click"><i class="fa fa-floppy-o"></i> Guardar</button>

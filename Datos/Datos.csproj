@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0E3CEAD4-2626-4455-9721-8390DC1A121B}</ProjectGuid>
+    <ProjectGuid>{D5F49A7D-8B9D-4117-A3E3-512679BE6BA0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Datos</RootNamespace>
@@ -100,10 +100,7 @@
     <Compile Include="EVALUACION.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="EVALUACION_EMPRESA_VIEW.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EVALUACION_PERSONA_VIEW.cs">
+    <Compile Include="EVALUACIONES_VIEW.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="EXAMEN.cs">
@@ -134,12 +131,6 @@
       <DependentUpon>Modelo.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RECOMENDACIONES_EMPRESA_VIEW.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RECOMENDACIONES_PERSONA_VIEW.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="RECOMENDADAS_VIEW.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

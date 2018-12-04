@@ -137,7 +137,7 @@ namespace Presentacion.Administrador
                 em.activo = em.activo == 1 ? 0 : 1;
                 em.Deshabilitar();
                 lblAlerta.Text = "Empresa Des/habilitado. Por favor espere.";
-                Response.AddHeader("REFRESH", "3;URL=administrarEmpresas.aspx");
+                Response.AddHeader("REFRESH", "2;URL=administrarEmpresas.aspx");
                 lblAlerta.Visible = true;
             }
             else
@@ -153,16 +153,17 @@ namespace Presentacion.Administrador
             {
                 if (int.Parse(e.Row.Cells[5].Text) == 1)
                 {
-                    Button btn = (Button)e.Row.Cells[6].FindControl("btnHabilitar");
+                    LinkButton btn = (LinkButton)e.Row.Cells[6].FindControl("btnHabilitar");
                     btn.CssClass = "btn btn-danger";
-                    btn.Text = "Deshabilitar";
+                    btn.CssClass = "btn btn-danger";
+                    btn.Text = "<i class='fa fa-circle-o'></i> Deshabilitar";
                     btn.CommandName = "Deshabilitar";
                 }
                 else
                 {
-                    Button btn = (Button)e.Row.Cells[6].FindControl("btnHabilitar");
+                    LinkButton btn = (LinkButton)e.Row.Cells[6].FindControl("btnHabilitar");
                     btn.CssClass = "btn btn-success";
-                    btn.Text = "Habilitar";
+                    btn.Text = "<i class='fa fa-check-circle-o'></i> Habilitar";
                     btn.CommandName = "Deshabilitar";
                 }
 

@@ -30,7 +30,26 @@ namespace Modelo
             this.recomendacion = recomendacion;
             this.autorizacion = autorizacion;
         }
-        
+
+        public bool Leer()
+        {
+            try
+            {
+                DETALLE_EVALUACION det = Conexion.Entidades.DETALLE_EVALUACION.AsNoTracking().First(
+                    de => de.ID_EVALUACION == this.idEvaluacion);
+
+                this.idEvaluacion = det.ID_EVALUACION;
+                this.recomendacion = det.RECOMENDACION;
+                this.autorizacion = char.Parse(det.AUTORIZACION);
+                this.rutEmpleado = det.RUT_SAFE;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public bool Insertar()
         {
             try
@@ -47,12 +66,41 @@ namespace Modelo
 
         }
 
+        public bool Modificar()
+        {
+            try
+            {
+                Conexion.Entidades.MODIFICAR_DETALLE_EVALUACION(this.idEvaluacion,this.recomendacion,this.autorizacion.ToString());
+                Conexion.Entidades.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
 
-        public List<dynamic> ListaDetalle()
+                return false;
+            }
+        }
+
+        public bool Eliminar()
+        {
+            try
+            {
+                Conexion.Entidades.ELIMINAR_DETALLE_EVALUACION(this.idEvaluacion);
+                Conexion.Entidades.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public List<dynamic> ListaDetalle(string tipo)
         {
             List<dynamic> dervs = new List<dynamic>();
 
-            foreach (RECOMENDADAS_VIEW evs in Conexion.Entidades.RECOMENDADAS_VIEW)
+            foreach (RECOMENDADAS_VIEW evs in Conexion.Entidades.RECOMENDADAS_VIEW.AsNoTracking().Where(
+                a => a.TIPO.Equals(tipo)))
             {
                 RECOMENDADAS_VIEW eva = new RECOMENDADAS_VIEW();
 
@@ -60,11 +108,10 @@ namespace Modelo
                 eva.FECHA = evs.FECHA;
                 eva.OBSERVACION = evs.OBSERVACION;
                 eva.RECOMENDACION = evs.RECOMENDACION;
-                eva.AUTORIZADA = evs.EMPRESA;
+                eva.AUTORIZADA = evs.AUTORIZADA;
                 eva.EMPLEADO = evs.EMPLEADO;
                 eva.EMPRESA = evs.EMPRESA;
                 eva.TIPO = evs.TIPO;
-                eva.CLIENTE = evs.CLIENTE;
 
                 dervs.Add(eva);
             }

@@ -30,8 +30,14 @@ namespace Presentacion.Administrador
               gvUsuarios.DataBind();
             }
 
+            //Oculta control tipo usuario destinados a ciertos usuarios.
             tipoUsuarioLabel.Visible = false;
             dpTipoUsuarios.Visible = false;
+
+            //Oculta control empresa destinado a ciertos usuarios.
+            dpEmpresa.Visible = false;
+            tipoEmpresaLabel.Visible = false;
+
             lblAlert.Visible = false;
         }
 
@@ -51,6 +57,7 @@ namespace Presentacion.Administrador
 
                 if (emp.Leer())
                 {
+                    //Empleado
                     hdtipoEmpleado.Value = "0";
                     hdnRut.Value = emp.rut;
                     txtNombre.Text = emp.nombre;
@@ -60,12 +67,17 @@ namespace Presentacion.Administrador
                     txtCorreo.Text = emp.correo;
                     txtFono.Text = emp.numero.ToString();
                     txtClave.Text = emp.clave;
-                    hdnEmpresa.Value = emp.rutEmpresa;
+                    dpEmpresa.SelectedValue = emp.rutEmpresa;
                     dpTipoUsuarios.Visible = false;
                     tipoUsuarioLabel.Visible = false;
+                    RellenarEmpresa();
+                    dpEmpresa.SelectedValue = emp.rutEmpresa;
+                    dpEmpresa.Visible = true;
+                    tipoEmpresaLabel.Visible = true;
                 }
                 else if (emps.Leer())
                 {
+                    //Empleado SAFE
                     hdtipoEmpleado.Value = "1";
                     hdnRut.Value = emps.rut;
                     txtNombre.Text = emps.nombre;
@@ -79,12 +91,14 @@ namespace Presentacion.Administrador
                     dpTipoUsuarios.SelectedValue = emps.id_tipo_us.ToString();
                     dpTipoUsuarios.Visible = true;
                     tipoUsuarioLabel.Visible = true;
+                    dpEmpresa.Visible = false;
+                    tipoEmpresaLabel.Visible = false;
                 }
                 else
                 {
+                    //Medico
                     me.Leer();
-                    hdtipoEmpleado.Value = "2";
-                    hdnEmpresa.Value = me.rut_empresa;
+                    dpEmpresa.SelectedValue = me.rut_empresa;
                     hdnRut.Value = me.rut;
                     txtNombre.Text = me.nombre;
                     txtApterno.Text = me.apellido_p;
@@ -93,8 +107,14 @@ namespace Presentacion.Administrador
                     txtCorreo.Text = me.correo;
                     txtClave.Text = me.clave;
                     txtFono.Text = me.telefono.ToString();
+                    //Mostrar dropdown tipoUsuario
                     dpTipoUsuarios.Visible = false;
                     tipoUsuarioLabel.Visible = false;
+                    //Mostrar dropdown empresa
+                    RellenarEmpresa();
+                    dpEmpresa.SelectedValue = me.rut_empresa;
+                    dpEmpresa.Visible = true;
+                    tipoEmpresaLabel.Visible = true;
 
                 }
 
@@ -282,7 +302,7 @@ namespace Presentacion.Administrador
                 case 0:
                     Empleado emp = new Empleado();
                     emp.rut = hdnRut.Value;
-                    emp.rutEmpresa = hdnEmpresa.Value;
+                    emp.rutEmpresa = dpEmpresa.SelectedValue;
                     emp.nombre = txtNombre.Text;
                     emp.apellido_p = txtApterno.Text;
                     emp.apellido_m = txtAmterno.Text;
@@ -340,6 +360,7 @@ namespace Presentacion.Administrador
                     me.nombre = txtNombre.Text;
                     me.apellido_p = txtApterno.Text;
                     me.apellido_m = txtAmterno.Text;
+                    me.rut_empresa = dpEmpresa.SelectedValue;
                     me.f_nacimiento = DateTime.Parse(dtNacimiento.Value);
                     me.telefono = int.Parse(txtFono.Text);
                     me.correo = txtCorreo.Text;
@@ -377,22 +398,33 @@ namespace Presentacion.Administrador
             
         }
 
+        public void RellenarEmpresa()
+        {
+            Empresa e = new Empresa();
+
+            dpEmpresa.DataSource = e.ListarEmpresaTabla();
+            dpEmpresa.DataTextField = "NOMBRE";
+            dpEmpresa.DataValueField = "RUT";
+            dpEmpresa.DataBind();
+            dpEmpresa.Items.Insert(0, new ListItem("Selecciona Empresa", "0"));
+        }
+
         protected void gvUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 if (int.Parse(e.Row.Cells[4].Text) == 1)
                 {
-                    Button btn = (Button)e.Row.Cells[5].FindControl("btnHabilitar");
+                    LinkButton btn = (LinkButton)e.Row.Cells[5].FindControl("btnHabilitar");
                     btn.CssClass = "btn btn-danger";
-                    btn.Text = "Deshabilitar";
+                    btn.Text = "<i class='fa fa-circle-o'></i> Deshabilitar";
                     btn.CommandName = "Deshabilitar";
                 }
                 else
                 {
-                    Button btn = (Button)e.Row.Cells[5].FindControl("btnHabilitar");
+                    LinkButton btn = (LinkButton)e.Row.Cells[5].FindControl("btnHabilitar");
                     btn.CssClass = "btn btn-success";
-                    btn.Text = "Habilitar";
+                    btn.Text = "<i class='fa fa-check-circle-o'></i> Habilitar";
                     btn.CommandName = "Deshabilitar";
                 }
 
