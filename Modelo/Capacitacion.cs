@@ -9,6 +9,7 @@ namespace Modelo
 {
     public class Capacitacion
     {
+        //test commit
         public int id_capcitacion { get; set; }
         public string objetivo { get; set; }
         public DateTime fecha { get; set; }
