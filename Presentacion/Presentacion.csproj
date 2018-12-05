@@ -159,7 +159,9 @@
     <Content Include="Supervisor\agregarEvaluacion.aspx" />
     <Content Include="Supervisor\agregarMedico.aspx" />
     <Content Include="Supervisor\agregarVisitaMedica.aspx" />
+    <Content Include="Supervisor\generarInforme.aspx" />
     <Content Include="Supervisor\index.aspx" />
+    <Content Include="Supervisor\Informe.aspx" />
     <Content Include="Tecnico\index.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Web.config" />
@@ -338,12 +340,26 @@
     <Compile Include="Supervisor\agregarVisitaMedica.aspx.designer.cs">
       <DependentUpon>agregarVisitaMedica.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Supervisor\generarInforme.aspx.cs">
+      <DependentUpon>generarInforme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Supervisor\generarInforme.aspx.designer.cs">
+      <DependentUpon>generarInforme.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Supervisor\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Supervisor\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Supervisor\Informe.aspx.cs">
+      <DependentUpon>Informe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Supervisor\Informe.aspx.designer.cs">
+      <DependentUpon>Informe.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tecnico\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
@@ -372,6 +388,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceMedico\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Supervisor\Reportes\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

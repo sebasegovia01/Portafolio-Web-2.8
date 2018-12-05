@@ -68,7 +68,7 @@ namespace Modelo
         {
             try
             {
-                Conexion.Entidades.MODIFICAR_EXAMEN(this.id_examen, this.nombre, this.tipo_doc, this.documento, this.id_diagnostico, this.habilitado, this.anotacion);
+                Conexion.Entidades.MODIFICAR_EXAMEN(this.id_examen, this.nombre, this.tipo_doc, this.documento, this.anotacion);
                 Conexion.Entidades.SaveChanges();
                 return true;
             }

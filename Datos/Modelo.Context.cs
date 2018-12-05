@@ -768,7 +768,7 @@ namespace Datos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_EVALUACION", iD_EVALParameter, fECHAParameter, oBSERVParameter, rUTSAFEParameter, iDTIPOParameter, rUT_EMPRESAParameter);
         }
     
-        public virtual int MODIFICAR_EXAMEN(Nullable<decimal> iD, string nAME, string tIP_DOC, byte[] dOCMNT, Nullable<decimal> iDDIAGNOSTICO, string aCTIVO, string aNOTACIONES)
+        public virtual int MODIFICAR_EXAMEN(Nullable<decimal> iD, string nAME, string tIP_DOC, byte[] dOCMNT, string aNOTACIONES)
         {
             var iDParameter = iD.HasValue ?
                 new ObjectParameter("ID", iD) :
@@ -786,19 +786,11 @@ namespace Datos
                 new ObjectParameter("DOCMNT", dOCMNT) :
                 new ObjectParameter("DOCMNT", typeof(byte[]));
     
-            var iDDIAGNOSTICOParameter = iDDIAGNOSTICO.HasValue ?
-                new ObjectParameter("IDDIAGNOSTICO", iDDIAGNOSTICO) :
-                new ObjectParameter("IDDIAGNOSTICO", typeof(decimal));
-    
-            var aCTIVOParameter = aCTIVO != null ?
-                new ObjectParameter("ACTIVO", aCTIVO) :
-                new ObjectParameter("ACTIVO", typeof(string));
-    
             var aNOTACIONESParameter = aNOTACIONES != null ?
                 new ObjectParameter("ANOTACIONES", aNOTACIONES) :
                 new ObjectParameter("ANOTACIONES", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_EXAMEN", iDParameter, nAMEParameter, tIP_DOCParameter, dOCMNTParameter, iDDIAGNOSTICOParameter, aCTIVOParameter, aNOTACIONESParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MODIFICAR_EXAMEN", iDParameter, nAMEParameter, tIP_DOCParameter, dOCMNTParameter, aNOTACIONESParameter);
         }
     
         public virtual int MODIFICAR_MEDICO(string rUT, string nAME, string aPELLIDO_P, string aPELLIDO_M, string f_NACIMIENTO, string eMAIL, string pASWD, Nullable<decimal> fONO, string hABILITADO, string rUT_EMPRESA)

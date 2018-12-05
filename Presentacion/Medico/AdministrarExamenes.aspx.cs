@@ -25,7 +25,67 @@ namespace Presentacion.Medico
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+            Examen ex = new Examen();
+            ex.id_examen = int.Parse(hdnId.Value);
+            ex.Leer();
 
+            if (flDocumento.HasFile)
+            {
+
+                HttpPostedFile postedFile = flDocumento.PostedFile;
+                string filename = Path.GetFileName(postedFile.FileName);
+                string fileExtension = Path.GetExtension(filename);
+                int fileSize = postedFile.ContentLength;
+
+                if (fileExtension.ToLower().Equals(".pdf") || fileExtension.ToUpper().Equals(".PDF"))
+                {
+                    Stream stream = postedFile.InputStream;
+                    BinaryReader binaryReader = new BinaryReader(stream);
+                    byte[] bytes = binaryReader.ReadBytes((int)stream.Length);
+                    ex.documento = bytes;
+                    ex.nombre = filename;
+                    ex.tipo_doc = fileExtension;
+                    ex.anotacion = txtDescripcion.InnerText;
+
+                    if (ex.Modificar())
+                    {
+                        lblAlerta.Text = "Examen modificado, porfavor espere...";
+                        lblAlerta.Visible = true;
+                        Response.AddHeader("REFRESH", "2;URL=AdministrarExamenes.aspx");
+                    }
+                    else
+                    {
+                        lblAlerta.Text = "Error al modificar";
+                        lblAlerta.Visible = true;
+                    }
+
+                }
+                else
+                {
+                    lblAlerta.Text = "Solo documentos en formato pdf";
+                    lblAlerta.Visible = true;
+                }
+            }else
+            {
+
+                ex.anotacion = txtDescripcion.InnerText;
+
+                if (ex.Modificar())
+                {
+                    lblAlerta.Text = "Examen modificado, porfavor espere...";
+                    lblAlerta.Visible = true;
+                    Response.AddHeader("REFRESH", "2;URL=AdministrarExamenes.aspx");
+                }
+                else
+                {
+                    lblAlerta.Text = "Error al modificar";
+                    lblAlerta.Visible = true;
+                }
+
+            }
+
+           
+            
         }
 
         private void CargarExamenes()
@@ -44,24 +104,49 @@ namespace Presentacion.Medico
 
         protected void gvExamenes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            int id = Convert.ToInt32(e.CommandArgument);
+
             switch (e.CommandName)
             {
                 case "Modificar":
 
-                    //Obtenemos id
-                    int id = Convert.ToInt32(e.CommandArgument);
+                    //Obtenemos id  
                     //se envia id a modal para desplegar datos asociados.
                     DesplegarModal(id.ToString());
                     break;
 
                 case "Descargar":
-
-                    id = Convert.ToInt32(e.CommandArgument);
+                    //Obtenemos id
+                    //Se envia a metodo que procesa documento
                     DescargarPdf(id);
                     break;
 
+                case "Eliminar":
+
+                    //Obtenemos id
+                    //Enviamos a metodo eliminar
+                    EliminarExamen(id);
+                    break;
                 default:
                     break;
+            }
+        }
+
+        private void EliminarExamen(int id)
+        {
+            Examen ex = new Examen();
+            ex.id_examen = id;
+
+            if (ex.Eliminar())
+            {
+                lblAlerta.Text = "Examen eliminado, porfavor espere...";
+                lblAlerta.Visible = true;
+                Response.AddHeader("REFRESH", "2;URL=AdministrarExamenes.aspx");
+            }
+            else
+            {
+                lblAlerta.Text = "Error al eliminar examen";
+                lblAlerta.Visible = true;
             }
         }
 
@@ -91,7 +176,9 @@ namespace Presentacion.Medico
                 Examen ex = new Examen();
                 ex.id_examen = int.Parse(id);
                 ex.Leer();
+                hdnId.Value = id;
                 txtDescripcion.InnerText = ex.anotacion;
+                inputTxtExamen.Text = ex.nombre + ex.tipo_doc;
 
                 StringBuilder fn = new StringBuilder();
                 fn.Append("$(document).ready(function () {");

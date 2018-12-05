@@ -694,8 +694,6 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
           <Parameter Name="NAME" Type="varchar2" Mode="In" />
           <Parameter Name="TIP_DOC" Type="varchar2" Mode="In" />
           <Parameter Name="DOCMNT" Type="blob" Mode="In" />
-          <Parameter Name="IDDIAGNOSTICO" Type="number" Mode="In" />
-          <Parameter Name="ACTIVO" Type="char" Mode="In" />
           <Parameter Name="ANOTACIONES" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="MODIFICAR_MEDICO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
@@ -1643,8 +1641,6 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <Parameter Name="NAME" Mode="In" Type="String" />
             <Parameter Name="TIP_DOC" Mode="In" Type="String" />
             <Parameter Name="DOCMNT" Mode="In" Type="Binary" />
-            <Parameter Name="IDDIAGNOSTICO" Mode="In" Type="Decimal" />
-            <Parameter Name="ACTIVO" Mode="In" Type="String" />
             <Parameter Name="ANOTACIONES" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MODIFICAR_MEDICO">

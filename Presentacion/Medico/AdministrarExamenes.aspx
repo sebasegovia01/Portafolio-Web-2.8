@@ -170,8 +170,12 @@
                 <label for="">Anotaciones</label>
                 <textarea class="form-control" id="txtDescripcion" cols="20" rows="4" runat="server"></textarea>
             </div>
+                 <div class="form-group">
+                <label for="">Examen actual: </label>
+                     <asp:Label ID="inputTxtExamen" Text="text" runat="server" />
+            </div>
              <div class="form-group">
-                <label for="">Examen</label>
+                <label for="">Subir nuevo</label>
                  <asp:FileUpload class="form-control" ID="flDocumento" runat="server" />
             </div>
         </div>

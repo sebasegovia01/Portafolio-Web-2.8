@@ -164,5 +164,28 @@ namespace Modelo
 
             return emp;
         }
+
+        public List<dynamic> ListarEmpresaPorRut()
+        {
+
+            List<dynamic> emp = new List<dynamic>();
+
+            foreach (EMPRESA_VIEW em in Conexion.Entidades.EMPRESA_VIEW.AsNoTracking().Where(
+                e => e.RUT.Equals(this.rutEmpresa)))
+            {
+                EMPRESA_VIEW empv = new EMPRESA_VIEW();
+
+                empv.RUT = em.RUT;
+                empv.NOMBRE = em.NOMBRE;
+                empv.CORREO = em.CORREO;
+                empv.NUMERO = em.NUMERO;
+                empv.COMUNA = em.COMUNA;
+
+                emp.Add(empv);
+            }
+
+
+            return emp;
+        }
     }
 }
