@@ -14,16 +14,21 @@
 </head>
 <body>
     <div class="container">
+        <h4>SAFE</h4>
+    </div>
+    <div class="container">
+        <form method="POST" runat="server">
          <div class="row">
              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                 <form action="" method="POST" runat="server">
+                 
                      <div class="form-title">
                         <h3>Ingresar</h3>
                      </div>
                      <!-- Alert -->
-                     <div id="personal-alert">
-                         <asp:Label ID="lblAlerta" runat="server" Font-Bold="True" ForeColor="Red" Visible="False"></asp:Label>
-                     </div>                 
+                     <div class="alert alert-danger" id="alerta" runat="server">
+                         <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                    </div> 
+                    <!-- /Alert -->              
                      <div class="form-group">   
                          <asp:TextBox class="form-control" type="email" ID="inputEmail" placeholder="Email" required="required" runat="server"></asp:TextBox>            
                      </div>

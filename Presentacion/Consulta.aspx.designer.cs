@@ -10,7 +10,7 @@
 namespace Presentacion {
     
     
-    public partial class Login {
+    public partial class Consulta {
         
         /// <summary>
         /// Control alerta.
@@ -31,30 +31,30 @@ namespace Presentacion {
         protected global::System.Web.UI.WebControls.Label lblAlertMsge;
         
         /// <summary>
-        /// Control inputEmail.
+        /// Control txtRut.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox inputEmail;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtRut;
         
         /// <summary>
-        /// Control inputPswd.
+        /// Control txtPaswd.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox inputPswd;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtPaswd;
         
         /// <summary>
-        /// Control btnLogin.
+        /// Control btnConsultar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogin;
+        protected global::System.Web.UI.WebControls.Button btnConsultar;
     }
 }
