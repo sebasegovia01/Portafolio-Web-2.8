@@ -70,6 +70,7 @@
     <Compile Include="Examen.cs" />
     <Compile Include="Medico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Riesgo.cs" />
     <Compile Include="TipoEvaluacion.cs" />
     <Compile Include="TipoUsuario.cs" />
   </ItemGroup>

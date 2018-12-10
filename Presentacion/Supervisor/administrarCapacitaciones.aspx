@@ -15,6 +15,12 @@
     <link href="../assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+     <!-- jQuery Js -->
+    <script src="../assets/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <!-- DataTable -->
+    <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
 
 </head>
 
@@ -101,6 +107,7 @@
                                 </li>
                             </ul>
                     </li>
+                    </ul>
             </div>
 
         </nav>
@@ -120,25 +127,96 @@
                  <div class="row">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Evaluaciones
+                                    Capacitaciones
                                 </div>
                                 <div class="panel-body">   
                                     <form id="form2" runat="server">
-                                    
+                                           <!-- Alert -->
+                                 <div class="" id="alerta" runat="server">
+                                     <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                 </div> 
+                                       <!-- /Alert --> 
+                                        <br />
                                         <div class="col-lg-12">                          
                                             <div class="form-group">
-                                                <asp:GridView ID="gvCapacitaciones" class="table table-striped table-bordered table-hover" EmptyDataText="No se han encontrado resultados." runat="server" AutoGenerateColumns="False">
+                                                <asp:GridView ID="gvCapacitaciones" class="table table-striped table-bordered table-hover" EmptyDataText="No se han encontrado resultados." runat="server" AutoGenerateColumns="False" OnRowCommand="gvCapacitaciones_RowCommand">
                                             <Columns>
-                                                 <asp:BoundField DataField="IDCAPACITACION" HeaderText="Id" SortExpression="IDCAPACITACION" Visible ="FALSE" />
+                                                <asp:BoundField DataField="ID" HeaderText="Id" SortExpression="ID" Visible="false" />
+                                                <asp:BoundField DataField="EMPRESA" HeaderText="Empresa" SortExpression="EMPRESA" />
                                                 <asp:BoundField DataField="FECHA" HeaderText="Fecha" SortExpression="FECHA" />
                                                 <asp:BoundField DataField="LUGAR" HeaderText="Lugar" SortExpression="LUGAR"/>
-                                                <asp:BoundField DataField="OBJETIVO" HeaderText="Objetivo" SortExpression="OBJETIVO"/>                                             
+                                                <asp:BoundField DataField="OBJETIVO" HeaderText="Objetivo" SortExpression="OBJETIVO"/>  
+                                                <asp:BoundField DataField="EXPOSITOR" HeaderText="Expositor" SortExpression="EXPOSITOR" />
+                                                 <asp:TemplateField headertext="Opciones" >
+                                                            <ItemTemplate>
+                                                            <asp:LinkButton CommandName="Detalle" CommandArgument='<%# Eval("ID") %>' class="btn btn-primary" runat="server"><i class="fa fa-info"></i> Detalle</asp:LinkButton>
+                                                            <asp:LinkButton CommandName="Modificar" CommandArgument='<%# Eval("ID") %>' class="btn btn-info" runat="server"><i class="fa fa-edit"></i> Editar</asp:LinkButton>
+                                                            <asp:LinkButton CommandName="Eliminar" CommandArgument='<%# Eval("ID") %>' class="btn btn-danger" runat="server"><i class="fa fa-trash"></i> Anular</asp:LinkButton>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>                                           
                                             </Columns>
                                                </asp:GridView>
                                             </div>
                                         </div>
                                         <asp:Label ID="lblAlerta" runat="server" Visible="true" Font-Bold="True" ForeColor="Red"></asp:Label>
                                         
+   <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="tituloModal" runat="server" class="modal-title"></h4>
+        </div>
+        <div id="modificarDatos" runat="server">
+        <div class="modal-body">
+          <div class="form-group">
+              <asp:HiddenField ID="hdnIdCapacitacion" runat="server" />
+             </div> 
+             <div class="form-group">
+                <label for="">Expositor</label>
+              <asp:DropDownList ID="ddlExpositor" class="form-control" runat="server"></asp:DropDownList>
+            </div>         
+            <div class="form-group">
+                <label for="">Fecha</label>
+                <input id="datetimepicker" type="date" class="form-control" runat="server" autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <label for="">Hora</label>
+               <asp:DropDownList ID="ddlHora" class="form-control" runat="server"></asp:DropDownList>
+            </div>
+              <div class="form-group">
+                <label for="">Objetivo</label>
+                <textarea id="txtObjetivo" cols="20" rows="2" runat="server" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="">Lugar</label>
+                <input id="txtLugar" type="text" class="form-control" runat="server" />
+            </div>
+        </div>
+        <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+           <button type="button" class="btn btn-success" runat="server" onserverclick="btnModificar_Click"><i class="fa fa-floppy-o"></i> Guardar</button>
+         </div>
+            </div><!-- /modificar-datos -->
+
+          <div id="listarDetalle" runat="server">
+           <div class="modal-body">
+               <asp:GridView ID="gvDetalleCap" runat="server" class="table table-striped table-bordered table-hover" AutoGenerateColumns="false" OnRowDataBound="gvDetalleCap_RowDataBound">
+                     <Columns>
+                        <asp:BoundField DataField="ID" HeaderText="Id" SortExpression="ID" Visible="false" />
+                        <asp:BoundField DataField="EMPLEADO" HeaderText="Empleado" SortExpression="EMPLEADO" />
+                        <asp:BoundField DataField="ASISTENCIA" HeaderText="Asistencia" SortExpression="Asistencia" />                                       
+                     </Columns>
+               </asp:GridView>
+           </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+         </div>
+          </div><!-- /listar-datos -->
+          </div>
+      </div>
+  </div><!-- close modal -->
+
                                     </form>
 
                                 </div>                       
@@ -154,13 +232,8 @@
     </div>
     <!-- /. WRAPPER  -->
     <!-- JS Scripts-->
-    <!-- jQuery Js -->
-    <script src="../assets/js/jquery-1.10.2.js"></script>
-    <!-- Bootstrap Js -->
-    <script src="../assets/js/bootstrap.min.js"></script>
     <!-- Metis Menu Js -->
     <script src="../assets/js/jquery.metisMenu.js"></script>
-    <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
      <script>
          function Confirmar(){
              return confirm('¿Desea enviar esta evaluación para su posterior revisión?') == true;
@@ -172,7 +245,6 @@
     <!-- Custom Js -->
     <script src="../assets/js/custom-scripts.js"></script>
     <!-- user Script -->
-    <script src="../assets/js/userScript.js"></script>
 
 </body>
 

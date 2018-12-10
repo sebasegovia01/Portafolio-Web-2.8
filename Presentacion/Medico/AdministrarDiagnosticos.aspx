@@ -10,7 +10,7 @@
     <!-- Bootstrap Styles-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- Morris Chart Styles-->
     <link href="../assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
     <!-- Custom Styles-->
@@ -51,8 +51,6 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="../Login.aspx?close=1"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
@@ -121,7 +119,11 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">  
-                                     <asp:Label ID="lblAlerta" runat="server" Visible="False" Font-Bold="True" ForeColor="Red"></asp:Label>
+                                           <!-- Alert -->
+                                 <div class="" id="alerta" runat="server">
+                                     <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                 </div> 
+                                       <!-- /Alert --> 
                                         <br />
                                         <br />
                                         <asp:GridView class="table table-striped table-bordered table-hover" ID="gvDiagnosticos" runat="server" EmptyDataText="No se han encontrado resultados." Visible="False" AutoGenerateColumns="False" DataKeyNames="ID" OnRowCommand="gvEmpresas_RowCommand" OnRowDataBound="gvEmpresas_RowDataBound">
@@ -135,7 +137,7 @@
                                              <asp:TemplateField headertext="">
                                                             <ItemTemplate>
                                                                 <asp:LinkButton CommandName="Modificar" CommandArgument='<%# Eval("ID") %>' class="btn btn-info" runat="server"><i class="fa fa-edit"></i> Modificar</asp:LinkButton>
-                                                                <asp:Button ID="btnHabilitar" runat="server" text="" CssClass="" CommandName="Deshabilitar" CommandArgument='<%# Eval("ID") %>' OnClientClick="return Confirmar();" />
+                                                                <asp:LinkButton CommandName="Deshabilitar" CommandArgument='<%# Eval("ID") %>' class="btn btn-danger" runat="server" OnClientClick="return Confirmar();"><i class="fa fa-trash" ></i> Eliminar</asp:LinkButton>
                                                                  </ItemTemplate>
                                                         </asp:TemplateField> </Columns>
                                         </asp:GridView>

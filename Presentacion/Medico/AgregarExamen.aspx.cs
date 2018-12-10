@@ -61,47 +61,47 @@ namespace Presentacion.Medico
                     ex.anotacion = txtNombreEx.InnerText;
                     if(ex.Insertar())
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Green;
-                        lblAlerta.Text = "Examen añadido con exito!";
-                        lblAlerta.Visible = true;
+                        Alerta("alert alert-success", "Examen añadido con exito, porfavor espere....");
                         Response.AddHeader("REFRESH", "2;URL=AgregarExamen.aspx");
                     }
                     else
                     {
-                        lblAlerta.Text = "Error al ingresar examen";
-                        lblAlerta.Visible = true;
+                        Alerta("alert alert-danger", "Error al ingresar examen.");
                     }
 
                 }
                 else
                 {
-                    lblAlerta.Text = "Documentos solo en formato .pdf";
-                    lblAlerta.Visible = true;
+                    Alerta("alert alert-danger", "Documento solo en formato pdf.");
                 }
             }else
             {
-                lblAlerta.Text = "Ingrese documento";
-                lblAlerta.Visible = true;
+                Alerta("alert alert-danger", "Ingrese documento.");
             }
         }
         private bool Validar()
         {
             if (cmbEmpleado.SelectedValue.Equals("0"))
             {
-                lblAlerta.Text = "Seleccione empleado";
-                lblAlerta.Visible = true;
+                Alerta("alert alert-danger", "Seleccione empleado.");
                 return false;
             }
             else if (txtNombreEx.InnerText.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese información de examen";
-                lblAlerta.Visible = true;
+                Alerta("alert alert-danger", "Ingrese información de examen.");
                 return false;
             }
             else
             {
                 return true;
             }
+        }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
     }
 }

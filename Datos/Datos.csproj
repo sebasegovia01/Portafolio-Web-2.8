@@ -55,6 +55,9 @@
     <Compile Include="CAPACITACION.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="CAPACITACIONES_VIEW.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="CITA.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -65,6 +68,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="DETALLECAPACITACION.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DETALLE_CAP_VIEW.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="DETALLE_EVALUACION.cs">

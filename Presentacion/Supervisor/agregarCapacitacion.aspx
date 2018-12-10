@@ -143,6 +143,11 @@
                                             <asp:DropDownList ID="ddlEmpresa" runat="server" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlEmpresa_SelectedIndexChanged">
                                             </asp:DropDownList>
                                         </div>
+                                        <div class="form-group">
+                                           <label for="">Expositor</label><br />
+                                           <asp:DropDownList ID="ddlExpositor" runat="server" class="form-control" AutoPostBack="True">
+                                           </asp:DropDownList>
+                                        </div>
                                         <label for="" >Lista de usuarios</label><br />
                                         <div class="col-lg-5">                          
                                                 <div class="form-group">
@@ -183,11 +188,11 @@
                                             <label for="">Lugar</label>
                                             <asp:TextBox class="form-control" ID="txtLugar" placeholder="Ej: Planta superior" runat="server"></asp:TextBox>
                                         </div>
-                                    </div>       
-                                <div class="col-lg-12">
-                                    <label for="">Fecha</label><br />
+                                        <div class="form-group">
+                                         <label for="">Fecha</label><br />
                                     <input type="text" class="form-control" id="datetimepicker"  runat="server" autocomplete="off"/>                         
-                                </div> 
+                                        </div>
+                                    </div>                
                                 <div class="col-lg-12">
                                     <br />
                                     <br />

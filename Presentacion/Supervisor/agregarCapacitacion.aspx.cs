@@ -15,42 +15,56 @@ namespace Presentacion.Supervisor
             if (!IsPostBack)
             {
                 RellenarEmpresa();
+                RellenarExpositor();
             }
 
 
             alerta.Visible = false;
-            
+
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
 
-            if(Validacion())
-            { 
+            if (Validacion())
+            {
 
-            Capacitacion cap = new Capacitacion();
-            cap.fecha = DateTime.Parse(datetimepicker.Value + ":00");
-            cap.objetivo = txtOBjetivo.Text;
-            cap.lugar = txtLugar.Text;
+                Capacitacion cap = new Capacitacion();
+                cap.fecha = DateTime.Parse(datetimepicker.Value + ":00");
+                cap.objetivo = txtOBjetivo.Text;
+                cap.lugar = txtLugar.Text;
+                cap.expositor = ddlExpositor.SelectedValue;
+                cap.rut_empresa = ddlEmpresa.SelectedValue;
 
-                if (cap.Insertar())
+                //Para insertar muchos usuarios en una capacitación, se inserta en el detalle
+                if (cap.LimiteCapacitaciones(ddlEmpresa.SelectedItem.Text) >= 5)
                 {
-                    DetalleCapacitacion det = new DetalleCapacitacion();
-
-                    for (int i = 0; i < selDestinatarios.Items.Count; i++)
-                    {
-                        det.id_capacitacion = cap.Id_Capacitacion();
-                        det.rut_empleado = selDestinatarios.Items[i].Value;
-
-                        det.Insertar();
-                    }
-
-                    this.Alerta("alert alert-success","Capacitación ingresada con exito!");
+                    this.Alerta("alert alert-danger", "Maximo 5 capacitaciones por empresa al año");
                 }
                 else
                 {
-                    this.Alerta("alert alert-danger", "Capacitación ya registrada en el sistema");
+                    if (cap.Insertar())
+                    {
+                        DetalleCapacitacion det = new DetalleCapacitacion();
+
+                        for (int i = 0; i < selDestinatarios.Items.Count; i++)
+                        {
+                            //Insertamos asistente
+                            det.id_capacitacion = cap.Id_Capacitacion();
+                            det.rut_empleado = selDestinatarios.Items[i].Value;
+
+                            det.Insertar();
+                        }
+
+                        this.Alerta("alert alert-success", "Capacitación ingresada con exito!");
+                    }
+                    else
+                    {
+                        this.Alerta("alert alert-danger", "Error al ingresar Capacitación");
+                    }
                 }
+                
+              
 
             }//Cierre validación
         }
@@ -65,11 +79,28 @@ namespace Presentacion.Supervisor
             ddlEmpresa.Items.Insert(0, new ListItem("Seleccione empresa", "0"));
         }
 
+        private void RellenarExpositor()
+        {
+            EmpleadoSafe emps = new EmpleadoSafe();
+            ddlExpositor.DataSource = emps.ListarExpositorCmb();
+            ddlExpositor.DataTextField = "NOMBRE";
+            ddlExpositor.DataValueField = "RUT";
+            ddlExpositor.DataBind();
+            ddlExpositor.Items.Insert(0, new ListItem("Selecciona Expositor", "0"));
+        }
+
         private bool Validacion()
         {
+            Capacitacion ca = new Capacitacion();
+
             if (ddlEmpresa.SelectedValue.Equals("0"))
             {
                 this.Alerta("alert alert-danger", "Selecciona empresa");
+                return false;
+            }
+            else if (ddlExpositor.SelectedValue.Equals("0"))
+            {
+                this.Alerta("alert alert-danger", "Selecciona expositor");
                 return false;
             }
             else if (selDestinatarios.Items.Count <= 0)
@@ -93,7 +124,12 @@ namespace Presentacion.Supervisor
                 this.Alerta("alert alert-danger", "Seleccione fecha y hora");
                 return false;
             }
-            
+            else if (ca.FechaAgendada(datetimepicker.Value))
+            {
+                this.Alerta("alert alert-danger", "Fecha ya agendada");
+                return false;
+            }
+
             return true;
         }
 
@@ -143,7 +179,7 @@ namespace Presentacion.Supervisor
                         selDestinatarios.Items.Insert(0, new ListItem(selUsuarios.Items[y].Text, selUsuarios.Items[y].Value));
                         selUsuarios.Items.RemoveAt(y);
                     }
-                   
+
                 }
             }
         }

@@ -20,7 +20,6 @@ namespace Presentacion.Medico
                 CargarExamenes();
             }
 
-            lblAlerta.Visible = false;
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
@@ -49,21 +48,18 @@ namespace Presentacion.Medico
 
                     if (ex.Modificar())
                     {
-                        lblAlerta.Text = "Examen modificado, porfavor espere...";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-success", "Examen modificado, porfavor espere...");
                         Response.AddHeader("REFRESH", "2;URL=AdministrarExamenes.aspx");
                     }
                     else
                     {
-                        lblAlerta.Text = "Error al modificar";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger", "Error al modificar");
                     }
 
                 }
                 else
                 {
-                    lblAlerta.Text = "Solo documentos en formato pdf";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-danger", "Solo documentos en formato pdf");
                 }
             }else
             {
@@ -72,14 +68,12 @@ namespace Presentacion.Medico
 
                 if (ex.Modificar())
                 {
-                    lblAlerta.Text = "Examen modificado, porfavor espere...";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-success", "Examen modificado, porfavor espere...");
                     Response.AddHeader("REFRESH", "2;URL=AdministrarExamenes.aspx");
                 }
                 else
                 {
-                    lblAlerta.Text = "Error al modificar";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-danger", "Error al modificar examen");
                 }
 
             }
@@ -139,14 +133,12 @@ namespace Presentacion.Medico
 
             if (ex.Eliminar())
             {
-                lblAlerta.Text = "Examen eliminado, porfavor espere...";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-success", "Examen eliminado. porfavor espere...");
                 Response.AddHeader("REFRESH", "2;URL=AdministrarExamenes.aspx");
             }
             else
             {
-                lblAlerta.Text = "Error al eliminar examen";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Error al eliminar examen");
             }
         }
 
@@ -187,6 +179,14 @@ namespace Presentacion.Medico
                 ScriptManager.RegisterStartupScript(this, this.GetType(),
         ScriptKey, fn.ToString(), true);
             }
+        }
+
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
     }
 }

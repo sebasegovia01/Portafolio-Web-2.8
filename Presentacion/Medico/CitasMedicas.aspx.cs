@@ -16,8 +16,7 @@ namespace Presentacion.Medico
             {
                 ListarCitasGenerales();
             }
-                
-                lblAlert.Enabled = false;
+
         }
 
 
@@ -65,17 +64,22 @@ namespace Presentacion.Medico
 
             if (c.ModificarAsistencia())
             {
-                lblAlert.Text = "Actualizando Cita, por favor espere...";
-                lblAlert.Visible = true;
-                Response.AddHeader("REFRESH", "3;URL=CitasMedicas.aspx");
+                this.Alerta("alert alert-success", "Actualizando cita, porfavor espere...");
+                Response.AddHeader("REFRESH", "2;URL=CitasMedicas.aspx");
             }
             else
             {
-                lblAlert.Text = "Error al actualizar cita.";
-                lblAlert.Visible = true;
+                this.Alerta("alert alert-danger","Error al actualizar");
 
             }
 
+        }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
 
         protected void gvVisitasMe_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -89,16 +93,16 @@ namespace Presentacion.Medico
 
                 if (int.Parse(e.Row.Cells[5].Text) == 1)
                 {
-                    Button btn = (Button)e.Row.Cells[6].FindControl("btnHabilitar");
+                    LinkButton btn = (LinkButton)e.Row.Cells[6].FindControl("btnHabilitar");
                     btn.CssClass = "btn btn-danger";
-                    btn.Text = "Anular";
+                    btn.Text = "<i class='fa fa-circle-o'></i> Anular";
                     btn.CommandName = "Anular";
                 }
                 else
                 {
-                    Button btn = (Button)e.Row.Cells[6].FindControl("btnHabilitar");
+                    LinkButton btn = (LinkButton)e.Row.Cells[6].FindControl("btnHabilitar");
                     btn.CssClass = "btn btn-success";
-                    btn.Text = "Confirmar";
+                    btn.Text = "<i class='fa fa-check-circle-o'></i> Confirmar";
                     btn.CommandName = "Confirmar";
                 }
             }
