@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Modelo;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace Presentacion
 {
@@ -45,18 +47,18 @@ namespace Presentacion
             EmpleadoSafe emps = new EmpleadoSafe();
 
             emps.correo = inputEmail.Text;
-            emps.clave = inputPswd.Text;
+            emps.clave = Encriptacion(inputPswd.Text);
 
             //Inicio Medico
             Modelo.Medico med = new Modelo.Medico();
 
             med.correo = inputEmail.Text;
-            med.clave = inputPswd.Text;
+            med.clave = Encriptacion(inputPswd.Text);
 
             //Inicio Cliente
             Empleado cli = new Empleado();
             cli.correo = inputEmail.Text;
-            cli.clave = inputPswd.Text;
+            cli.clave = Encriptacion(inputPswd.Text);
 
             if (emps.existe())
             {
@@ -131,6 +133,20 @@ namespace Presentacion
                 Response.Redirect("Cliente/index.aspx");
             }
 
+        }
+
+        public string Encriptacion(string pass)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(pass));
+            byte[] result = md5.Hash;
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                str.Append(result[i].ToString("x2"));
+            }
+
+            return str.ToString();
         }
 
     }// Cierre clase

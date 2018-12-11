@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Modelo;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Presentacion
 {
@@ -32,6 +34,7 @@ namespace Presentacion
             {
                 if (int.Parse(ddlTipoUsuario.SelectedValue) > 0 && int.Parse(ddlTipoUsuario.SelectedValue) < 5)
                 {
+                    
                     EmpleadoSafe emp = new EmpleadoSafe();
                     emp.rut = txtRut.Text;
                     emp.nombre = txtNombre.Text;
@@ -41,7 +44,8 @@ namespace Presentacion
                     emp.numero = int.Parse(txtFono.Text);
                     emp.id_tipo_us = int.Parse(ddlTipoUsuario.SelectedValue);
                     emp.correo = txtCorreo.Text;
-                    emp.clave = txtClave.Text;
+                    //emp.clave = txtClave.Text;
+                    emp.clave = Encriptacion(txtClave.Text);
 
                     if (emp.Insertar())
                     {
@@ -67,7 +71,8 @@ namespace Presentacion
                     med.f_nacimiento = DateTime.Parse(dtNacimiento.Text);
                     med.telefono = int.Parse(txtFono.Text);
                     med.correo = txtCorreo.Text;
-                    med.clave = txtClave.Text;
+                    //med.clave = txtClave.Text;
+                    med.clave = Encriptacion(txtClave.Text);
 
                     if (med.Insertar())
                     {
@@ -92,7 +97,8 @@ namespace Presentacion
                     cli.f_nacimiento = DateTime.Parse(dtNacimiento.Text);
                     cli.numero = int.Parse(txtFono.Text);
                     cli.correo = txtCorreo.Text;
-                    cli.clave = txtClave.Text;
+                    //cli.clave = txtClave.Text;
+                    cli.clave = Encriptacion(txtClave.Text);
                     cli.rutEmpresa = ddlEmpresa.SelectedValue;
 
                     if (cli.Insertar())
@@ -220,6 +226,20 @@ namespace Presentacion
             ddlEmpresa.DataValueField = "RUT";
             ddlEmpresa.DataBind();
             ddlEmpresa.Items.Insert(0, new ListItem("Selecciona Empresa", "0"));
+        }
+
+        public string Encriptacion(string pass)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(pass));
+            byte[] result = md5.Hash;
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                str.Append(result[i].ToString("x2"));
+            }
+
+            return str.ToString();
         }
     }
 }

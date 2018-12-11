@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -57,7 +58,8 @@ namespace Presentacion.Supervisor
                 me.apellido_m = txtApMaterno.Text;
                 me.f_nacimiento = DateTime.Parse(dtNacimiento.Text);
                 me.correo = txtCorreo.Text;
-                me.clave = txtClave.Text;
+                //me.clave = txtClave.Text;
+                me.clave = Encriptacion(txtClave.Text);
                 me.telefono = int.Parse(txtFono.Text);
                 me.rut_empresa = cmbEmpresa.SelectedValue;
                 me.activo = 1;
@@ -158,6 +160,20 @@ namespace Presentacion.Supervisor
             {
                 return true;
             }
+        }
+
+        public string Encriptacion(string pass)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(pass));
+            byte[] result = md5.Hash;
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                str.Append(result[i].ToString("x2"));
+            }
+
+            return str.ToString();
         }
 
 
