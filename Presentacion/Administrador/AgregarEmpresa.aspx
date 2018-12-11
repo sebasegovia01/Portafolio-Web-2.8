@@ -112,6 +112,11 @@
                                 </div>
                                 <div class="panel-body">   
                                     <form id="form1" runat="server">
+                                            <!-- Alert -->
+                                              <div class="" id="alerta" runat="server">
+                                                 <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                              </div> 
+                                              <!-- /Alert --> 
                         <div class="col-lg-6">                          
                                         <div class="form-group">
                                             <label for="">Comuna*</label><br />
@@ -147,8 +152,6 @@
                                     <button type="button" class="btn btn-primary" runat="server" onserverclick="btnAgregar_Click"><i class="fa fa-floppy-o"></i> Guardar</button>
                                              <br />
                                     <br />
-                                           <asp:Label ID="lblAlerta" runat="server" Visible="False" Font-Bold="True" ForeColor="Red"></asp:Label>
-   
                                      <p class="help-block">Los campos con (*) son obligatorios.</p>                                   <br>
                          
                                 </div>

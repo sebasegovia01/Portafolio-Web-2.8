@@ -38,7 +38,6 @@ namespace Presentacion.Administrador
             dpEmpresa.Visible = false;
             tipoEmpresaLabel.Visible = false;
 
-            lblAlert.Visible = false;
         }
 
         private void DesplegarModal(string rut)
@@ -129,6 +128,7 @@ namespace Presentacion.Administrador
 
         protected void ddlUsuario_SelectedIndexChanged(object sender, EventArgs e)
         {
+            alerta.Visible = false;
             string valor = ddlUsuario.SelectedValue;
 
             switch (valor)
@@ -163,27 +163,26 @@ namespace Presentacion.Administrador
 
         private void BuscarPorRut(string rut)
         {
+            alerta.Visible = false;
+
             EmpleadoSafe empSafe = new EmpleadoSafe();
             Empleado emp = new Empleado();
             Modelo.Medico me = new Modelo.Medico();
 
             if (empSafe.ListarEmpleadoSFPorRut(rut).Count() > 0)
             {
-                lblAlert.Visible = false;
                 gvUsuarios.Visible = true;
                 gvUsuarios.DataSource = empSafe.ListarEmpleadoSFPorRut(rut);
                 gvUsuarios.DataBind();
             }
             else if (emp.ListarEmpleadoPorRut(rut).Count > 0)
             {
-                lblAlert.Visible = false;
                 gvUsuarios.Visible = true;
                 gvUsuarios.DataSource = emp.ListarEmpleadoPorRut(rut);
                 gvUsuarios.DataBind();
             }
             else if (me.ListarMedicosPorRut(rut).Count > 0)
             {
-                lblAlert.Visible = false;
                 gvUsuarios.Visible = true;
                 gvUsuarios.DataSource = me.ListarMedicosPorRut(rut);
                 gvUsuarios.DataBind();
@@ -191,8 +190,7 @@ namespace Presentacion.Administrador
             else
             {
                 gvUsuarios.Visible = false;
-                lblAlert.Text = "No se encontrarón resultados";
-                lblAlert.Visible = true;
+                Alerta("alert alert-danger","No se encontrarón resultados");
             }
         }
 
@@ -242,7 +240,6 @@ namespace Presentacion.Administrador
                     break;
 
                 default:
-                    lblAlert.Visible = false;
                     break;
             }
         }
@@ -263,32 +260,28 @@ namespace Presentacion.Administrador
                 //Se des/habilita empleado safe      
                 emps.activo = emps.activo == 1 ? 0 : 1;
                 emps.Deshabilitar();
-                lblAlert.Text = "Cliente Des/habilitado. Por favor espere.";
-                Response.AddHeader("REFRESH", "3;URL=administrarUsuarios.aspx");
-                lblAlert.Visible = true;
+                Alerta("alert alert-success", "Empleado safe des/habilitado, porfavor espere...");
+                Response.AddHeader("REFRESH", "2;URL=administrarUsuarios.aspx");
             }
             else if (em.Leer())
             {
                 //Se des/habilita empleado
                 em.activo = em.activo == 1 ? 0 : 1;
                 em.Deshabilitar();
-                lblAlert.Text = "Empleado Des/habilitado. Por favor espere.";
-                Response.AddHeader("REFRESH", "3;URL=administrarUsuarios.aspx");
-                lblAlert.Visible = true;
+                Alerta("alert alert-success", "Empleado des/habilitado, porfavor espere...");
+                Response.AddHeader("REFRESH", "2;URL=administrarUsuarios.aspx");
             }
             else if (me.Leer())
             {
                 //Se des/habilita médico
                 me.activo = me.activo == 1 ? 0 : 1;
                 me.Deshabilitar();
-                lblAlert.Text = "Médico Des/habilitado. Por favor espere.";
+                Alerta("alert alert-success", "Médico des/habilitado, porfavor espere...");
                 Response.AddHeader("REFRESH", "3;URL=administrarUsuarios.aspx");
-                lblAlert.Visible = true;
             }
             else
             {
-                lblAlert.Text = "No se encontro registros con el rut " + rut;
-                lblAlert.Visible = true;
+                Alerta("alert alert-danger", "No se encontro registro con el rut: "+rut);
             }
         }
 
@@ -314,14 +307,12 @@ namespace Presentacion.Administrador
 
                     if (emp.Modificar())
                     {
-                        lblAlert.Text = "Actualizando datos, por favor espere...";
-                        lblAlert.Visible = true;
-                        Response.AddHeader("REFRESH", "3;URL=administrarUsuarios.aspx");
+                        Alerta("alert alert-success", "Actualizando datos, porfavor espere...");
+                        Response.AddHeader("REFRESH", "2;URL=administrarUsuarios.aspx");
                     }
                     else
                     {
-                        lblAlert.Text = "Error al actualizar usuario";
-                        lblAlert.Visible = true;
+                        Alerta("alert alert-danger", "Error al actualizar usuario");
                     }
                     break;
 
@@ -341,15 +332,13 @@ namespace Presentacion.Administrador
 
                     if (emps.Modificar())
                     {
-                        lblAlert.Text = "Actualizando datos, por favor espere...";
-                        lblAlert.Visible = true;
-                        Response.AddHeader("REFRESH", "3;URL=administrarUsuarios.aspx");
+                        Alerta("alert alert-success", "Actualizando datos, porfavor espere...");
+                        Response.AddHeader("REFRESH", "2;URL=administrarUsuarios.aspx");
 
                     }
                     else
                     {
-                        lblAlert.Text = "Error al actualizar usuario";
-                        lblAlert.Visible = true;
+                        Alerta("alert alert-danger", "Error al actualizar usuario");
                     }
                     break;
 
@@ -369,15 +358,13 @@ namespace Presentacion.Administrador
 
                     if (me.Modificar())
                     {
-                        lblAlert.Text = "Actualizando datos, por favor espere...";
-                        lblAlert.Visible = true;
-                        Response.AddHeader("REFRESH", "3;URL=administrarUsuarios.aspx");
+                        Alerta("alert alert-success", "Actualizando usuario, porfavor espere...");
+                        Response.AddHeader("REFRESH", "2;URL=administrarUsuarios.aspx");
 
                     }
                     else
                     {
-                        lblAlert.Text = "Error al actualizar usuario";
-                        lblAlert.Visible = true;
+                        Alerta("alert alert-danger", "Error al actualizar usuario");
                     }
                     break;
                 default:
@@ -407,6 +394,13 @@ namespace Presentacion.Administrador
             dpEmpresa.DataValueField = "RUT";
             dpEmpresa.DataBind();
             dpEmpresa.Items.Insert(0, new ListItem("Selecciona Empresa", "0"));
+        }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
 
         protected void gvUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)

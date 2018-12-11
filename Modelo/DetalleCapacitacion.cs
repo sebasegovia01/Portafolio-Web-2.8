@@ -43,7 +43,6 @@ namespace Modelo
             }
         }
 
-
         public bool Eliminar()
         {
             try
@@ -90,6 +89,25 @@ namespace Modelo
                 capacitacion.ID = c.ID;
                 capacitacion.EMPLEADO = c.EMPLEADO;
                 capacitacion.ASISTENCIA = c.ASISTENCIA;
+
+                capacitaciones.Add(capacitacion);
+            }
+
+
+            return capacitaciones;
+        }
+
+        public List<dynamic> ListarDetalleCapConfirmados()
+        {
+            List<dynamic> capacitaciones = new List<dynamic>();
+
+            foreach (DETALLE_CAP_VIEW c in Conexion.Entidades.DETALLE_CAP_VIEW.AsNoTracking().Where(
+                d => d.ID.Equals(this.id_capacitacion)))
+            {
+                DETALLE_CAP_VIEW capacitacion = new DETALLE_CAP_VIEW();
+
+                capacitacion.ID = c.ID;
+                capacitacion.EMPLEADO = c.EMPLEADO;
 
                 capacitaciones.Add(capacitacion);
             }

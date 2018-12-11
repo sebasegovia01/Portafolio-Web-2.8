@@ -51,8 +51,6 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
-                        </li>
                         <li class="divider"></li>
                         <li><a href="../Login.aspx?close=1"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
                         </li>
@@ -133,8 +131,8 @@
                                        </div>
                                       <div class="col-lg-6">
                                          <label for="">Buscar por rut: </label>
-                                          <asp:TextBox ID="txtBuscarRut" runat="server"></asp:TextBox>
-                                          <button type="button" class="btn btn-primary" runat="server" onserverclick="btnBuscar_Click"><i class="fa fa-search"></i> Buscar</button>
+                                          <asp:TextBox ID="txtBuscarRut" runat="server" MaxLength="9" placeholder="Ej: 12345645K"></asp:TextBox>
+                                          <button type="button" class="btn btn-primary" runat="server" onserverclick="btnBuscar_Click"><i class="fa fa-search" ></i> Buscar</button>
                                         
                                           <br />
                                       </div>
@@ -143,7 +141,11 @@
                                          <br />
                                         <div class="col-lg-12">
                                         <div class="table-responsive">
-                                            <asp:Label ID="lblAlert" runat="server" ForeColor="Red" Font-Bold="True"></asp:Label>
+                                               <!-- Alert -->
+                                              <div class="" id="alerta" runat="server">
+                                                 <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                              </div> 
+                                              <!-- /Alert --> 
                                                <br />
                                                <br />
                                         <asp:GridView class="table table-striped table-bordered table-hover"  ID="gvUsuarios" runat="server" DataKeyNames="RUT" EmptyDataText="No se han encontrado resultados." Visible="False" AutoGenerateColumns="False" OnRowCommand="gvUsuarios_RowCommand" OnRowDataBound="gvUsuarios_RowDataBound">

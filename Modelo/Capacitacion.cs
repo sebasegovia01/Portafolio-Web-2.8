@@ -174,5 +174,28 @@ namespace Modelo
 
             return capacitaciones;
         }
+
+        public List<dynamic> ListarCapacitacionesExpositor()
+        {
+            List<dynamic> capacitaciones = new List<dynamic>();
+
+            foreach (CAPACITACIONES_VIEW c in Conexion.Entidades.CAPACITACIONES_VIEW.AsNoTracking().Where(
+                c => c.EXPOSITOR.Equals(this.expositor)))
+            {
+                CAPACITACIONES_VIEW capacitacion = new CAPACITACIONES_VIEW();
+
+                capacitacion.ID = c.ID;
+                capacitacion.FECHA = c.FECHA;
+                capacitacion.LUGAR = c.LUGAR;
+                capacitacion.OBJETIVO = c.OBJETIVO;
+                capacitacion.EXPOSITOR = c.EXPOSITOR;
+                capacitacion.EMPRESA = c.EMPRESA;
+
+                capacitaciones.Add(capacitacion);
+            }
+
+
+            return capacitaciones;
+        }
     }
 }

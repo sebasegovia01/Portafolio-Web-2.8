@@ -28,7 +28,6 @@ namespace Presentacion.Administrador
                 mostrarEmpresas();
             }
 
-            lblAlerta.Visible = false; 
         }
         
 
@@ -117,17 +116,21 @@ namespace Presentacion.Administrador
 
             if (em.Modificar())
             {
-                lblAlerta.Text = "Actualizando datos, por favor espere...";
-                lblAlerta.Visible = true;
-                Response.AddHeader("REFRESH", "3;URL=administrarEmpresas.aspx");
+                this.Alerta("alert alert-success", "Actualizando datos, porfavor espere...");
+                Response.AddHeader("REFRESH", "2;URL=administrarEmpresas.aspx");
             }
             else
             {
-                lblAlerta.Text = "Error al actualizar datos";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Error al actualizar");
             }
         }
 
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
+        }
         private void DeshabilitarEmpresa(string rut)
         {
             Empresa em = new Empresa();
@@ -136,14 +139,12 @@ namespace Presentacion.Administrador
             {
                 em.activo = em.activo == 1 ? 0 : 1;
                 em.Deshabilitar();
-                lblAlerta.Text = "Empresa Des/habilitado. Por favor espere.";
+                this.Alerta("alert alert-success", "Empresa des/habilitada, porfavor espere...");
                 Response.AddHeader("REFRESH", "2;URL=administrarEmpresas.aspx");
-                lblAlerta.Visible = true;
             }
             else
             {
-                lblAlerta.Text = "No se encontro registros con el rut " + rut;
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "No se encontrarón registros");
             }
         }
 

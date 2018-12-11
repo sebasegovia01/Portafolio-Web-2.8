@@ -47,8 +47,6 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
-                        </li>
                         <li class="divider"></li>
                         <li><a href="../Login.aspx?close=1"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
                         </li>
@@ -131,7 +129,11 @@
                                 </div>
                                 <div class="panel-body">   
                                    <form id="form1" runat="server">
-                                       
+                                         <!-- Alert -->
+                                              <div class="" id="alerta" runat="server">
+                                                 <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                              </div> 
+                                              <!-- /Alert --> 
                         <div class="col-lg-6">    
                                         <div class="form-group">
                                             <label for="">Fecha</label>
@@ -147,11 +149,11 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="">Empresa*</label>
+                                        <label for="">Empresa</label>
                                         <asp:DropDownList ID="cmbEmpresa" class="form-control" runat="server" OnSelectedIndexChanged="cmbEmpresa_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList>
                                         </div>
                                     <div class="form-group">
-                                        <label for="">Doctor(a)*</label>
+                                        <label for="">Doctor(a)</label>
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <asp:DropDownList ID="cmbDoctor" class="form-control" runat="server" OnSelectedIndexChanged="cmbDoctor_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList>
@@ -166,7 +168,7 @@
 
 
                                         <div class="form-group">
-                                            <label for="">Horas Disponibles*</label>
+                                            <label for="">Horas Disponibles</label>
                                                     <asp:DropDownList ID="cmbHora" CssClass="form-control" runat="server" AutoPostBack="True">                                            
                                                     </asp:DropDownList>
                                         </div>  
@@ -177,16 +179,9 @@
                                           <br />
                                         </div>
                                          <br />
-                                           <br />
-                                    <br />
-                                      &nbsp;&nbsp;&nbsp;
-                                      <asp:Label ID="lblAlerta" runat="server" Visible="False" Font-Bold="True" ForeColor="Red"></asp:Label>
-   
-                                           <br />
-                                    
-                                           <br>
+                                         <br />
                                 <div class="col-lg-12">    
-                                     <p class="help-block">Los campos con (*) son obligatorios.</p>  
+                                     <p class="help-block">Todos los campos son obligatorios.</p>  
                                     </div>
                                 </div>
                                        </form>

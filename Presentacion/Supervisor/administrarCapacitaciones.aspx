@@ -158,8 +158,7 @@
                                                </asp:GridView>
                                             </div>
                                         </div>
-                                        <asp:Label ID="lblAlerta" runat="server" Visible="true" Font-Bold="True" ForeColor="Red"></asp:Label>
-                                        
+                                                                                
    <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">

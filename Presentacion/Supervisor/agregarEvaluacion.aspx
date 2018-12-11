@@ -44,8 +44,6 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
-                        </li>
                         <li class="divider"></li>
                         <li><a href="../Login.aspx?close=1"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
                         </li>
@@ -127,9 +125,14 @@
                                 </div>
                                 <div class="panel-body">   
                                     <form id="form1" runat="server">
+                                          <!-- Alert -->
+                                              <div class="" id="alerta" runat="server">
+                                                 <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                              </div> 
+                                              <!-- /Alert --> 
                                     <div class="col-lg-6">                          
                                         <div class="form-group">
-                                            <label for="">Tipo Evaluación*</label><br />
+                                            <label for="">Tipo Evaluación</label><br />
                                             <asp:DropDownList ID="ddlTipoEvaluacion" runat="server" class="form-control" AutoPostBack="True">
                                             </asp:DropDownList>
                                         </div>
@@ -139,13 +142,13 @@
                                             </asp:DropDownList>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Observación*</label><br/>
+                                            <label for="">Observación</label><br/>
                                             <asp:TextBox id="txtObservacion" TextMode="multiline" class="form-control" Rows="5" runat="server" />
                                         </div>              
                                 </div>
                                 <div class="col-lg-6">                          
                                         <div class="form-group">
-                                            <label for="">Fecha*</label>
+                                            <label for="">Fecha</label>
                                             <asp:TextBox type="date" class="form-control" ID="dtFecha" runat="server"></asp:TextBox>
                                         </div>      
                                 </div>
@@ -153,9 +156,7 @@
                                     <button type="button" class="btn btn-primary" runat="server" onserverclick="btnAgregar_Click"><i class="fa fa-floppy-o"></i> Guardar</button>
                                           <br />
                                     <br />
-                                           <asp:Label ID="lblAlerta" runat="server" Visible="False" Font-Bold="True" ForeColor="Red"></asp:Label>
-   
-                                     <p class="help-block">Los campos con (*) son obligatorios.</p>                                   <br>
+                                     <p class="help-block">Todos los campos son obligatorios.</p>                                   <br>
                          
                                 </div>
                                </form>

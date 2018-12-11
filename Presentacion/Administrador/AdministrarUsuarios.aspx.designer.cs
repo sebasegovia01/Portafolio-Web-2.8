@@ -49,13 +49,22 @@ namespace Presentacion.Administrador {
         protected global::System.Web.UI.WebControls.TextBox txtBuscarRut;
         
         /// <summary>
-        /// Control lblAlert.
+        /// Control alerta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAlert;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alerta;
+        
+        /// <summary>
+        /// Control lblAlertMsge.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAlertMsge;
         
         /// <summary>
         /// Control gvUsuarios.

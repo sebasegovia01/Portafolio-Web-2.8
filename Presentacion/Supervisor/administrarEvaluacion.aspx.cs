@@ -31,7 +31,6 @@ namespace Presentacion.Supervisor
                 RellenarTipoEvaluacion(0); 
             }
 
-            lblAlerta.Visible = false;
         }
 
         protected void ddlTipoEvaluacion_SelectedIndexChanged(object sender, EventArgs e)
@@ -100,6 +99,12 @@ namespace Presentacion.Supervisor
             
         }
 
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
+        }
         private void RellenarUsuariosSafe()
         {
             EmpleadoSafe ems = new EmpleadoSafe();
@@ -163,17 +168,13 @@ namespace Presentacion.Supervisor
 
                     if (ev.Cambiar_Estado())
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Green;
-                        lblAlerta.Text = "Evaluación enviada con exito, porfavor espere...";
+                        this.Alerta("alert alert-success","Evaluación ingresada con exito, porfavor espere...");
                         Response.AddHeader("REFRESH", "2;URL=administrarEvaluacion.aspx");
-                        lblAlerta.Visible = true;
                         RellenarNoDerivados("0");
                     }
                     else
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Red;
-                        lblAlerta.Text = "Error al enviar evaluación";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger","Error al ingresar evaluación");
                     }
 
                     break;
@@ -201,14 +202,12 @@ namespace Presentacion.Supervisor
             ev.idEvaluacion = id;
             if (ev.Eliminar())
             {
-                lblAlerta.Text = "Evaluación Eliminada, porfavor espere...";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-success","Evaluación eliminada, porfavor espere...");
                 Response.AddHeader("REFRESH", "2;URL=administrarEvaluacion.aspx");
             }
             else
             {
-                lblAlerta.Text = "Error al eliminar";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Error al eliminar evaluación");
             }
         }
 
@@ -250,14 +249,12 @@ namespace Presentacion.Supervisor
 
             if (ev.Modificar())
             {
-                lblAlerta.Text = "Datos Modificados con exito, porfavor espere";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-success","Datos modificados con exito, porfavor espere...");
                 Response.AddHeader("REFRESH", "2;URL=administrarEvaluacion.aspx");
             }
             else
             {
-                lblAlerta.Text = "Error al modificar rvaluación";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Error al modificar evaluación");
             }
 
         }

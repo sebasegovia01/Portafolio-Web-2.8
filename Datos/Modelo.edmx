@@ -16,6 +16,15 @@
           <Property Name="EXPOSITOR" Type="varchar2" MaxLength="255" />
           <Property Name="RUTEMPRESA" Type="varchar2" MaxLength="255" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SEBA.CERTIFICADO' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="CERTIFICADO">
+          <Property Name="IDCAPACITACION" Type="number" Precision="38" Scale="0" />
+          <Property Name="RUTEMPLEADO" Type="varchar2" MaxLength="9" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="255" />
+          <Property Name="DOCUMENTO" Type="blob" />
+          <Property Name="TIPO_DOC" Type="varchar2" MaxLength="20" />
+        </EntityType>-->
         <EntityType Name="CITA">
           <Key>
             <PropertyRef Name="ID_CITA" />
@@ -189,6 +198,17 @@ advertencia 6002: La tabla o vista 'SEBA.CAPACITACIONES_VIEW' no tiene definida 
           <Property Name="FECHA" Type="timestamp" Precision="6" Nullable="false" />
           <Property Name="LUGAR" Type="varchar2" MaxLength="255" Nullable="false" />
           <Property Name="EXPOSITOR" Type="varchar2" MaxLength="61" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.CERTIFICADOS_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="CERTIFICADOS_VIEW">
+          <Key>
+            <PropertyRef Name="RUT" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="RUT" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="EMPLEADO" Type="varchar2" MaxLength="60" />
+          <Property Name="DOCUMENTO" Type="varchar2" MaxLength="276" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SEBA.DETALLE_CAP_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -407,6 +427,9 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'SEBA.CERTIFICADO', pero no se encuentra la tabla.
+        <Association Name="CERTIFICADO_FK1" />-->
         <Association Name="MEDICO_FK1">
           <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
           <End Role="MEDICO" Type="Self.MEDICO" Multiplicity="*" />
@@ -578,6 +601,13 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
           <Parameter Name="LUGAR" Type="varchar2" Mode="In" />
           <Parameter Name="EXPOSITOR" Type="varchar2" Mode="In" />
           <Parameter Name="RUT_EMP" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INGRESAR_CERTIFICADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+          <Parameter Name="RUTEMPLEADO" Type="varchar2" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+          <Parameter Name="DOCUMENTO" Type="blob" Mode="In" />
+          <Parameter Name="TIPO_DOC" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="INGRESAR_CITA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
           <Parameter Name="ASISTENCIA" Type="char" Mode="In" />
@@ -823,6 +853,14 @@ FROM "SEBA"."DETALLECAPACITACION" "DETALLECAPACITACION"</DefiningQuery>
 "CAPACITACIONES_VIEW"."LUGAR" AS "LUGAR", 
 "CAPACITACIONES_VIEW"."EXPOSITOR" AS "EXPOSITOR"
 FROM "SEBA"."CAPACITACIONES_VIEW" "CAPACITACIONES_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="CERTIFICADOS_VIEW" EntityType="Self.CERTIFICADOS_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"CERTIFICADOS_VIEW"."ID" AS "ID", 
+"CERTIFICADOS_VIEW"."RUT" AS "RUT", 
+"CERTIFICADOS_VIEW"."EMPLEADO" AS "EMPLEADO", 
+"CERTIFICADOS_VIEW"."DOCUMENTO" AS "DOCUMENTO"
+FROM "SEBA"."CERTIFICADOS_VIEW" "CERTIFICADOS_VIEW"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="DETALLE_CAP_VIEW" EntityType="Self.DETALLE_CAP_VIEW" store:Type="Views" store:Schema="SEBA">
             <DefiningQuery>SELECT 
@@ -1804,6 +1842,14 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <Parameter Name="RUT_EMPLEADO" Mode="In" Type="String" />
             <Parameter Name="NOMBRE" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="CERTIFICADOS_VIEW" EntityType="Model.CERTIFICADOS_VIEW" />
+          <FunctionImport Name="INGRESAR_CERTIFICADO">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="RUTEMPLEADO" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="DOCUMENTO" Mode="In" Type="Binary" />
+            <Parameter Name="TIPO_DOC" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="CAPACITACIONES_VIEW">
           <Key>
@@ -1853,6 +1899,15 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CERTIFICADOS_VIEW">
+          <Key>
+            <PropertyRef Name="RUT" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="RUT" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="EMPLEADO" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="DOCUMENTO" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2233,6 +2288,17 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <FunctionImportMapping FunctionImportName="ELIMINAR_CAPACITACION" FunctionName="Model.Store.ELIMINAR_CAPACITACION" />
           <FunctionImportMapping FunctionImportName="ELIMINAR_DETALLE_CAPACITACION" FunctionName="Model.Store.ELIMINAR_DETALLE_CAPACITACION" />
           <FunctionImportMapping FunctionImportName="INGRESAR_RIESGO" FunctionName="Model.Store.INGRESAR_RIESGO" />
+          <EntitySetMapping Name="CERTIFICADOS_VIEW">
+            <EntityTypeMapping TypeName="Model.CERTIFICADOS_VIEW">
+              <MappingFragment StoreEntitySet="CERTIFICADOS_VIEW">
+                <ScalarProperty Name="DOCUMENTO" ColumnName="DOCUMENTO" />
+                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="INGRESAR_CERTIFICADO" FunctionName="Model.Store.INGRESAR_CERTIFICADO" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

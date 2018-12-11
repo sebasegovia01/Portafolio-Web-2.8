@@ -18,7 +18,6 @@ namespace Presentacion.Administrador
                 MostraTiposEvaluacion();
             }
 
-            lblAlerta.Visible = false;
         }
 
 
@@ -72,14 +71,12 @@ namespace Presentacion.Administrador
             {
                 te.habilitado = te.habilitado == '1' ? '0' : '1';
                 te.Eliminar();
-                lblAlerta.Text = "Tipo Evaluación modificada, espere...";
-                Response.AddHeader("REFRESH", "3;URL=tiposdeEvaluacion.aspx");
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Tipo evaluación des/habilitada, porfavor espere...");
+                Response.AddHeader("REFRESH", "2;URL=tiposdeEvaluacion.aspx");
             }
             else
             {
-                lblAlerta.Text = "No se encontro registros con el id " + id;
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "No se encontrarón registros");
             }
         }
 
@@ -91,18 +88,15 @@ namespace Presentacion.Administrador
 
             if (txtNombre.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Rellene los campos";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese  nombre");
             }
             else if(tp.Insertar())
             {
-                lblAlerta.Text = "Tipo Evaluación añadida, espere...";
-                Response.AddHeader("REFRESH", "3;URL=tiposdeEvaluacion.aspx");
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-success", "Tipo evaluación añadida, porfavor espere...");
+                Response.AddHeader("REFRESH", "2;URL=tiposdeEvaluacion.aspx");
             }else
             {
-                lblAlerta.Text = "Error al ingresar";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Error al ingresar");
             }
 
         }
@@ -116,19 +110,16 @@ namespace Presentacion.Administrador
 
             if (txtNombre.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Rellene los campos";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese nombre");
             }
             else if (tp.Modificar())
             {
-                lblAlerta.Text = "Tipo Evaluación modificada, espere...";
-                Response.AddHeader("REFRESH", "3;URL=tiposdeEvaluacion.aspx");
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-success", "Datos modificados, porfavor espere...");
+                Response.AddHeader("REFRESH", "2;URL=tiposdeEvaluacion.aspx");
             }
             else
             {
-                lblAlerta.Text = "Error al modificar Tipo evaluación";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Error al ingresar tipo Evaluación");
             }
         }
 
@@ -178,6 +169,13 @@ namespace Presentacion.Administrador
                 }
 
             }
+        }
+
+         private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)

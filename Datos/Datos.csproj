@@ -58,6 +58,9 @@
     <Compile Include="CAPACITACIONES_VIEW.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="CERTIFICADOS_VIEW.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="CITA.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

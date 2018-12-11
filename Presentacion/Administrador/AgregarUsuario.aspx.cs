@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Modelo;
+using System.Text;
 
 namespace Presentacion
 {
@@ -45,15 +46,12 @@ namespace Presentacion
 
                     if (emp.Insertar())
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Green;
-                        lblAlerta.Text = "Usuario ingresado con exito!";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-success","Usuario ingresado, porfavor espere...");
+                        Response.AddHeader("REFRESH", "2;URL=AgregarUsuario.aspx");
                     }
                     else
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Red;
-                        lblAlerta.Text = "Usuario ya registrado en el sistema";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger", "Usuario ya registrado.");
                     }
                 }
                 else if (int.Parse(ddlTipoUsuario.SelectedValue) == 5)
@@ -71,15 +69,12 @@ namespace Presentacion
 
                     if (med.Insertar())
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Green;
-                        lblAlerta.Text = "Usuario ingresado con exito!";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-success", "Usuario ingresado, porfavor espere...");
+                        Response.AddHeader("REFRESH", "2;URL=AgregarUsuario.aspx");
                     }
                     else
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Red;
-                        lblAlerta.Text = "Usuario ya registrado en el sistema";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger", "Usuario ya registrado.");
                     }
                 }
                 else
@@ -97,86 +92,91 @@ namespace Presentacion
 
                     if (cli.Insertar())
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Green;
-                        lblAlerta.Text = "Usuario ingresado con exito!";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-success", "Usuario ingresado, porfavor espere...");
+                        Response.AddHeader("REFRESH", "2;URL=AgregarUsuario.aspx");
                     }
                     else
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Red;
-                        lblAlerta.Text = "Usuario ya registrado en el sistema";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger", "Usuario ya registrado.");
                     }
                 }
             }
         }
 
-        public bool Validator()
+        protected void btnGenerarPassword_Click(object sender, EventArgs e)
+        {
+            txtClave.Text = CrearPassword(10);
+        }
+
+
+
+        private string CrearPassword(int longitud)
+        {
+            string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            while (0 < longitud--)
+            {
+                res.Append(caracteres[rnd.Next(caracteres.Length)]);
+            }
+            return res.ToString();
+        }
+
+        private bool Validator()
         {
             if (int.Parse(ddlTipoUsuario.SelectedValue).Equals(0))
             {
-                lblAlerta.Text = "Seleccione tipo usuario";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Seleccione tipo usuario");
                 return false;
             }
             else if (ddlTipoUsuario.SelectedValue.Equals("6") && ddlEmpresa.SelectedValue.Equals("0"))
             {
-                lblAlerta.Text = "Seleccione empresa";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Seleccione empresa");
                 return false;
             }
             else if (txtRut.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese rut";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese rut");
                 return false;
             }
             else if (txtNombre.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese nombre";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese nombre");
                 return false;
             }
             else if (txtApPaterno.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese apellido paterno";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese apellido paterno");
                 return false;
             }
             else if (txtApMaterno.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese apellido materno";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese apellido materno");
                 return false;
             }
             else if (dtNacimiento.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Selecciona fecha";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Seleccione fecha");
                 return false;
             }
             else if (DateTime.Parse(dtNacimiento.Text).Year >= 2005)
             {
-                lblAlerta.Text = "Ingrese fecha de nacimiento valido";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese fecha de nacimiento valido");
                 return false;
             }
             else if (txtCorreo.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese correo";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese correo");
                 return false;
             }
             else if (txtFono.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese telefono";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese telefono");
                 return false;
             }
             else if (txtClave.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese contraseña";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese contraseña");
                 return false;
             }
             else
@@ -220,6 +220,13 @@ namespace Presentacion
             ddlEmpresa.DataValueField = "RUT";
             ddlEmpresa.DataBind();
             ddlEmpresa.Items.Insert(0, new ListItem("Selecciona Empresa", "0"));
+        }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
     }
 }

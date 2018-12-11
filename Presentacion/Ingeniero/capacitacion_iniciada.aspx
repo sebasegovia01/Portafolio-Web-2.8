@@ -1,24 +1,25 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AgregarDetalle.aspx.cs" Inherits="Presentacion.Ingeniero.AgregarDetalle" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="capacitacion_iniciada.aspx.cs" Inherits="Presentacion.Ingeniero.capacitacion_iniciada" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sistema - Detalle Recomendación</title>
+    <title>Sistema - Capacitación</title>
     <!-- Bootstrap Styles-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
-    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- Morris Chart Styles-->
     <link href="../assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
     <!-- Custom Styles-->
     <link href="../assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!-- datapicker-->
+    <link href="../assets/datapicker/jquery.datetimepicker.css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -54,15 +55,15 @@
             </ul>
         </nav>
         <!--/. NAV TOP  -->
-         <nav class="navbar-default navbar-side" role="navigation">
+        <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
                         <a href="index.aspx"><i class="fa fa-home"></i> Principal</a>
                     </li>
                 <li>
-                    <a class="active-menu" href="#"><i class="glyphicon glyphicon-list-alt"></i> Evaluaciones<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse in">
+                    <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Evaluaciones<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
                         <li>
                             <a href="AdministrarEvaluacion.aspx">Administrar evaluaciones</a>
                             <a href="AdministrarRecomendacion.aspx">Administrar recomendación</a>
@@ -70,8 +71,8 @@
                     </ul>
                 </li>
                   <li>
-                    <a href="#"><i class="fa fa-calendar"></i> Capacitaciones<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
+                    <a class="active-menu" href="#"><i class="fa fa-calendar"></i> Capacitaciones<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse in">
                         <li>
                             <a href="Capacitaciones.aspx">Mis capacitaciones</a>
                             <a href="Certificados.aspx">Certificados</a>
@@ -87,54 +88,55 @@
             <div id="page-inner">
 
 
-                <div class="row">
+                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
                             <small><a id="btnVolver" href="#">Volver</a></small>
                         </h1>
                     </div>
                 </div>
-                 <!-- /. ROW  -->        
+                 <!-- /. ROW  -->     
                  <div class="row">
+                      <form id="form1" runat="server">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Ingresar Recomendación
+                                    Capacitación
                                 </div>
                                 <div class="panel-body">   
-                                    <form id="form1" runat="server">
-                                             <!-- Alert -->
-                                              <div class="" id="alerta" runat="server">
-                                                 <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
-                                              </div> 
-                                              <!-- /Alert --> 
-                                        <div class="col-lg-12">   
+                                        <!-- Alert -->
+                                 <div class="" id="alerta" runat="server">
+                                     <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                 </div> 
+                                       <!-- /Alert --> 
+                                 
+                                    <div class="col-lg-6">
+                                         <div class="form-group">
+                                                <label for="">Asistentes</label><br/>
+                                             <asp:ListBox ID="ltAsistentes" class="form-control" runat="server"></asp:ListBox>
+                                            </div> 
+                                    </div>
+                                    <div class="col-lg-6">                          
                                             <div class="form-group">
-                                               <label for="">Observación*</label><br/>
-                                                <asp:TextBox id="txtObservacion" TextMode="multiline" class="form-control" Rows="5" runat="server" disabled/>
-                                            </div>
+                                                <label for="">Objetivo</label><br/>
+                                                <asp:TextBox id="txtOBjetivo" TextMode="multiline" class="form-control" Rows="5" runat="server"  ReadOnly="true"/>
+                                            </div>    
                                             <div class="form-group">
-                                               <label for="">Recomendación*</label><br/>
-                                                <asp:TextBox id="txtRecomendación" TextMode="multiline" class="form-control" Rows="5" runat="server"/>
-                                            </div>
-                                            <div class="form-group">
-                                               <label for="">Autorización*</label><br/>
-                                                 <asp:DropDownList ID="ddlEstado" runat="server" class="form-control">
-                                                    <asp:ListItem Selected="True" Value="falso">Selecciona estado</asp:ListItem>
-                                                    <asp:ListItem Value="0">No</asp:ListItem>
-                                                    <asp:ListItem Value="1">Si</asp:ListItem>
-                                                </asp:DropDownList>
-                                            </div>
+                                            <label for="">Lugar</label>
+                                            <asp:TextBox class="form-control" ID="txtLugar" placeholder="Ej: Planta superior" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
-                                        <div class="col-lg-12">
-                                            <asp:Button ID="btnAgregar" class="btn btn-primary" runat="server" Text="Enviar" OnClick="btnAgregar_Click" />
-                                                   <br />
-                                            <br />
-                                             <p class="help-block">Los campos con (*) son obligatorios.</p><br />
-                         
-                                        </div>
-                                    </form>
+                                    </div>                
+                                <div class="col-lg-12">
+                                    <br />
+                                    <br />
+                                    <button type="button" class="btn btn-danger" runat="server" onserverclick="btnFinalizar_Click"><i class="fa fa-check-circle"></i> Finalizar</button>
+                                        <br />
+                                    <br />
+
+                               </div>
+                              
                             </div>                       
-                        </div>                 
+                        </div>    
+                                 </form>             
                  </div><!--/ROW -->
                  
 
@@ -157,6 +159,13 @@
     <script src="../assets/js/morris/morris.js"></script>
     <!-- Custom Js -->
     <script src="../assets/js/custom-scripts.js"></script>
+
+    <!--DATAPICKET -->
+    <script src="../assets/datapicker/jquery.datetimepicker.full.js"></script>
+    <script>
+        $("#datetimepicker").datetimepicker();
+        jQuery.datetimepicker.setLocale('es');
+    </script>
     <!-- user Script -->
     <script src="../assets/js/userScript.js"></script>
 

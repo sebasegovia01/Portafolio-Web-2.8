@@ -54,8 +54,6 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
-                        </li>
                         <li class="divider"></li>
                         <li><a href="../Login.aspx?close=1"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
                         </li>
@@ -138,6 +136,11 @@
                                 </div>
                                 <div class="panel-body">   
                                     <form id="form1" runat="server">
+                                          <!-- Alert -->
+                                              <div class="" id="alerta" runat="server">
+                                                 <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                              </div> 
+                                              <!-- /Alert --> 
                         <div class="col-lg-6">    
                                         <div class="form-group">
                                             <label for="">Empresa</label>
@@ -203,10 +206,8 @@
                                     <button type="button" class="btn btn-primary" runat="server" onserverclick="btnAgregar_Click"><i class="fa fa-floppy-o"></i> Guardar</button>
                                            <br />
                                     <br />
-                                           <asp:Label ID="lblAlerta" runat="server" Visible="False" Font-Bold="True" ForeColor="Red"></asp:Label>
-   
                                      <p class="help-block">Los campos con (*) son obligatorios.</p>                                  
-                                     <br>
+                                     <br />
                          
                                 </div>
                                         </form>

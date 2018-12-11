@@ -31,38 +31,32 @@ namespace Presentacion.Administrador
         {
             if (int.Parse(ddlComuna.SelectedValue).Equals(0))
             {
-                lblAlerta.Text = "Seleccione comuna";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Selecciona comuna");
                 return false;
             }
             else if (txtRut.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese rut";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese rut");
                 return false;
             }
             else if (txtNombre.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese nombre";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Ingrese nombre");
                 return false;
             }
             else if (txtDireccion.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese apellido materno";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese apellido");
                 return false;
             }
             else if (txtCorreo.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese correo";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese correo");
                 return false;
             }
             else if (txtFono.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese telefono";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese telefono");
                 return false;
             }
             else
@@ -85,20 +79,22 @@ namespace Presentacion.Administrador
 
                 if (emp.Insertar())
                 {
-                    lblAlerta.ForeColor = System.Drawing.Color.Green;
-                    lblAlerta.Text = "Empresa ingresada con exito!";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-success", "Empresa ingresada con exito, porfavor espere...");
+                    Response.AddHeader("REFRESH", "2;URL=AgregarEmpresa.aspx");
                 }
                 else
                 {
-                    lblAlerta.ForeColor = System.Drawing.Color.Red;
-                    lblAlerta.Text = "Empresa ya registrada en el sistema";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-danger", "Empresa y a registrada");
                 }
             }
         }
 
-
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
+        }
         public void RellenarComuna()
         {
             Comuna emp = new Comuna();

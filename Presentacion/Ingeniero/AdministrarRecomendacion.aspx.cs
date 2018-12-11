@@ -18,7 +18,6 @@ namespace Presentacion.Ingeniero
                 RellenarTipoEvaluacion();
             }
              
-            lblAlerta.Visible = false;
         }
 
         private void RellenarDetalleEvaluacion(string tipo_evaluacion)
@@ -96,14 +95,12 @@ namespace Presentacion.Ingeniero
 
             if (det.Modificar())
             {
-                lblAlerta.Text = "Recomendación modificada, porfavor espere...";
+                this.Alerta("alert alert-success","Recomendación modificada, porfavor espere...");
                 Response.AddHeader("REFRESH", "2;URL=administrarRecomendacion.aspx");
-                lblAlerta.Visible = true;
             }
             else
             {
-                lblAlerta.Text = "Error al modificar recomendación";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Error al modificar recomendación");
             }
         }
 
@@ -122,6 +119,13 @@ namespace Presentacion.Ingeniero
                 default:
                     break;
             }
+        }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
     }
 }

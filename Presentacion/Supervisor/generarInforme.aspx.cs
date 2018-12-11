@@ -23,7 +23,6 @@ namespace Presentacion.Supervisor
             }
 
             gvEmpresas.Visible = false;
-            lblAlerta.Visible = false;
         }
 
 
@@ -151,8 +150,7 @@ namespace Presentacion.Supervisor
             }
             catch (Exception ex)
             {
-                lblAlerta.Text = "Error al generar pdf: " + ex;
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Error al generar pdf: "+ex);
             }
 
             //Finalmente se descarga el documento
@@ -191,5 +189,13 @@ namespace Presentacion.Supervisor
             GenerarInformePdf("", gvEmpresas);
 
          }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
+        }
+
     }
 }

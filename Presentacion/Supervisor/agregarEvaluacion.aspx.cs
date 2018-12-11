@@ -47,43 +47,36 @@ namespace Presentacion.Supervisor
 
                 if (eva.Insertar())
                 {
-                    lblAlerta.ForeColor = System.Drawing.Color.Green;
-                    lblAlerta.Text = "Evaluación ingresada con exito!";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-success", "Evaluación ingresada con exito, porfavor espere...");
+                    Response.AddHeader("REFRESH", "2;URL=AgregarEvaluacion.aspx");
                 }
                 else
                 {
-                    lblAlerta.ForeColor = System.Drawing.Color.Red;
-                    lblAlerta.Text = "Error al ingresar evaluación";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-danger", "Error al ingresar evaluación");
                 }
             }
         }
 
-        public bool Validator()
+        private bool Validator()
         {
             if (int.Parse(ddlTipoEvaluacion.SelectedValue).Equals(0))
             {
-                lblAlerta.Text = "Seleccione tipo evaluación";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Seleccione tipo evaluación");
                 return false;
             }
             else if (txtObservacion.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese su observación";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese observación");
                 return false;
             }
             else if (dtFecha.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese fecha";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese fecha evaluación");
                 return false;
             }
             else if(int.Parse(ddlEmpresa.SelectedValue).Equals(0))
             {
-                lblAlerta.Text = "Seleccione empresa.";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Seleccione empresa");
                 return false;
             }
             else
@@ -92,7 +85,7 @@ namespace Presentacion.Supervisor
             }
         }
 
-        public void RellenarEmpresa()
+        private void RellenarEmpresa()
         {
             Empresa emp = new Empresa();
             ddlEmpresa.DataSource = emp.ListarEmpresa();
@@ -102,7 +95,14 @@ namespace Presentacion.Supervisor
         }
 
 
-        public void RellenarTipoEvaluacion()
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
+        }
+
+        private void RellenarTipoEvaluacion()
         {
             TipoEvaluacion tipe = new TipoEvaluacion();
             ddlTipoEvaluacion.DataSource = tipe.ListaTipoEvaluacionComboBox();

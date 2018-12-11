@@ -74,9 +74,7 @@ namespace Presentacion.Supervisor
 
                 if (cita.ExisteAgendamiento())
                 {
-                    lblAlerta.Text = "Doctor ya agendado a la hora " + cita.hora.ToShortTimeString() + ", Porfavor seleccione otra";
-                    lblAlerta.Visible = true;
-         
+                    this.Alerta("alert alert-danger", "Doctor ya agendado a la hora "+ cita.hora.ToShortTimeString() + ", porfavor selecciona otra hora");
                 }
                 else if (cita.Agendar())
                 {
@@ -97,20 +95,17 @@ namespace Presentacion.Supervisor
                     if (email.MandarCorreo("skream.skard@gmail.com", "SAFE", "notreply@mail.com",
                          "Cita Agendada", mensaje))
                     {
-                        lblAlerta.Text = "Cita agendada correctamente. Se envio correo de confirmación.";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-success", "Cita agendada correctamente, se envio correo de confirmación.");
                     }
                     else
                     {
-                        lblAlerta.Text = "Error al enviar corrreo de confirmación";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger", "Error al enviar correo de confirmación");
                     }
                   
                 }
                 else
                 {
-                    lblAlerta.Text = "Error al agendar los datos";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-danger", "Error al agendar");
                 }
 
             }
@@ -118,32 +113,27 @@ namespace Presentacion.Supervisor
 
         private bool validarComboBoxes()
         {
-            lblAlerta.Visible = false;
 
             if (int.Parse(cmbEmpresa.SelectedValue) == 0)
             {
-                lblAlerta.Text = "Seleccione empresa";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Seleccione empresa");
                 return false;
             }
 
             if (int.Parse(cmbDoctor.SelectedValue) == 0)
             {
-                lblAlerta.Text = "Seleccione Médico";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Seleccione doctor");
                 return false;
             }
 
             if (MyCalendario.SelectedDate.Date.ToShortDateString().Equals("01/01/0001"))
             {
-                lblAlerta.Text = "Seleccione una fecha";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","seleccione fecha");
                 return false;
             } 
             else if (cmbHora.SelectedValue.ToString() == "0")
             {
-                lblAlerta.Text = "Seleccione Hora";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Seleccione hora");
                 return false;
             }
             else
@@ -340,6 +330,13 @@ namespace Presentacion.Supervisor
             }
 
 
+        }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
 
     }

@@ -55,6 +55,7 @@ namespace Datos
         public DbSet<VISTA_CITAS_GENERAL> VISTA_CITAS_GENERAL { get; set; }
         public DbSet<CAPACITACIONES_VIEW> CAPACITACIONES_VIEW { get; set; }
         public DbSet<DETALLE_CAP_VIEW> DETALLE_CAP_VIEW { get; set; }
+        public DbSet<CERTIFICADOS_VIEW> CERTIFICADOS_VIEW { get; set; }
     
         public virtual int DESHABILITAR_CITA(Nullable<decimal> iD, string hABILITADA)
         {
@@ -971,6 +972,31 @@ namespace Datos
                 new ObjectParameter("NOMBRE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INGRESAR_RIESGO", rUT_EMPLEADOParameter, nOMBREParameter);
+        }
+    
+        public virtual int INGRESAR_CERTIFICADO(Nullable<decimal> iD, string rUTEMPLEADO, string nOMBRE, byte[] dOCUMENTO, string tIPO_DOC)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(decimal));
+    
+            var rUTEMPLEADOParameter = rUTEMPLEADO != null ?
+                new ObjectParameter("RUTEMPLEADO", rUTEMPLEADO) :
+                new ObjectParameter("RUTEMPLEADO", typeof(string));
+    
+            var nOMBREParameter = nOMBRE != null ?
+                new ObjectParameter("NOMBRE", nOMBRE) :
+                new ObjectParameter("NOMBRE", typeof(string));
+    
+            var dOCUMENTOParameter = dOCUMENTO != null ?
+                new ObjectParameter("DOCUMENTO", dOCUMENTO) :
+                new ObjectParameter("DOCUMENTO", typeof(byte[]));
+    
+            var tIPO_DOCParameter = tIPO_DOC != null ?
+                new ObjectParameter("TIPO_DOC", tIPO_DOC) :
+                new ObjectParameter("TIPO_DOC", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INGRESAR_CERTIFICADO", iDParameter, rUTEMPLEADOParameter, nOMBREParameter, dOCUMENTOParameter, tIPO_DOCParameter);
         }
     }
 }

@@ -18,6 +18,18 @@
     <link href="../assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+      <style>
+
+        .ctnGenerador {
+            display: inline-flex;
+        }
+
+        #btnGenerarPassword {
+           
+        }
+      
+
+    </style>
 
 </head>
 
@@ -113,6 +125,11 @@
                                 </div>
                                 <div class="panel-body">   
                                     <form id="form1" runat="server">
+                                          <!-- Alert -->
+                                              <div class="" id="alerta" runat="server">
+                                                 <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                              </div> 
+                                              <!-- /Alert --> 
                         <div class="col-lg-6">                          
                                         <div class="form-group">
                                             <label for="">Tipo usuario*</label><br />
@@ -132,10 +149,27 @@
                                             <label for="">Correo*</label>
                                             <asp:TextBox type="email" class="form-control" ID="txtCorreo" placeholder="Ejemplo: correo@empresa.cl" runat="server"></asp:TextBox>
                                         </div>       
-                                        <div class="form-group">
-                                                <label for="">Contraseña por defecto*</label>
-                                            <asp:TextBox type="password" class="form-control" ID="txtClave" placeholder="" runat="server"></asp:TextBox>
-                                            </div>                        
+                                          <div class="row">   
+                                        <div class="col-lg-12">
+                                            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                                            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                                <ContentTemplate>
+                                             <label for="">Contraseña*</label>
+                                             <div class="input-group">
+                                                 <div class="row">
+                                                     <div class="col-md-6">
+                                                         <asp:TextBox type="text" class="form-control" ID="txtClave" placeholder="" runat="server"></asp:TextBox><br />
+                                                     </div>
+                                                       <div class="col-md-6">
+                                                         <asp:Button ID="btnGenerarPassword" class="form-control" runat="server" CssClass="btn btn-default" Text="Generar Contraseña" OnClick="btnGenerarPassword_Click" />
+                                                       </div>
+                                                 </div>                                       
+                                                </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                            
+                                        </div>
+                                        </div>                       
                                 </div>
                                 <div class="col-lg-6">
                                       <div id="formEmpresa" class="form-group" visible="false" runat="server">
@@ -163,11 +197,11 @@
                                 </div>
 
                                 <div class="col-lg-12">
+                                    <br />
+
                                     <button type="button" class="btn btn-primary" runat="server" onserverclick="btnAgregar_Click"><i class="fa fa-floppy-o"></i> Guardar</button>
                                                <br />
                                     <br />
-                                           <asp:Label ID="lblAlerta" runat="server" Visible="False" Font-Bold="True" ForeColor="Red"></asp:Label>
-   
                                      <p class="help-block">Los campos con (*) son obligatorios.</p>                                   <br>
                          
                                 </div>
@@ -196,6 +230,8 @@
     <script src="../assets/js/morris/morris.js"></script>
     <!-- Custom Js -->
     <script src="../assets/js/custom-scripts.js"></script>
+     <!-- show/hide password -->
+    <script src="../assets/js/showhidepassword.js"></script>
     <!-- user Script -->
     <script src="../assets/js/userScript.js"></script>
 

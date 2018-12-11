@@ -49,8 +49,6 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
-                        </li>
                         <li class="divider"></li>
                         <li><a href="../Login.aspx?close=1"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
                         </li>
@@ -136,7 +134,11 @@
                                     
                                         <div class="col-lg-12">                          
                                             <div class="form-group">
-                                                <asp:Label ID="lblAlert" runat="server" ForeColor="Red" Font-Bold="True"></asp:Label>
+                                                 <!-- Alert -->
+                                              <div class="" id="alerta" runat="server">
+                                                 <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                              </div> 
+                                              <!-- /Alert --> 
                                                 <br />
                                                 <br />
                                                 <asp:GridView ID="gvVisitasMe" class="table table-striped table-bordered table-hover" EmptyDataText="No se han encontrado resultados." runat="server" AutoGenerateColumns="False" DataKeyNames="ID" OnRowCommand="gvVisitasMe_RowCommand" OnRowDataBound="gvVisitasMe_RowDataBound">

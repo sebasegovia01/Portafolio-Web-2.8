@@ -20,7 +20,6 @@ namespace Presentacion.Supervisor
                 
                 
             }
-            lblAlert.Visible = false;
         }
 
         private void DesplegarModal(int id_cita)
@@ -97,14 +96,12 @@ namespace Presentacion.Supervisor
 
             if (cita.Modificar())
             {
-                lblAlert.Text = "Actualizando datos, por favor espere...";
-                lblAlert.Visible = true;
+                this.Alerta("alert alert-success","Datos actualizados, porfavor espere...");
                 Response.AddHeader("REFRESH", "2;URL=administrarVisitas.aspx");
             }
             else
             {
-                lblAlert.Text = "Error al actualizar";
-                lblAlert.Visible = true;
+                this.Alerta("alert alert-danger", "Error al actualizar datos");
             }
         }
 
@@ -117,14 +114,12 @@ namespace Presentacion.Supervisor
 
             if (cita.Eliminar())
             {
-                lblAlert.Text = "Elimando cita, por favor espere...";
-                lblAlert.Visible = true;
-                Response.AddHeader("REFRESH", "3;URL=administrarVisitas.aspx");
+                this.Alerta("alert alert-danger", "Eliminando cita, porfavor espere...");
+                Response.AddHeader("REFRESH", "2;URL=administrarVisitas.aspx");
             }
             else
             {
-                lblAlert.Text = "Error al eliminar cita";
-                lblAlert.Visible = true;
+                this.Alerta("alert alert-success", "Error al eliminar");
             }
 
 
@@ -283,6 +278,13 @@ namespace Presentacion.Supervisor
         {
             CargarHorasCmb(MyCalendario.SelectedDate, cmbHora.SelectedValue);
             cmbHora.DataBind();
+        }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
     }
 }

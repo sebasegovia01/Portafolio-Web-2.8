@@ -118,6 +118,9 @@
     <Content Include="Ingeniero\AdministrarEvaluacion.aspx" />
     <Content Include="Ingeniero\AdministrarRecomendacion.aspx" />
     <Content Include="Ingeniero\AgregarDetalle.aspx" />
+    <Content Include="Ingeniero\Capacitaciones.aspx" />
+    <Content Include="Ingeniero\capacitacion_iniciada.aspx" />
+    <Content Include="Ingeniero\Certificados.aspx" />
     <Content Include="Ingeniero\index.aspx" />
     <Content Include="Medico\AdministrarDiagnosticos.aspx" />
     <Content Include="Medico\AdministrarExamenes.aspx" />
@@ -245,6 +248,27 @@
     </Compile>
     <Compile Include="Ingeniero\AgregarDetalle.aspx.designer.cs">
       <DependentUpon>AgregarDetalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ingeniero\Capacitaciones.aspx.cs">
+      <DependentUpon>Capacitaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ingeniero\Capacitaciones.aspx.designer.cs">
+      <DependentUpon>Capacitaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ingeniero\capacitacion_iniciada.aspx.cs">
+      <DependentUpon>capacitacion_iniciada.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ingeniero\capacitacion_iniciada.aspx.designer.cs">
+      <DependentUpon>capacitacion_iniciada.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ingeniero\Certificados.aspx.cs">
+      <DependentUpon>Certificados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ingeniero\Certificados.aspx.designer.cs">
+      <DependentUpon>Certificados.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ingeniero\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>

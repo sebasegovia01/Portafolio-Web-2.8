@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Capacitacion.cs" />
+    <Compile Include="Certificado.cs" />
     <Compile Include="Cita.cs" />
     <Compile Include="Ciudad.cs" />
     <Compile Include="Comuna.cs" />

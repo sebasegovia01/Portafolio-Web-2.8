@@ -48,8 +48,6 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
-                        </li>
                         <li class="divider"></li>
                         <li><a href="../Login.aspx?close=1"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
                         </li>
@@ -132,7 +130,11 @@
                                 </div>
                                 <div class="panel-body">   
                                     <form id="form1" runat="server">
-                                    
+                                      <!-- Alert -->
+                                              <div class="" id="alerta" runat="server">
+                                                 <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                              </div> 
+                                              <!-- /Alert --> 
                                         <div class="col-lg-12">      
                                             <div class="form-group">
                                                 <label for="">Tipo</label><br />
@@ -167,14 +169,8 @@
 
                                             </div>     
                                         </div>
-                                        <asp:Label ID="lblAlerta" runat="server" Visible="true" Font-Bold="True" ForeColor="Red"></asp:Label>
-                                        
                                     
-
-                                </div>                       
-                        </div>                 
-                 </div><!--/ROW -->
-                 
+              
                                     <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -215,6 +211,10 @@
     </div>
   </div><!-- close modal -->
                 </form>
+                                </div>                       
+                        </div>                 
+                 </div><!--/ROW -->
+   
 				<footer><p>Portafolio 2018</p></footer>
             </div>
             <!-- /. PAGE INNER  -->

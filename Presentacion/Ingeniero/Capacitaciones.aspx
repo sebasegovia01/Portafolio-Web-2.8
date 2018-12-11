@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="tiposdeEvaluacion.aspx.cs" Inherits="Presentacion.Administrador.tiposdeEvaluacion" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Capacitaciones.aspx.cs" Inherits="Presentacion.Ingeniero.Capacitaciones" %>
 
 <!DOCTYPE html>
 
@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sistema - Tipos Evaluación</title>
+    <title>Sistema - Capacitaciones</title>
     <!-- Bootstrap Styles-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
@@ -65,39 +65,30 @@
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
-
                     <li>
                         <a href="index.aspx"><i class="fa fa-home"></i> Principal</a>
                     </li>
-                    <li>
-                            <a href="#"><i class="fa fa-group"></i> Usuarios<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="agregarUsuario.aspx">Añadir usuario</a>
-                                </li>
-                                <li>
-                                    <a href="administrarUsuarios.aspx">Lista usuarios</a>
-                                </li>
-                            </ul>
+                <li>
+                    <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Evaluaciones<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="AdministrarEvaluacion.aspx">Administrar evaluaciones</a>
+                            <a href="AdministrarRecomendacion.aspx">Administrar recomendación</a>
                         </li>
-                    <li>
-                            <a href="#"><i class="fa fa-building-o"></i> Empresas<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="agregarEmpresa.aspx">Añadir empresa</a>
-                                </li>
-                                <li>
-                                     <a href="administrarEmpresas.aspx">Lista empresas</a>
-                                </li>
-                            </ul>
-                    </li>
-                      <li>
-                            <a class="active-menu" href="tiposdeEvaluacion.aspx"><i class="fa fa-list-alt"></i> Tipos de Evaluación</a>
-                    </li>
-                </ul>
-
+                    </ul>
+                </li>
+                  <li>
+                    <a class="active-menu" href="#"><i class="fa fa-calendar"></i> Capacitaciones<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse in">
+                        <li>
+                            <a href="Capacitaciones.aspx">Mis capacitaciones</a>
+                            <a href="Certificados.aspx">Certificados</a>
+                        </li>
+                    </ul>
+                </li>
+              </ul>
             </div>
-
+            
         </nav>
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">
@@ -116,65 +107,59 @@
                             <!-- Advanced Tables -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                     Tipos de Evaluación
+                                     Mis capacitaciones
                                 </div>
                                 <div class="panel-body">
-                                <div class="form-group">
-                                    <asp:LinkButton ID="btnAñadir" CssClass="btn btn-primary" runat="server" OnClick="btnAñadir_Click"><i class="fa fa-file-text-o"></i> Añadir</asp:LinkButton>
-                                     </div>
-                   
                                     <div class="table-responsive">  
-                                      <!-- Alert -->
+                                       <!-- Alert -->
                                               <div class="" id="alerta" runat="server">
                                                  <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
                                               </div> 
                                               <!-- /Alert --> 
+                                           <br />
                                         <br />
-                                        <br />
-                                        <asp:GridView class="table table-striped table-bordered table-hover" ID="gvTiposEvaluacion" runat="server" EmptyDataText="No se han encontrado resultados." Visible="False" AutoGenerateColumns="False" DataKeyNames="IDTIPO" OnRowCommand="gvEmpresas_RowCommand" OnRowDataBound="gvEmpresas_RowDataBound">
+                                        <asp:GridView class="table table-striped table-bordered table-hover" ID="gvCapataciones" runat="server" EmptyDataText="No se han encontrado resultados." Visible="False" AutoGenerateColumns="False" DataKeyNames="ID" OnRowCommand="gvCapataciones_RowCommand">
                                         <Columns>
-                                             <asp:BoundField DataField="IDTIPO" HeaderText="Código" SortExpression="IDTIPO" />
-                                             <asp:BoundField AccessibleHeaderText="NOMBRE" DataField="NOMBRE" HeaderText="Nombre" SortExpression="NOMBRE" />
-                                             <asp:BoundField AccessibleHeaderText="HABILITADO" DataField="HABILITADO" HeaderText="Estado" SortExpression="HABILITADA" HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn"/>
+                                             <asp:BoundField DataField="ID" HeaderText="Id" SortExpression="ID" visible="false"/>
+                                             <asp:BoundField AccessibleHeaderText="OBJETIVO" DataField="OBJETIVO" HeaderText="Objetivo" SortExpression="OBJETIVO" />
+                                             <asp:BoundField AccessibleHeaderText="FECHA" DataField="FECHA" HeaderText="Fecha" SortExpression="FECHA" />
+                                             <asp:BoundField AccessibleHeaderText="LUGAR" DataField="LUGAR" HeaderText="Lugar" SortExpression="LUGAR" />
                                              <asp:TemplateField headertext="">
                                                             <ItemTemplate>
-                                                                <asp:LinkButton CommandName="Modificar" CommandArgument='<%# Eval("IDTIPO") %>' class="btn btn-info" runat="server"><i class="fa fa-edit"></i> Modificar</asp:LinkButton>
-                                                                <asp:LinkButton ID="btnHabilitar" runat="server" text="" CssClass="" CommandName="" CommandArgument='<%# Eval("IDTIPO") %>' OnClientClick="return Confirmar();"></asp:LinkButton>
-                                                                </ItemTemplate>
-                                                        </asp:TemplateField> 
+                                                                <asp:LinkButton CommandName="Iniciar" CommandArgument='<%# Eval("ID") %>' class="btn btn-success" runat="server"><i class="fa fa-play"></i> Iniciar</asp:LinkButton>
+                                                                <asp:LinkButton CommandName="Detalle" CommandArgument='<%# Eval("ID") %>' class="btn btn-primary" runat="server"><i class="fa fa-info"></i> Detalle</asp:LinkButton>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
                                         </Columns>
                                         </asp:GridView>
                                     </div>
-                                    
-                                </div>
-                            </div>
-                            <!--End Advanced Tables -->
-                        </div>
-                                    <!-- Modal -->
+
+                                         <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 ID="modalTitle" class="modal-title" runat="server"></h4>
+          <h4 class="modal-title">Detalle Asistencia</h4>
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-              <asp:HiddenField ID="actionType" runat="server" />
-              <asp:HiddenField ID="hdnId" runat="server" />
-             </div>
-          <div class="form-group">
-                <label for="">Nombre</label>
-              <asp:TextBox ID="txtNombre" class="form-control" runat="server"></asp:TextBox>
-            </div>
-        </div>
-        <div class="modal-footer">
+           <div class="modal-body">
+               <asp:GridView ID="gvDetalleCap" runat="server" class="table table-striped table-bordered table-hover" AutoGenerateColumns="false" OnRowDataBound="gvDetalleCap_RowDataBound">
+                     <Columns>
+                        <asp:BoundField DataField="ID" HeaderText="Id" SortExpression="ID" Visible="false" />
+                        <asp:BoundField DataField="EMPLEADO" HeaderText="Empleado" SortExpression="EMPLEADO" />
+                        <asp:BoundField DataField="ASISTENCIA" HeaderText="Asistencia" SortExpression="Asistencia" />                                       
+                     </Columns>
+               </asp:GridView>
+           </div>
+          <div class="modal-footer">
              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-            <button id="btnModificar" type="button" class="btn btn-success" runat="server" onserverclick="btnModificar_Click"></button>
-        
-        </div>
+         </div>
+          </div>
       </div>
-    </div>
   </div><!-- close modal -->
+                                </div>
+                            </div>
+                            <!--End Advanced Tables -->
+                        </div>
                     </div>
                         <!-- /. ROW  -->
                 
@@ -199,7 +184,7 @@
          });
 
          function Confirmar() {
-             return confirm('¿Desea modificar los datos?') == true;
+             return confirm('¿Desea modificar este usuario?') == true;
          }
  </script>
       <!-- Custom Js -->

@@ -30,7 +30,6 @@ namespace Presentacion.Ingeniero
                 RellenarTipoEvaluacion();
             }
 
-            lblAlerta.Visible = false;
         }
 
 
@@ -67,22 +66,19 @@ namespace Presentacion.Ingeniero
 
                 if (dte.Eliminar())
                 {
-                    lblAlerta.Text = "Evaluación Eliminada, porfavor espere...";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-success","Evaluación eliminada, porfavor espere...");
                     Response.AddHeader("REFRESH", "2;URL=administrarEvaluacion.aspx");
                 }
                 else
                 {
-                    lblAlerta.Text = "Error al eliminar detalle evaluación";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-danger","Error al eliminar evaluación");
                 }
 
         
             }
             else
             {
-                lblAlerta.Text = "Error al eliminar evaluación";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Error al eliminar recomendación");
             }
         }
 
@@ -119,14 +115,12 @@ namespace Presentacion.Ingeniero
 
             if (dte.Insertar())
             {
-                lblAlerta.Text = "Recomendación añadida, porfavor espere...";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-success","Recomendación añadida. porfavor espere...");
                 Response.AddHeader("REFRESH", "2;URL=administrarEvaluacion.aspx");
             }
             else
             {
-                lblAlerta.Text = "Error al añadir Recomendación";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Error al añadir recomendación");
             }
       
         }
@@ -214,6 +208,13 @@ namespace Presentacion.Ingeniero
                     btn.Visible = true;
                 }
             }
+        }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
     }
 }

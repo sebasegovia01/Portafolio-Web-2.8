@@ -68,8 +68,18 @@
                         </li>
                     </ul>
                 </li>
+                  <li>
+                    <a href="#"><i class="fa fa-calendar"></i> Capacitaciones<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="Capacitaciones.aspx">Mis capacitaciones</a>
+                            <a href="Certificados.aspx">Certificados</a>
+                        </li>
+                    </ul>
+                </li>
+              </ul>
             </div>
-
+            
         </nav>
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">

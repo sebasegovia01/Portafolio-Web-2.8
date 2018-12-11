@@ -54,17 +54,13 @@ namespace Presentacion.Ingeniero
             {
                 if (det.Insertar())
                 {
-                    lblAlerta.ForeColor = System.Drawing.Color.Green;
-                    lblAlerta.Text = "Recomendación ingresado con exito!";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-success", "Recomendación ingresada, porfavor espere...");
 
                     ActualizarEstado(int.Parse(id));
                 }
                 else
                 {
-                    lblAlerta.ForeColor = System.Drawing.Color.Red;
-                    lblAlerta.Text = "Ocurrio un error en el sistema";
-                    lblAlerta.Visible = true;
+                    this.Alerta("alert alert-danger", "Ocurrio un error al ingrsar recomendación");
                 }
             }
             
@@ -75,14 +71,12 @@ namespace Presentacion.Ingeniero
         {
             if (int.Parse(ddlEstado.SelectedValue).Equals("falso"))
             {
-                lblAlerta.Text = "Seleccione estado";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Seleccione estado");
                 return false;
             }
             else if (txtRecomendación.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese su recomendación";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese recomendación");
                 return false;
             }
             else
@@ -91,11 +85,18 @@ namespace Presentacion.Ingeniero
             }
         }
 
-        public void ActualizarEstado(int id)
+        private void ActualizarEstado(int id)
         {
             Evaluacion ev = new Evaluacion();
             ev.idEvaluacion = id;
             ev.Cambiar_Estado_Recomendado();
+        }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
 
     }
