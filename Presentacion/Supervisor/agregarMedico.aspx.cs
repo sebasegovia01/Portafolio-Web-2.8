@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -57,7 +58,8 @@ namespace Presentacion.Supervisor
                 me.apellido_m = txtApMaterno.Text;
                 me.f_nacimiento = DateTime.Parse(dtNacimiento.Text);
                 me.correo = txtCorreo.Text;
-                me.clave = txtClave.Text;
+                //me.clave = txtClave.Text;
+                me.clave = Encriptacion(txtClave.Text);
                 me.telefono = int.Parse(txtFono.Text);
                 me.rut_empresa = cmbEmpresa.SelectedValue;
                 me.activo = 1;
@@ -70,75 +72,88 @@ namespace Presentacion.Supervisor
                     {
                         if (me.Insertar())
                         {
-                            this.Alerta("alert alert-success", "Médico agregado, porfavor espere...");
-                            Response.AddHeader("REFRESH", "2;URL=agregarVisitaMedica.aspx");
+                            lblAlerta.Text = "Médico agregado, espere...";
+                            lblAlerta.Visible = true;
+                            Response.AddHeader("REFRESH", "4;URL=agregarVisitaMedica.aspx");
                         }
                         else
                         {
-                            this.Alerta("alert alert-danger", "Error al insertar datos");
+                            lblAlerta.Text = "Error al insertar datos";
+                            lblAlerta.Visible = true;
 
                         }
                     }
                     else
                     {
-                        this.Alerta("alert alert-danger", "Médico no se encuentra en el registro nacional");
+                        lblAlerta.Text = "Médico no se encuentra en registro nacional";
+                        lblAlerta.Visible = true;
                     }
                 }
 
-
+                    
             }
         }
 
-        private bool Validator()
+        public bool Validator()
         {
             if (txtRut.Text.Equals(string.Empty))
             {
-                this.Alerta("alert alert-danger", "Ingrese rut");
+                lblAlerta.Text = "Ingrese rut";
+                lblAlerta.Visible = true;
                 return false;
             }
             else if (txtNombre.Text.Equals(string.Empty))
             {
-                this.Alerta("alert alert-danger", "Ingrese nombre");
+                lblAlerta.Text = "Ingrese nombre";
+                lblAlerta.Visible = true;
                 return false;
             }
             else if (txtApPaterno.Text.Equals(string.Empty))
             {
-                this.Alerta("alert alert-danger", "Ingrese apellido paterno");
+                lblAlerta.Text = "Ingrese apellido paterno";
+                lblAlerta.Visible = true;
                 return false;
             }
             else if (txtApMaterno.Text.Equals(string.Empty))
             {
-                this.Alerta("alert alert-danger", "Ingrese apellido materno");
+                lblAlerta.Text = "Ingrese apellido materno";
+                lblAlerta.Visible = true;
                 return false;
             }
             else if (dtNacimiento.Text.Equals(string.Empty))
             {
-                this.Alerta("alert alert-danger", "Selecciona fecha");
+                lblAlerta.Text = "Selecciona fecha";
+                lblAlerta.Visible = true;
                 return false;
             }
             else if (DateTime.Parse(dtNacimiento.Text).Year >= 2005)
             {
-                this.Alerta("alert alert-danger", "Ingrese fecha de nacimiento valida");
+                lblAlerta.Text = "Ingrese fecha de nacimiento valido";
+                lblAlerta.Visible = true;
                 return false;
             }
             else if (txtCorreo.Text.Equals(string.Empty))
             {
-                this.Alerta("alert alert-danger", "Ingrese correo");
+                lblAlerta.Text = "Ingrese correo";
+                lblAlerta.Visible = true;
                 return false;
             }
             else if (txtFono.Text.Equals(string.Empty))
             {
-                this.Alerta("alert alert-danger", "Ingrese telefono");
+                lblAlerta.Text = "Ingrese telefono";
+                lblAlerta.Visible = true;
                 return false;
             }
             else if (txtClave.Text.Equals(string.Empty))
             {
-                this.Alerta("alert alert-danger", "Ingrese contraseña");
+                lblAlerta.Text = "Ingrese contraseña";
+                lblAlerta.Visible = true;
                 return false;
             }
             else if (int.Parse(cmbEmpresa.SelectedValue).Equals(0))
             {
-                this.Alerta("alert alert-danger","Selecciona empresa");
+                lblAlerta.Text = "Seleccione Empresa";
+                lblAlerta.Visible = true;
                 return false;
             }
             else
@@ -147,11 +162,18 @@ namespace Presentacion.Supervisor
             }
         }
 
-        private void Alerta(string tipo, string mensaje)
+        public string Encriptacion(string pass)
         {
-            lblAlertMsge.Text = mensaje;
-            alerta.Attributes["class"] = tipo;
-            alerta.Visible = true;
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(pass));
+            byte[] result = md5.Hash;
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                str.Append(result[i].ToString("x2"));
+            }
+
+            return str.ToString();
         }
 
 
