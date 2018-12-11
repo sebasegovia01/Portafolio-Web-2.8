@@ -7,28 +7,10 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Presentacion.Medico {
+namespace Presentacion {
     
     
-    public partial class AdministrarEvaluaciones {
-        
-        /// <summary>
-        /// Control form1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
-        /// Control lblNombreUs.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombreUs;
+    public partial class Consulta {
         
         /// <summary>
         /// Control alerta.
@@ -49,30 +31,30 @@ namespace Presentacion.Medico {
         protected global::System.Web.UI.WebControls.Label lblAlertMsge;
         
         /// <summary>
-        /// Control gvDiagnosticos.
+        /// Control txtRut.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvDiagnosticos;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtRut;
         
         /// <summary>
-        /// Control hdnId.
+        /// Control txtPaswd.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnId;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtPaswd;
         
         /// <summary>
-        /// Control txtDescripcion.
+        /// Control btnConsultar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtDescripcion;
+        protected global::System.Web.UI.WebControls.Button btnConsultar;
     }
 }

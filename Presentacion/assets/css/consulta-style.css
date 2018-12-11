@@ -1,7 +1,7 @@
 
 /*
 
- Estilo para pagina inicio de sesión
+Estilo para pagina de consultas
 
 */
 
@@ -10,6 +10,7 @@ body {
     position: relative;
     top: 150px;
     background-color: #292728;
+    align-content: center;
 }
 
 .container:nth-child(1)
@@ -22,13 +23,15 @@ body {
 }
 
 
+
 .container:nth-child(2) {
   
    
-   max-width: 400px;
+   max-width: 650px;
    background-color: #fff;
    border-radius: 3px;
    border-bottom: 5px solid rgb(115, 115, 116);
+   padding: 20px;
  }
 
  .row {
@@ -37,13 +40,16 @@ body {
     padding: 10px;
     display: flex;
     justify-content: center;
+    align-items: baseline;
  }
 
-.row:nth-child(2) {
+.row:nth-child(1) {
    
    display: flex;
    justify-content: center;
+   align-items: baseline;
    border-top: 1px solid rgb(190, 190, 190);
+   padding-top: 40px;
  }
 
 .form-title {
@@ -51,14 +57,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
-#btnLogin {
+#btnConsultar {
 
-    background-color: #4CAF50;
+    background-color: rgb(40, 132, 194);
     border: none;
-    border-bottom: 4px solid rgb(16, 139, 20);
+    border-bottom: 4px solid rgb(27, 77, 119);
     color: white;
     padding: 15px 32px;
     text-align: center;
@@ -71,9 +78,10 @@ body {
 
  }
 
- #btnLogin:hover {
+ #btnConsultar:hover {
 
-    background-color: rgb(16, 139, 20);
-    border-bottom: 4px solid rgb(16, 139, 20);
+    background-color: rgb(52, 183, 223);
+    border-bottom: 4px solid rgb(62, 95, 145);
 
  }
+

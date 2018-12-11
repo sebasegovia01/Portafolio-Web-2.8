@@ -18,7 +18,6 @@ namespace Presentacion.Medico
                 CargarCmbDiagnosticos();
             }
 
-            lblAlerta.Visible = false;
         }
 
         protected void gvEmpresas_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -53,20 +52,6 @@ namespace Presentacion.Medico
                 //Remueve hora de fecha celda[4]
                 e.Row.Cells[4].Text = e.Row.Cells[4].Text.Substring(0, 10);
 
-                if (int.Parse(e.Row.Cells[5].Text) == 1)
-                {
-                    Button btn = (Button)e.Row.Cells[6].FindControl("btnHabilitar");
-                    btn.CssClass = "btn btn-danger";
-                    btn.Text = "Deshabilitar";
-                    btn.CommandName = "Deshabilitar";
-                }
-                else
-                {
-                    Button btn = (Button)e.Row.Cells[6].FindControl("btnHabilitar");
-                    btn.CssClass = "btn btn-success";
-                    btn.Text = "Habilitar";
-                    btn.CommandName = "Deshabilitar";
-                }
             }
         }
 
@@ -80,14 +65,12 @@ namespace Presentacion.Medico
 
             if (d.Modificar())
             {
-                lblAlerta.Text = "Actualizando datos, por favor espere...";
-                lblAlerta.Visible = true;
-                Response.AddHeader("REFRESH", "3;URL=administrarDiagnosticos.aspx");
+                Alerta("alert alert-success", "Actualizando datos, porfavor espere...");
+                Response.AddHeader("REFRESH", "2;URL=administrarDiagnosticos.aspx");
             }
             else
             {
-                lblAlerta.Text = "Error al actualizar datos";
-                lblAlerta.Visible = true;
+                Alerta("alert alert-danger", "Error al actualizar datos");
             }
         }
 
@@ -121,7 +104,12 @@ namespace Presentacion.Medico
             }
         }
 
-
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
+        }
         private void DeshabilitarDiagnostico(string id)
         {
             Diagnostico d = new Diagnostico();
@@ -134,21 +122,18 @@ namespace Presentacion.Medico
 
                 if(d.Deshabilitar())
                 {
-                    lblAlerta.Text = "Diagnostico modificado. Por favor espere.";
-                    Response.AddHeader("REFRESH", "3;URL=administrarDiagnosticos.aspx");
-                    lblAlerta.Visible = true;
+                    Alerta("alert alert-success", "Diagnostico Modificado, porfavor espere...");
+                    Response.AddHeader("REFRESH", "2;URL=administrarDiagnosticos.aspx");
                 }
                 else
                 {
-                    lblAlerta.Text = "Error al deshabilitar diagnostico";
-                    lblAlerta.Visible = true;
+                    Alerta("alert alert-danger","Error al eliminar");
                 }
               
             }
             else
             {
-                lblAlerta.Text = "No se encontro diagnostico con el id " + id;
-                lblAlerta.Visible = true;
+                Alerta("alert alert-danger", "No se encontro diagnostico con el id, "+id);
             }
         }
 

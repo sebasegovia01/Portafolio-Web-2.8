@@ -13,6 +13,8 @@
           <Property Name="OBJETIVO" Type="varchar2" MaxLength="255" Nullable="false" />
           <Property Name="FECHA" Type="timestamp" Precision="6" Nullable="false" />
           <Property Name="LUGAR" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="EXPOSITOR" Type="varchar2" MaxLength="255" />
+          <Property Name="RUTEMPRESA" Type="varchar2" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="CITA">
           <Key>
@@ -56,12 +58,10 @@ advertencia 6002: La tabla o vista 'SEBA.DETALLECAPACITACION' no tiene definida 
         <EntityType Name="DETALLECAPACITACION">
           <Key>
             <PropertyRef Name="ASISTENCIA" />
-            <PropertyRef Name="ESTADO" />
             <PropertyRef Name="IDCAPACITACION" />
             <PropertyRef Name="IDEMPLEADO" />
           </Key>
           <Property Name="ASISTENCIA" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="ESTADO" Type="varchar2" MaxLength="40" Nullable="false" />
           <Property Name="IDCAPACITACION" Type="number" Precision="10" Scale="0" Nullable="false" />
           <Property Name="IDEMPLEADO" Type="varchar2" MaxLength="9" Nullable="false" />
         </EntityType>
@@ -172,6 +172,34 @@ advertencia 6002: La tabla o vista 'SEBA.DETALLECAPACITACION' no tiene definida 
           <Property Name="IDTIPO" Type="number" Precision="10" Scale="0" Nullable="false" />
           <Property Name="NOMBRE" Type="varchar2" MaxLength="30" Nullable="false" />
           <Property Name="HABILITADA" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.CAPACITACIONES_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="CAPACITACIONES_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="EMPRESA" />
+            <PropertyRef Name="OBJETIVO" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="LUGAR" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="EMPRESA" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="OBJETIVO" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="FECHA" Type="timestamp" Precision="6" Nullable="false" />
+          <Property Name="LUGAR" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="EXPOSITOR" Type="varchar2" MaxLength="61" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.DETALLE_CAP_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="DETALLE_CAP_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ASISTENCIA" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="EMPLEADO" Type="varchar2" MaxLength="61" />
+          <Property Name="ASISTENCIA" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SEBA.DIAGNOSTICOS_MEDICO_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -355,6 +383,30 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
           <Property Name="ASISTENCIA" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="ACTIVA" Type="char" MaxLength="1" />
         </EntityType>
+        <Association Name="CAPACITACION_FK1">
+          <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
+          <End Role="CAPACITACION" Type="Self.CAPACITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPRESA">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Principal>
+            <Dependent Role="CAPACITACION">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CAPACITACION_FK2">
+          <End Role="EMPLEADOSAFE" Type="Self.EMPLEADOSAFE" Multiplicity="0..1" />
+          <End Role="CAPACITACION" Type="Self.CAPACITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADOSAFE">
+              <PropertyRef Name="RUTSAFE" />
+            </Principal>
+            <Dependent Role="CAPACITACION">
+              <PropertyRef Name="EXPOSITOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="MEDICO_FK1">
           <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
           <End Role="MEDICO" Type="Self.MEDICO" Multiplicity="*" />
@@ -501,6 +553,12 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
           <Parameter Name="RUT" Type="varchar2" Mode="In" />
           <Parameter Name="HABILITADO" Type="char" Mode="In" />
         </Function>
+        <Function Name="ELIMINAR_CAPACITACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ELIMINAR_DETALLE_CAPACITACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+        </Function>
         <Function Name="ELIMINAR_DETALLE_EVALUACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
           <Parameter Name="ID_EV" Type="number" Mode="In" />
         </Function>
@@ -518,6 +576,8 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
           <Parameter Name="OBJETIVO" Type="varchar2" Mode="In" />
           <Parameter Name="FECHA" Type="timestamp" Mode="In" />
           <Parameter Name="LUGAR" Type="varchar2" Mode="In" />
+          <Parameter Name="EXPOSITOR" Type="varchar2" Mode="In" />
+          <Parameter Name="RUT_EMP" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="INGRESAR_CITA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
           <Parameter Name="ASISTENCIA" Type="char" Mode="In" />
@@ -606,6 +666,10 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
           <Parameter Name="ACTIVO" Type="char" Mode="In" />
           <Parameter Name="RUTEMPRESA" Type="varchar2" Mode="In" />
         </Function>
+        <Function Name="INGRESAR_RIESGO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="RUT_EMPLEADO" Type="varchar2" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
+        </Function>
         <Function Name="INGRESAR_TIPO_EVALUACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
           <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
         </Function>
@@ -616,6 +680,13 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
         <Function Name="MODIFICAR_ASISTENCIA_CITA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
           <Parameter Name="ID" Type="number" Mode="In" />
           <Parameter Name="ASIS" Type="char" Mode="In" />
+        </Function>
+        <Function Name="MODIFICAR_CAPACITACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID" Type="number" Mode="In" />
+          <Parameter Name="OBJTV" Type="varchar2" Mode="In" />
+          <Parameter Name="FECH" Type="timestamp" Mode="In" />
+          <Parameter Name="EXPO" Type="varchar2" Mode="In" />
+          <Parameter Name="SITIO" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="MODIFICAR_CITA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
           <Parameter Name="ID" Type="number" Mode="In" />
@@ -739,10 +810,26 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
           <EntitySet Name="DETALLECAPACITACION" EntityType="Self.DETALLECAPACITACION" store:Type="Tables" store:Schema="SEBA">
             <DefiningQuery>SELECT 
 "DETALLECAPACITACION"."ASISTENCIA" AS "ASISTENCIA", 
-"DETALLECAPACITACION"."ESTADO" AS "ESTADO", 
 "DETALLECAPACITACION"."IDCAPACITACION" AS "IDCAPACITACION", 
 "DETALLECAPACITACION"."IDEMPLEADO" AS "IDEMPLEADO"
 FROM "SEBA"."DETALLECAPACITACION" "DETALLECAPACITACION"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="CAPACITACIONES_VIEW" EntityType="Self.CAPACITACIONES_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"CAPACITACIONES_VIEW"."ID" AS "ID", 
+"CAPACITACIONES_VIEW"."EMPRESA" AS "EMPRESA", 
+"CAPACITACIONES_VIEW"."OBJETIVO" AS "OBJETIVO", 
+"CAPACITACIONES_VIEW"."FECHA" AS "FECHA", 
+"CAPACITACIONES_VIEW"."LUGAR" AS "LUGAR", 
+"CAPACITACIONES_VIEW"."EXPOSITOR" AS "EXPOSITOR"
+FROM "SEBA"."CAPACITACIONES_VIEW" "CAPACITACIONES_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="DETALLE_CAP_VIEW" EntityType="Self.DETALLE_CAP_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"DETALLE_CAP_VIEW"."ID" AS "ID", 
+"DETALLE_CAP_VIEW"."EMPLEADO" AS "EMPLEADO", 
+"DETALLE_CAP_VIEW"."ASISTENCIA" AS "ASISTENCIA"
+FROM "SEBA"."DETALLE_CAP_VIEW" "DETALLE_CAP_VIEW"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="DIAGNOSTICOS_MEDICO_VIEW" EntityType="Self.DIAGNOSTICOS_MEDICO_VIEW" store:Type="Views" store:Schema="SEBA">
             <DefiningQuery>SELECT 
@@ -853,6 +940,14 @@ FROM "SEBA"."RECOMENDADAS_VIEW" "RECOMENDADAS_VIEW"</DefiningQuery>
 "VISTA_CITAS_GENERAL"."ACTIVA" AS "ACTIVA"
 FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="CAPACITACION_FK1" Association="Self.CAPACITACION_FK1">
+            <End Role="EMPRESA" EntitySet="EMPRESA" />
+            <End Role="CAPACITACION" EntitySet="CAPACITACION" />
+          </AssociationSet>
+          <AssociationSet Name="CAPACITACION_FK2" Association="Self.CAPACITACION_FK2">
+            <End Role="EMPLEADOSAFE" EntitySet="EMPLEADOSAFE" />
+            <End Role="CAPACITACION" EntitySet="CAPACITACION" />
+          </AssociationSet>
           <AssociationSet Name="MEDICO_FK1" Association="Self.MEDICO_FK1">
             <End Role="EMPRESA" EntitySet="EMPRESA" />
             <End Role="MEDICO" EntitySet="MEDICO" />
@@ -906,6 +1001,10 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="OBJETIVO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FECHA" Type="DateTime" Precision="6" Nullable="false" />
           <Property Name="LUGAR" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EXPOSITOR" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RUTEMPRESA" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EMPRESA" Relationship="Model.CAPACITACION_FK1" FromRole="CAPACITACION" ToRole="EMPRESA" />
+          <NavigationProperty Name="EMPLEADOSAFE" Relationship="Model.CAPACITACION_FK2" FromRole="CAPACITACION" ToRole="EMPLEADOSAFE" />
         </EntityType>
         <EntityType Name="CITA">
           <Key>
@@ -993,6 +1092,7 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="DETALLE_EVALUACION" Relationship="Self.SYS_C007141" FromRole="EMPLEADOSAFE" ToRole="DETALLE_EVALUACION" />
           <NavigationProperty Name="EVALUACION" Relationship="Self.SYS_C007135" FromRole="EMPLEADOSAFE" ToRole="EVALUACION" />
+          <NavigationProperty Name="CAPACITACION" Relationship="Model.CAPACITACION_FK2" FromRole="EMPLEADOSAFE" ToRole="CAPACITACION" />
         </EntityType>
         <EntityType Name="EMPRESA">
           <Key>
@@ -1007,6 +1107,7 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="MEDICO" Relationship="Self.MEDICO_FK1" FromRole="EMPRESA" ToRole="MEDICO" />
           <NavigationProperty Name="EVALUACION" Relationship="Self.SYS_C007133" FromRole="EMPRESA" ToRole="EVALUACION" />
+          <NavigationProperty Name="CAPACITACION" Relationship="Model.CAPACITACION_FK1" FromRole="EMPRESA" ToRole="CAPACITACION" />
         </EntityType>
         <EntityType Name="EVALUACION">
           <Key>
@@ -1075,12 +1176,10 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
         <EntityType Name="DETALLECAPACITACION">
           <Key>
             <PropertyRef Name="ASISTENCIA" />
-            <PropertyRef Name="ESTADO" />
             <PropertyRef Name="IDCAPACITACION" />
             <PropertyRef Name="IDEMPLEADO" />
           </Key>
           <Property Name="ASISTENCIA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ESTADO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IDCAPACITACION" Type="Int32" Nullable="false" />
           <Property Name="IDEMPLEADO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
@@ -1470,6 +1569,8 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <Parameter Name="OBJETIVO" Mode="In" Type="String" />
             <Parameter Name="FECHA" Mode="In" Type="DateTime" />
             <Parameter Name="LUGAR" Mode="In" Type="String" />
+            <Parameter Name="EXPOSITOR" Mode="In" Type="String" />
+            <Parameter Name="RUT_EMP" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="INGRESAR_CITA">
             <Parameter Name="ASISTENCIA" Mode="In" Type="String" />
@@ -1676,7 +1777,82 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <Parameter Name="RECOMND" Mode="In" Type="String" />
             <Parameter Name="AUTORITATION" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="CAPACITACIONES_VIEW" EntityType="Model.CAPACITACIONES_VIEW" />
+          <EntitySet Name="DETALLE_CAP_VIEW" EntityType="Model.DETALLE_CAP_VIEW" />
+          <AssociationSet Name="CAPACITACION_FK1" Association="Model.CAPACITACION_FK1">
+            <End Role="EMPRESA" EntitySet="EMPRESA" />
+            <End Role="CAPACITACION" EntitySet="CAPACITACION" />
+          </AssociationSet>
+          <AssociationSet Name="CAPACITACION_FK2" Association="Model.CAPACITACION_FK2">
+            <End Role="EMPLEADOSAFE" EntitySet="EMPLEADOSAFE" />
+            <End Role="CAPACITACION" EntitySet="CAPACITACION" />
+          </AssociationSet>
+          <FunctionImport Name="MODIFICAR_CAPACITACION">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="OBJTV" Mode="In" Type="String" />
+            <Parameter Name="FECH" Mode="In" Type="DateTime" />
+            <Parameter Name="EXPO" Mode="In" Type="String" />
+            <Parameter Name="SITIO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ELIMINAR_CAPACITACION">
+          <Parameter Name="ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="ELIMINAR_DETALLE_CAPACITACION">
+          <Parameter Name="ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_RIESGO">
+            <Parameter Name="RUT_EMPLEADO" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <EntityType Name="CAPACITACIONES_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="EMPRESA" />
+            <PropertyRef Name="OBJETIVO" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="LUGAR" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EMPRESA" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="OBJETIVO" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="6" />
+          <Property Name="LUGAR" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EXPOSITOR" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DETALLE_CAP_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ASISTENCIA" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EMPLEADO" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="ASISTENCIA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <Association Name="CAPACITACION_FK1">
+          <End Type="Model.EMPRESA" Role="EMPRESA" Multiplicity="1" />
+          <End Type="Model.CAPACITACION" Role="CAPACITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPRESA">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Principal>
+            <Dependent Role="CAPACITACION">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CAPACITACION_FK2">
+          <End Type="Model.EMPLEADOSAFE" Role="EMPLEADOSAFE" Multiplicity="0..1" />
+          <End Type="Model.CAPACITACION" Role="CAPACITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADOSAFE">
+              <PropertyRef Name="RUTSAFE" />
+            </Principal>
+            <Dependent Role="CAPACITACION">
+              <PropertyRef Name="EXPOSITOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1686,6 +1862,8 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <EntitySetMapping Name="CAPACITACION">
             <EntityTypeMapping TypeName="Model.CAPACITACION">
               <MappingFragment StoreEntitySet="CAPACITACION">
+                <ScalarProperty Name="RUTEMPRESA" ColumnName="RUTEMPRESA" />
+                <ScalarProperty Name="EXPOSITOR" ColumnName="EXPOSITOR" />
                 <ScalarProperty Name="IDCAPACITACION" ColumnName="IDCAPACITACION" />
                 <ScalarProperty Name="OBJETIVO" ColumnName="OBJETIVO" />
                 <ScalarProperty Name="FECHA" ColumnName="FECHA" />
@@ -1855,7 +2033,6 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <EntityTypeMapping TypeName="Model.DETALLECAPACITACION">
               <MappingFragment StoreEntitySet="DETALLECAPACITACION">
                 <ScalarProperty Name="ASISTENCIA" ColumnName="ASISTENCIA" />
-                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
                 <ScalarProperty Name="IDCAPACITACION" ColumnName="IDCAPACITACION" />
                 <ScalarProperty Name="IDEMPLEADO" ColumnName="IDEMPLEADO" />
               </MappingFragment>
@@ -2031,6 +2208,31 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <FunctionImportMapping FunctionImportName="MODIFICAR_TIPO_USUARIO" FunctionName="Model.Store.MODIFICAR_TIPO_USUARIO" />
           <FunctionImportMapping FunctionImportName="ELIMINAR_DETALLE_EVALUACION" FunctionName="Model.Store.ELIMINAR_DETALLE_EVALUACION" />
           <FunctionImportMapping FunctionImportName="MODIFICAR_DETALLE_EVALUACION" FunctionName="Model.Store.MODIFICAR_DETALLE_EVALUACION" />
+          <EntitySetMapping Name="CAPACITACIONES_VIEW">
+            <EntityTypeMapping TypeName="Model.CAPACITACIONES_VIEW">
+              <MappingFragment StoreEntitySet="CAPACITACIONES_VIEW">
+                <ScalarProperty Name="EXPOSITOR" ColumnName="EXPOSITOR" />
+                <ScalarProperty Name="LUGAR" ColumnName="LUGAR" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="OBJETIVO" ColumnName="OBJETIVO" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLE_CAP_VIEW">
+            <EntityTypeMapping TypeName="Model.DETALLE_CAP_VIEW">
+              <MappingFragment StoreEntitySet="DETALLE_CAP_VIEW">
+                <ScalarProperty Name="ASISTENCIA" ColumnName="ASISTENCIA" />
+                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="MODIFICAR_CAPACITACION" FunctionName="Model.Store.MODIFICAR_CAPACITACION" />
+          <FunctionImportMapping FunctionImportName="ELIMINAR_CAPACITACION" FunctionName="Model.Store.ELIMINAR_CAPACITACION" />
+          <FunctionImportMapping FunctionImportName="ELIMINAR_DETALLE_CAPACITACION" FunctionName="Model.Store.ELIMINAR_DETALLE_CAPACITACION" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_RIESGO" FunctionName="Model.Store.INGRESAR_RIESGO" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

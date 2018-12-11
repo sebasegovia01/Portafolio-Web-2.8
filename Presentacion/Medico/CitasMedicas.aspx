@@ -10,7 +10,7 @@
     <!-- Bootstrap Styles-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
-    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- Morris Chart Styles-->
     <link href="../assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
     <!-- Custom Styles-->
@@ -47,8 +47,6 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="../Login.aspx?close=1"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
@@ -119,7 +117,11 @@
                                     
                                         <div class="col-lg-12">                          
                                             <div class="form-group">
-                                                <asp:Label ID="lblAlert" runat="server" ForeColor="Red" Font-Bold="True"></asp:Label>
+                                               <!-- Alert -->
+                                              <div class="" id="alerta" runat="server">
+                                                 <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                              </div> 
+                                              <!-- /Alert --> 
                                                 <br />
                                                 <br />
                                                 <asp:GridView ID="gvVisitasMe" class="table table-striped table-bordered table-hover" EmptyDataText="No se han encontrado resultados." runat="server" AutoGenerateColumns="False" DataKeyNames="ID" OnRowCommand="gvVisitasMe_RowCommand" OnRowDataBound="gvVisitasMe_RowDataBound">
@@ -132,8 +134,7 @@
                                                         <asp:BoundField DataField="ASISTENCIA" HeaderText="Asistencia" SortExpression="ASISTENCIA" HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn"/>
                                                         <asp:TemplateField headertext="">
                                                         <ItemTemplate>
-                                                          <!--<asp:LinkButton CommandName="Modificar" CommandArgument='<%# Eval("ID") %>' class="btn btn-info" runat="server">Modificar</asp:LinkButton>-->
-                                                          <asp:Button ID="btnHabilitar" runat="server" text="" CssClass="" CommandName="Deshabilitar" CommandArgument='<%# Eval("ID") %>' OnClientClick="return Confirmar();" />
+                                                            <asp:LinkButton ID="btnHabilitar" runat="server" text="" CssClass="" CommandName="" CommandArgument='<%# Eval("ID") %>' OnClientClick="return Confirmar();"></asp:LinkButton>
                                                         </ItemTemplate>
                                                        </asp:TemplateField> 
                                                    </Columns>

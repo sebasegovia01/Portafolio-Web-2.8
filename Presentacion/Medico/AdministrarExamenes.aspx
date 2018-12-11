@@ -52,8 +52,6 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
-                        </li>
                         <li class="divider"></li>
                         <li><a href="../Login.aspx?close=1"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
                         </li>
@@ -121,8 +119,11 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">  
-                                     <asp:Label ID="lblAlerta" runat="server" Visible="False" Font-Bold="True" ForeColor="Red"></asp:Label>
-                                        <br />
+                                                      <!-- Alert -->
+                                 <div class="" id="alerta" runat="server">
+                                     <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                 </div> 
+                                       <br />
                                         <br />
                                         <asp:GridView class="table table-striped table-bordered table-hover" ID="gvExamenes" runat="server" EmptyDataText="No se han encontrado resultados." Visible="False" AutoGenerateColumns="False" DataKeyNames="ID" OnRowDataBound="gvExamenes_RowDataBound" OnRowCommand="gvExamenes_RowCommand">
                                         <Columns>

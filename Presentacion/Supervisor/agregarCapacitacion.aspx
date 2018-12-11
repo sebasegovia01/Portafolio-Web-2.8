@@ -123,67 +123,88 @@
                 </div>
                  <!-- /. ROW  -->     
                  <div class="row">
+                      <form id="form1" runat="server">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Añadir Capcitación
+                                    Añadir Capacitación
                                 </div>
                                 <div class="panel-body">   
-                                    <form id="form1" runat="server">
-                                    <div class="col-lg-6">                          
+                                        <!-- Alert -->
+                                 <div class="" id="alerta" runat="server">
+                                     <asp:Label ID="lblAlertMsge" runat="server" Text=""></asp:Label>
+                                 </div> 
+                                       <!-- /Alert --> 
+                                        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                            <ContentTemplate>
+                                                   <div class="col-lg-6">                          
                                         <div class="form-group">
                                             <label for="">Empresa</label><br />
                                             <asp:DropDownList ID="ddlEmpresa" runat="server" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlEmpresa_SelectedIndexChanged">
                                             </asp:DropDownList>
                                         </div>
+                                        <div class="form-group">
+                                           <label for="">Expositor</label><br />
+                                           <asp:DropDownList ID="ddlExpositor" runat="server" class="form-control" AutoPostBack="True">
+                                           </asp:DropDownList>
+                                        </div>
                                         <label for="" >Lista de usuarios</label><br />
                                         <div class="col-lg-5">                          
                                                 <div class="form-group">
-                                                    <label for="" >Seleccione usuarios*</label><br />
+                                                    <label for="" >Seleccione usuarios</label><br />
                                                     <select id="selUsuarios" class="form-control" runat="server" multiple="true">
                                                     </select>
                                                 </div>     
                                         </div>   
                                         <div class="col-lg-2">                          
                                                 <div class="form-group"><br /><br />
-                                                    <asp:Button ID="btnEnviar" runat="server" Text=">" OnClick="btnEnviar_Click" />
+                                                    <style>
+                                                        .btn-outline-info {
+                                                            margin: 2px;
+                                                        }
+                                                    </style>
+                                                    <asp:Button ID="btnEnviar" runat="server" class="btn btn-outline-info" Text=">" OnClick="btnEnviar_Click" Font-Bold="True" />
+                                                    <br />
+                                                    <asp:Button ID="btnDevolver" runat="server" class="btn btn-outline-info" Text="<" OnClick="btnDevolver_Click" Font-Bold="True" />
                                                 </div>     
                                         </div>  
                                         <div class="col-lg-5">                          
                                                 <div class="form-group">
-                                                    <label for="" >Destinatarios*</label><br />
+                                                    <label for="" >Destinatarios</label><br />
                                                     <select id="selDestinatarios"  class="form-control" runat="server" multiple="true">
                                                     </select>
                                                 </div>     
                                         </div>         
                                     </div>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                 
                                     <div class="col-lg-6">                          
                                             <div class="form-group">
-                                                <label for="">Objetivo*</label><br/>
+                                                <label for="">Objetivo</label><br/>
                                                 <asp:TextBox id="txtOBjetivo" TextMode="multiline" class="form-control" Rows="5" runat="server" />
                                             </div>    
                                             <div class="form-group">
-                                            <label for="">Lugar*</label>
+                                            <label for="">Lugar</label>
                                             <asp:TextBox class="form-control" ID="txtLugar" placeholder="Ej: Planta superior" runat="server"></asp:TextBox>
                                         </div>
-                                    </div>       
-                                <div class="col-lg-12">
-                                    <label for="">Fecha*</label><br />
-                                    <input type="text" class="form-control" id="datetimepicker"  runat="server"/>                         
-                                </div> 
+                                        <div class="form-group">
+                                         <label for="">Fecha</label><br />
+                                    <input type="text" class="form-control" id="datetimepicker"  runat="server" autocomplete="off"/>                         
+                                        </div>
+                                    </div>                
                                 <div class="col-lg-12">
                                     <br />
                                     <br />
                                     <button type="button" class="btn btn-primary" runat="server" onserverclick="btnAgregar_Click"><i class="fa fa-floppy-o"></i> Guardar</button>
                                         <br />
                                     <br />
-                                           <asp:Label ID="lblAlerta" runat="server" Visible="False" Font-Bold="True" ForeColor="Red"></asp:Label>
-   
-                                     <p class="help-block">Los campos con (*) son obligatorios.</p><br/>
-                         
-                                </div>
-                               </form>
+
+                               </div>
+                              
                             </div>                       
-                        </div>                 
+                        </div>    
+                                 </form>             
                  </div><!--/ROW -->
                  
 

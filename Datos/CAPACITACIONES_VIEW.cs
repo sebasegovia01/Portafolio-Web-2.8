@@ -12,16 +12,13 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class CAPACITACION
+    public partial class CAPACITACIONES_VIEW
     {
-        public int IDCAPACITACION { get; set; }
+        public int ID { get; set; }
+        public string EMPRESA { get; set; }
         public string OBJETIVO { get; set; }
         public System.DateTime FECHA { get; set; }
         public string LUGAR { get; set; }
         public string EXPOSITOR { get; set; }
-        public string RUTEMPRESA { get; set; }
-    
-        public virtual EMPRESA EMPRESA { get; set; }
-        public virtual EMPLEADOSAFE EMPLEADOSAFE { get; set; }
     }
 }

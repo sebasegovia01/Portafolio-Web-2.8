@@ -195,5 +195,26 @@ namespace Modelo
 
         }
 
+        public List<dynamic> ListarExpositorCmb()
+        {
+            List<dynamic> expositores = new List<dynamic>();
+
+
+
+            foreach (EMPLEADO_SAFE_VIEW ex in Conexion.Entidades.EMPLEADO_SAFE_VIEW.AsNoTracking().Where(
+                e => e.TIPO_USUARIO.Equals("Ingeniero") && e.HABILITADA.Equals("1")))
+            {
+                EMPLEADO_SAFE_VIEW expositor = new EMPLEADO_SAFE_VIEW();
+
+                expositor.RUT = ex.RUT;
+                expositor.NOMBRE = ex.NOMBRE;
+
+
+                expositores.Add(expositor);
+
+            }
+            return expositores;
+        }
+
     }
 }

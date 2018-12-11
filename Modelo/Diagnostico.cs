@@ -92,7 +92,8 @@ namespace Modelo
         {
             List<dynamic> diagnosticos_medico = new List<dynamic>();
 
-            foreach (DIAGNOSTICOS_MEDICO_VIEW dmv in Conexion.Entidades.DIAGNOSTICOS_MEDICO_VIEW.AsNoTracking())
+            foreach (DIAGNOSTICOS_MEDICO_VIEW dmv in Conexion.Entidades.DIAGNOSTICOS_MEDICO_VIEW.AsNoTracking().Where(
+                d => d.HABILITADO.Equals("1")))
             {
                 DIAGNOSTICOS_MEDICO_VIEW diagnostico_medico = new DIAGNOSTICOS_MEDICO_VIEW();
 

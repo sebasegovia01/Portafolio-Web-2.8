@@ -40,6 +40,10 @@
         <AssociationConnector Association="Model.MEDICO_FK1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.SYS_C007133" ManuallyRouted="false" />
         <AssociationConnector Association="Model.SYS_C007134" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.CAPACITACIONES_VIEW" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.DETALLE_CAP_VIEW" Width="1.5" PointX="15.75" PointY="5.75" />
+        <AssociationConnector Association="Model.CAPACITACION_FK1" />
+        <AssociationConnector Association="Model.CAPACITACION_FK2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -99,7 +99,7 @@ namespace Presentacion.Supervisor
             {
                 lblAlert.Text = "Actualizando datos, por favor espere...";
                 lblAlert.Visible = true;
-                Response.AddHeader("REFRESH", "3;URL=administrarVisitas.aspx");
+                Response.AddHeader("REFRESH", "2;URL=administrarVisitas.aspx");
             }
             else
             {

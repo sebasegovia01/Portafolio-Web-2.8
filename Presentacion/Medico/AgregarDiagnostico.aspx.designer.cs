@@ -31,6 +31,24 @@ namespace Presentacion.Medico {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// Control alerta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alerta;
+        
+        /// <summary>
+        /// Control lblAlertMsge.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAlertMsge;
+        
+        /// <summary>
         /// Control cmbCita.
         /// </summary>
         /// <remarks>
@@ -58,22 +76,13 @@ namespace Presentacion.Medico {
         protected global::System.Web.UI.WebControls.DropDownList cmbEmpleado;
         
         /// <summary>
-        /// Control flExamen.
+        /// Control lstRiesgo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload flExamen;
-        
-        /// <summary>
-        /// Control lblAlerta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAlerta;
+        protected global::System.Web.UI.WebControls.ListBox lstRiesgo;
         
         /// <summary>
         /// Control modalTitle.

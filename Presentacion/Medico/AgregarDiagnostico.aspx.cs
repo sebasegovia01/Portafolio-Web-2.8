@@ -24,7 +24,6 @@ namespace Presentacion.Medico
                 RellenarCmbEmpresa();
             }
 
-            lblAlerta.Visible = false;
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
@@ -38,16 +37,34 @@ namespace Presentacion.Medico
                 d.id_cita = int.Parse(cmbCita.SelectedValue);
 
                 if(d.Insertar())
-                {
-                    lblAlerta.ForeColor = System.Drawing.Color.Green;
-                    lblAlerta.Text = "Diagnostico ingresado, espere...";
-                    lblAlerta.Visible = true;
+
+                { //Insertamos riesgos
+                    Riesgo r = new Riesgo();
+                    foreach (ListItem listItem in lstRiesgo.Items)
+                    {
+                        if (listItem.Selected)
+                        {
+                            r.rut_empleado = cmbEmpleado.SelectedValue;
+                            r.nombre = listItem.Text;
+                            try
+                            {
+                                r.Insertar();
+                            }
+                            catch (Exception ex)
+                            {
+
+                                Alerta("alert alert-success", "Error al insertar: "+ex);
+                            }
+                        }
+                    }
+
+
+                    Alerta("alert alert-success","Diagnostico ingresado, porfavor espere...");
                     Response.AddHeader("REFRESH", "2;URL=AgregarDiagnostico.aspx");
                 }
                 else
                 {
-                    lblAlerta.Text = "Error al ingresar diagnostico";
-                    lblAlerta.Visible = true;
+                    Alerta("alert alert-danger", "Error al ingresar diagnostico");
                 }
             }
         }
@@ -65,22 +82,24 @@ namespace Presentacion.Medico
     
         private bool Validar()
         {
-            if(cmbCita.SelectedValue.Equals("0"))
+            if (cmbCita.SelectedValue.Equals("0"))
             {
-                lblAlerta.Text = "Selecciona Cita";
-                lblAlerta.Visible = true;
+                Alerta("alert alert-danger", "Selecciona cita");
                 return false;
             }
-            else if(cmbEmpleado.SelectedValue.Equals("0"))
+            else if (cmbEmpleado.SelectedValue.Equals("0"))
             {
-                lblAlerta.Text = "Selecciona Empleado";
-                lblAlerta.Visible = true;
+                Alerta("alert alert-danger", "Selecciona empleado");
                 return false;
             }
-            else if(txtDescripcion.Value.Equals(string.Empty))
+            else if (txtDescripcion.Value.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese anotaciones para este empleado";
-                lblAlerta.Visible = true;
+                Alerta("alert alert-danger", "Ingrese anotaciones");
+                return false;
+            }
+            else if (lstRiesgo.SelectedIndex < 0)
+            {
+                Alerta("alert alert-danger", "Seleccione al menos un riesgo");
                 return false;
             }
             else
@@ -88,7 +107,15 @@ namespace Presentacion.Medico
                 return true;
             }
         }
-          
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
+        }
+
+
         private void RellenarCmbCitas()
         {
             Cita c = new Cita();

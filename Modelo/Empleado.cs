@@ -148,6 +148,30 @@ namespace Modelo
             }
         }
 
+        public bool ExisteTrabajador()
+        {
+            try
+            {
+                Datos.EMPLEADO emp = Conexion.Entidades.EMPLEADO.First(
+                              u => u.RUTEMPLEADO == this.rut && u.CLAVE == this.clave && u.HABILITADA.Equals("1"));
+
+                this.rut = emp.RUTEMPLEADO;
+                this.nombre = emp.PNOMBRE;
+                this.apellido_p = emp.APELLIDOP;
+                this.apellido_m = emp.APELLIDOM;
+                this.f_nacimiento = emp.FNACIMIENTO;
+                this.correo = emp.CORREO;
+                this.clave = emp.CLAVE;
+                this.numero = (int)emp.NUMERO;
+                this.rutEmpresa = emp.RUTEMPRESA;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         
         public List<dynamic> ListarUsuarios()
         {

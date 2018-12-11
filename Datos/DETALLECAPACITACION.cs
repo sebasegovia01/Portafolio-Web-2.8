@@ -15,7 +15,6 @@ namespace Datos
     public partial class DETALLECAPACITACION
     {
         public string ASISTENCIA { get; set; }
-        public string ESTADO { get; set; }
         public int IDCAPACITACION { get; set; }
         public string IDEMPLEADO { get; set; }
     }

@@ -16,6 +16,8 @@ namespace Presentacion
         {
             int closeSession = 0;
 
+            alerta.Visible = false;
+
             //Valida estado de la sesión
             if (Request.QueryString["close"] != null)
             {
@@ -80,8 +82,8 @@ namespace Presentacion
             }
             else
             {
-                lblAlerta.Text = "Correo o contraseña incorrect@";
-                lblAlerta.Visible = true;
+                alerta.Visible = true;
+                lblAlertMsge.Text = "Usuario y/o contraseña incorrectos";
             }
 
         }// Cierre botón login

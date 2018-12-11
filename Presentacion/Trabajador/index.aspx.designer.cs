@@ -7,19 +7,10 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Presentacion.Medico {
+namespace Presentacion.Trabajador {
     
     
-    public partial class AdministrarEvaluaciones {
-        
-        /// <summary>
-        /// Control form1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+    public partial class index {
         
         /// <summary>
         /// Control lblNombreUs.
@@ -31,48 +22,30 @@ namespace Presentacion.Medico {
         protected global::System.Web.UI.WebControls.Label lblNombreUs;
         
         /// <summary>
-        /// Control alerta.
+        /// Control lblMsgeBienvenida.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alerta;
+        protected global::System.Web.UI.WebControls.Label lblMsgeBienvenida;
         
         /// <summary>
-        /// Control lblAlertMsge.
+        /// Control gvExamenes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAlertMsge;
+        protected global::System.Web.UI.WebControls.GridView gvExamenes;
         
         /// <summary>
-        /// Control gvDiagnosticos.
+        /// Control gvCertificados.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvDiagnosticos;
-        
-        /// <summary>
-        /// Control hdnId.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnId;
-        
-        /// <summary>
-        /// Control txtDescripcion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtDescripcion;
+        protected global::System.Web.UI.WebControls.GridView gvCertificados;
     }
 }

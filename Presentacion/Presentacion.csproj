@@ -114,6 +114,7 @@
     <Content Include="Administrador\AgregarEmpresa.aspx" />
     <Content Include="Administrador\tiposdeEvaluacion.aspx" />
     <Content Include="Cliente\index.aspx" />
+    <Content Include="Consulta.aspx" />
     <Content Include="Ingeniero\AdministrarEvaluacion.aspx" />
     <Content Include="Ingeniero\AdministrarRecomendacion.aspx" />
     <Content Include="Ingeniero\AgregarDetalle.aspx" />
@@ -164,6 +165,7 @@
     <Content Include="Supervisor\Informe.aspx" />
     <Content Include="Tecnico\index.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Trabajador\index.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +217,13 @@
     </Compile>
     <Compile Include="Cliente\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Consulta.aspx.cs">
+      <DependentUpon>Consulta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Consulta.aspx.designer.cs">
+      <DependentUpon>Consulta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ingeniero\AdministrarEvaluacion.aspx.cs">
       <DependentUpon>AdministrarEvaluacion.aspx</DependentUpon>
@@ -376,6 +385,13 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Trabajador\index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Trabajador\index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modelo\Modelo.csproj">
