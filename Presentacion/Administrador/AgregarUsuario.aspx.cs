@@ -49,15 +49,12 @@ namespace Presentacion
 
                     if (emp.Insertar())
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Green;
-                        lblAlerta.Text = "Usuario ingresado con exito!";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger", "Usuario ingresado con exito, porfavor espere...");
+                        Response.AddHeader("REFRESH", "2;URL=agregarUsuario.aspx");
                     }
                     else
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Red;
-                        lblAlerta.Text = "Usuario ya registrado en el sistema";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger", "Usuario ya registrado en el sistema");
                     }
                 }
                 else if (int.Parse(ddlTipoUsuario.SelectedValue) == 5)
@@ -76,15 +73,12 @@ namespace Presentacion
 
                     if (med.Insertar())
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Green;
-                        lblAlerta.Text = "Usuario ingresado con exito!";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-success", "Usuario ingresado con exito, porfavor espere...");
+                        Response.AddHeader("REFRESH", "2;URL=agregarUsuario.aspx");
                     }
                     else
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Red;
-                        lblAlerta.Text = "Usuario ya registrado en el sistema";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger", "Usuario ya registrado en el sistema");
                     }
                 }
                 else
@@ -103,86 +97,71 @@ namespace Presentacion
 
                     if (cli.Insertar())
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Green;
-                        lblAlerta.Text = "Usuario ingresado con exito!";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-success", "Usuario ingresado con exito");
                     }
                     else
                     {
-                        lblAlerta.ForeColor = System.Drawing.Color.Red;
-                        lblAlerta.Text = "Usuario ya registrado en el sistema";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger", "Usuario ya registrado en el sistema");
                     }
                 }
             }
         }
 
-        public bool Validator()
+        private bool Validator()
         {
             if (int.Parse(ddlTipoUsuario.SelectedValue).Equals(0))
             {
-                lblAlerta.Text = "Seleccione tipo usuario";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Selecciona tipo usuario");
                 return false;
             }
             else if (ddlTipoUsuario.SelectedValue.Equals("6") && ddlEmpresa.SelectedValue.Equals("0"))
             {
-                lblAlerta.Text = "Seleccione empresa";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Selecciona empresa");
                 return false;
             }
             else if (txtRut.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese rut";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese rut");
                 return false;
             }
             else if (txtNombre.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese nombre";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese muerte");
                 return false;
             }
             else if (txtApPaterno.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese apellido paterno";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese apellido paterno");
                 return false;
             }
             else if (txtApMaterno.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese apellido materno";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese apellido materno");
                 return false;
             }
             else if (dtNacimiento.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Selecciona fecha";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Selecciona fecha");
                 return false;
             }
             else if (DateTime.Parse(dtNacimiento.Text).Year >= 2005)
             {
-                lblAlerta.Text = "Ingrese fecha de nacimiento valido";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese fecha de nacimiento valida");
                 return false;
             }
             else if (txtCorreo.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese correo";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese correo");
                 return false;
             }
             else if (txtFono.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese telefono";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese telefono");
                 return false;
             }
             else if (txtClave.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese contraseña";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Ingrese contraseña");
                 return false;
             }
             else
@@ -240,6 +219,13 @@ namespace Presentacion
             }
 
             return str.ToString();
+        }
+
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
         }
     }
 }

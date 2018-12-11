@@ -72,21 +72,18 @@ namespace Presentacion.Supervisor
                     {
                         if (me.Insertar())
                         {
-                            lblAlerta.Text = "Médico agregado, espere...";
-                            lblAlerta.Visible = true;
-                            Response.AddHeader("REFRESH", "4;URL=agregarVisitaMedica.aspx");
+                            this.Alerta("alert alert-success", "Médico registrado, porfavor espere...");
+                            Response.AddHeader("REFRESH", "2;URL=agregarVisitaMedica.aspx");
                         }
                         else
                         {
-                            lblAlerta.Text = "Error al insertar datos";
-                            lblAlerta.Visible = true;
+                            this.Alerta("alert alert-danger", "Error al insertar datos");
 
                         }
                     }
                     else
                     {
-                        lblAlerta.Text = "Médico no se encuentra en registro nacional";
-                        lblAlerta.Visible = true;
+                        this.Alerta("alert alert-danger", "Médico no se encuentra en registro nacional");
                     }
                 }
 
@@ -98,62 +95,52 @@ namespace Presentacion.Supervisor
         {
             if (txtRut.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese rut";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese rut");
                 return false;
             }
             else if (txtNombre.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese nombre";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese nombre");
                 return false;
             }
             else if (txtApPaterno.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese apellido paterno";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese apellido paterno");
                 return false;
             }
             else if (txtApMaterno.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese apellido materno";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese apellido materno");
                 return false;
             }
             else if (dtNacimiento.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Selecciona fecha";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese fecha");
                 return false;
             }
             else if (DateTime.Parse(dtNacimiento.Text).Year >= 2005)
             {
-                lblAlerta.Text = "Ingrese fecha de nacimiento valido";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese fecha de nacimiento valida");
                 return false;
             }
             else if (txtCorreo.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese correo";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese correo");
                 return false;
             }
             else if (txtFono.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese telefono";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese telefono");
                 return false;
             }
             else if (txtClave.Text.Equals(string.Empty))
             {
-                lblAlerta.Text = "Ingrese contraseña";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger", "Ingrese contraseña");
                 return false;
             }
             else if (int.Parse(cmbEmpresa.SelectedValue).Equals(0))
             {
-                lblAlerta.Text = "Seleccione Empresa";
-                lblAlerta.Visible = true;
+                this.Alerta("alert alert-danger","Seleccione empresa");
                 return false;
             }
             else
@@ -176,6 +163,11 @@ namespace Presentacion.Supervisor
             return str.ToString();
         }
 
-
+        private void Alerta(string tipo, string mensaje)
+        {
+            lblAlertMsge.Text = mensaje;
+            alerta.Attributes["class"] = tipo;
+            alerta.Visible = true;
+        }
     }
 }
