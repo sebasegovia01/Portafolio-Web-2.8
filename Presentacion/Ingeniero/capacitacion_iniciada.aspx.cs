@@ -72,32 +72,41 @@ namespace Presentacion.Ingeniero
             DetalleCapacitacion dc = new DetalleCapacitacion();
             dc.id_capacitacion = int.Parse(Request.QueryString["id"]);
 
-            //Recorremos lista de participantes
-            foreach (var item in dc.ListarDetalleCapConfirmados())
+            //Si existen empleados participantes se generan certificados
+            if (dc.ListarDetalleCapConfirmados().Count > 0)
             {
-                //Generamos certificados participantes y los guardamos en la bd
-                GenerarCertificadoPdf(int.Parse(Request.QueryString["id"]), item.EMPLEADO);
-            }
-
-            if (dc.Eliminar())
-            {
-                Capacitacion cap = new Capacitacion();
-                cap.id_capcitacion = int.Parse(Request.QueryString["id"]);
-
-                if (cap.Eliminar())
+                //Recorremos lista de participantes
+                foreach (var item in dc.ListarDetalleCapConfirmados())
                 {
+                    //Generamos certificados participantes y los guardamos en la bd
+                    GenerarCertificadoPdf(int.Parse(Request.QueryString["id"]), item.EMPLEADO);
+                }
 
-                    Alerta("alert alert-success", "Finalizando capacitación, porfavor espere...");
-                    Response.AddHeader("REFRESH", "3;URL=Capacitaciones.aspx");
+                if (dc.Eliminar())
+                {
+                    Capacitacion cap = new Capacitacion();
+                    cap.id_capcitacion = int.Parse(Request.QueryString["id"]);
+
+                    if (cap.Eliminar())
+                    {
+
+                        Alerta("alert alert-success", "Finalizando capacitación, porfavor espere...");
+                        Response.AddHeader("REFRESH", "3;URL=Capacitaciones.aspx");
+                    }
+                    else
+                    {
+                        Alerta("alert alert-danger", "Error al eliminar capacitación");
+                    }
                 }
                 else
                 {
-                    Alerta("alert alert-danger", "Error al eliminar capacitación");
+                    Alerta("alert alert-danger", "Error al eliminar detalle capacitación");
                 }
+
             }
             else
             {
-                Alerta("alert alert-danger", "Error al eliminar detalle capacitación");
+                Alerta("alert alert-danger","Tienen que existir participantes para finalizar la capacitación");
             }
 
 
@@ -119,8 +128,13 @@ namespace Presentacion.Ingeniero
                 //Se formatea documento en formato Carta
                 Document documento = new Document(PageSize.LETTER, 50, 100, 20, 100);
 
+
+                string ruta2 = Server.MapPath("..");
+
+                ruta2 = ruta2 + @"\Certificados\";
+
                 //Ruta donde se genera pdf
-                PdfWriter writePdf = PdfWriter.GetInstance(documento, new FileStream(@"C:\Users\fabio\OneDrive\Escritorio\Portafolio Web 2.7\Presentacion\Certificados\" + nombre_doc, FileMode.Create));
+                PdfWriter writePdf = PdfWriter.GetInstance(documento, new FileStream( ruta2 + nombre_doc, FileMode.Create));
 
                 //Se abre documento
                 documento.Open();
