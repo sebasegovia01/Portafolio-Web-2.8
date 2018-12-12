@@ -14,11 +14,11 @@ namespace Datos
     
     public partial class PROXIMA_CAPACITACION_VIEW
     {
-        public int ID { get; set; }
-        public string EMPRESA { get; set; }
-        public string OBJETIVO { get; set; }
+        public int IDCAPACITACION { get; set; }
+        public string IDEMPLEADO { get; set; }
+        public string NOMBRE { get; set; }
         public System.DateTime FECHA { get; set; }
+        public string OBJETIVO { get; set; }
         public string LUGAR { get; set; }
-        public string EXPOSITOR { get; set; }
     }
 }

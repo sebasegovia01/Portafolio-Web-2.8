@@ -374,18 +374,18 @@ advertencia 6002: La tabla o vista 'SEBA.MEDICO_VIEW' no tiene definida ninguna 
 advertencia 6002: La tabla o vista 'SEBA.PROXIMA_CAPACITACION_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PROXIMA_CAPACITACION_VIEW">
           <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="EMPRESA" />
-            <PropertyRef Name="OBJETIVO" />
+            <PropertyRef Name="IDCAPACITACION" />
+            <PropertyRef Name="IDEMPLEADO" />
             <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBJETIVO" />
             <PropertyRef Name="LUGAR" />
           </Key>
-          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
-          <Property Name="EMPRESA" Type="varchar2" MaxLength="30" Nullable="false" />
-          <Property Name="OBJETIVO" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="IDCAPACITACION" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="IDEMPLEADO" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="61" />
           <Property Name="FECHA" Type="timestamp" Precision="6" Nullable="false" />
+          <Property Name="OBJETIVO" Type="varchar2" MaxLength="255" Nullable="false" />
           <Property Name="LUGAR" Type="varchar2" MaxLength="255" Nullable="false" />
-          <Property Name="EXPOSITOR" Type="varchar2" MaxLength="61" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SEBA.PROXIMA_CITA_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -470,6 +470,18 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
             </Principal>
             <Dependent Role="CAPACITACION">
               <PropertyRef Name="EXPOSITOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DETALLECAPACITACION_FK1">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="DETALLECAPACITACION" Type="Self.DETALLECAPACITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="RUTEMPLEADO" />
+            </Principal>
+            <Dependent Role="DETALLECAPACITACION">
+              <PropertyRef Name="IDEMPLEADO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1010,12 +1022,12 @@ FROM "SEBA"."MEDICO_VIEW" "MEDICO_VIEW"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PROXIMA_CAPACITACION_VIEW" EntityType="Self.PROXIMA_CAPACITACION_VIEW" store:Type="Views" store:Schema="SEBA">
             <DefiningQuery>SELECT 
-"PROXIMA_CAPACITACION_VIEW"."ID" AS "ID", 
-"PROXIMA_CAPACITACION_VIEW"."EMPRESA" AS "EMPRESA", 
-"PROXIMA_CAPACITACION_VIEW"."OBJETIVO" AS "OBJETIVO", 
+"PROXIMA_CAPACITACION_VIEW"."IDCAPACITACION" AS "IDCAPACITACION", 
+"PROXIMA_CAPACITACION_VIEW"."IDEMPLEADO" AS "IDEMPLEADO", 
+"PROXIMA_CAPACITACION_VIEW"."NOMBRE" AS "NOMBRE", 
 "PROXIMA_CAPACITACION_VIEW"."FECHA" AS "FECHA", 
-"PROXIMA_CAPACITACION_VIEW"."LUGAR" AS "LUGAR", 
-"PROXIMA_CAPACITACION_VIEW"."EXPOSITOR" AS "EXPOSITOR"
+"PROXIMA_CAPACITACION_VIEW"."OBJETIVO" AS "OBJETIVO", 
+"PROXIMA_CAPACITACION_VIEW"."LUGAR" AS "LUGAR"
 FROM "SEBA"."PROXIMA_CAPACITACION_VIEW" "PROXIMA_CAPACITACION_VIEW"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PROXIMA_CITA_VIEW" EntityType="Self.PROXIMA_CITA_VIEW" store:Type="Views" store:Schema="SEBA">
@@ -1061,6 +1073,10 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <AssociationSet Name="CAPACITACION_FK2" Association="Self.CAPACITACION_FK2">
             <End Role="EMPLEADOSAFE" EntitySet="EMPLEADOSAFE" />
             <End Role="CAPACITACION" EntitySet="CAPACITACION" />
+          </AssociationSet>
+          <AssociationSet Name="DETALLECAPACITACION_FK1" Association="Self.DETALLECAPACITACION_FK1">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="DETALLECAPACITACION" EntitySet="DETALLECAPACITACION" />
           </AssociationSet>
           <AssociationSet Name="MEDICO_FK1" Association="Self.MEDICO_FK1">
             <End Role="EMPRESA" EntitySet="EMPRESA" />
@@ -1189,6 +1205,7 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="RUTEMPRESA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="DIAGNOSTICO" Relationship="Self.SYS_C007075" FromRole="EMPLEADO" ToRole="DIAGNOSTICO" />
+          <NavigationProperty Name="DETALLECAPACITACION" Relationship="Model.DETALLECAPACITACION_FK1" FromRole="EMPLEADO" ToRole="DETALLECAPACITACION" />
         </EntityType>
         <EntityType Name="EMPLEADOSAFE">
           <Key>
@@ -1297,6 +1314,7 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="IDCAPACITACION" Type="Int32" Nullable="false" />
           <Property Name="IDEMPLEADO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FIRMA" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="EMPLEADO" Relationship="Model.DETALLECAPACITACION_FK1" FromRole="DETALLECAPACITACION" ToRole="EMPLEADO" />
         </EntityType>
         <EntityType Name="CAPACITACIONES_VIEW">
           <Key>
@@ -1983,13 +2001,17 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           </FunctionImport>
           <EntitySet Name="CERTIFICADO" EntityType="Model.CERTIFICADO" />
           <EntitySet Name="CERTIFICADOS_VIEW" EntityType="Model.CERTIFICADOS_VIEW" />
-          <EntitySet Name="PROXIMA_CAPACITACION_VIEW" EntityType="Model.PROXIMA_CAPACITACION_VIEW" />
           <EntitySet Name="PROXIMA_CITA_VIEW" EntityType="Model.PROXIMA_CITA_VIEW" />
           <FunctionImport Name="MODIFICAR_DETALLE_CAPACITACION">
             <Parameter Name="ID_CAP" Mode="In" Type="Decimal" />
             <Parameter Name="ID_EMPLEADO" Mode="In" Type="String" />
             <Parameter Name="FIRMADO" Mode="In" Type="Binary" />
           </FunctionImport>
+          <AssociationSet Name="DETALLECAPACITACION_FK1" Association="Model.DETALLECAPACITACION_FK1">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="DETALLECAPACITACION" EntitySet="DETALLECAPACITACION" />
+          </AssociationSet>
+          <EntitySet Name="PROXIMA_CAPACITACION_VIEW" EntityType="Model.PROXIMA_CAPACITACION_VIEW" />
         </EntityContainer>
         <EntityType Name="CERTIFICADO">
           <Key>
@@ -2012,21 +2034,6 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="DOCUMENTO" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
           <Property Name="FECHA" Type="DateTime" />
         </EntityType>
-        <EntityType Name="PROXIMA_CAPACITACION_VIEW">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="EMPRESA" />
-            <PropertyRef Name="OBJETIVO" />
-            <PropertyRef Name="FECHA" />
-            <PropertyRef Name="LUGAR" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="EMPRESA" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="OBJETIVO" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="6" />
-          <Property Name="LUGAR" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="EXPOSITOR" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="PROXIMA_CITA_VIEW">
           <Key>
             <PropertyRef Name="ID" />
@@ -2044,6 +2051,33 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="EMPRESA" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="ASISTENCIA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ACTIVA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <Association Name="DETALLECAPACITACION_FK1">
+          <End Type="Model.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+          <End Type="Model.DETALLECAPACITACION" Role="DETALLECAPACITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="RUTEMPLEADO" />
+            </Principal>
+            <Dependent Role="DETALLECAPACITACION">
+              <PropertyRef Name="IDEMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PROXIMA_CAPACITACION_VIEW">
+          <Key>
+            <PropertyRef Name="IDCAPACITACION" />
+            <PropertyRef Name="IDEMPLEADO" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="OBJETIVO" />
+            <PropertyRef Name="LUGAR" />
+          </Key>
+          <Property Name="IDCAPACITACION" Type="Int32" Nullable="false" />
+          <Property Name="IDEMPLEADO" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="6" />
+          <Property Name="OBJETIVO" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LUGAR" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2453,18 +2487,6 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PROXIMA_CAPACITACION_VIEW">
-            <EntityTypeMapping TypeName="Model.PROXIMA_CAPACITACION_VIEW">
-              <MappingFragment StoreEntitySet="PROXIMA_CAPACITACION_VIEW">
-                <ScalarProperty Name="EXPOSITOR" ColumnName="EXPOSITOR" />
-                <ScalarProperty Name="LUGAR" ColumnName="LUGAR" />
-                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
-                <ScalarProperty Name="OBJETIVO" ColumnName="OBJETIVO" />
-                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PROXIMA_CITA_VIEW">
             <EntityTypeMapping TypeName="Model.PROXIMA_CITA_VIEW">
               <MappingFragment StoreEntitySet="PROXIMA_CITA_VIEW">
@@ -2480,6 +2502,18 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="MODIFICAR_DETALLE_CAPACITACION" FunctionName="Model.Store.MODIFICAR_DETALLE_CAPACITACION" />
+          <EntitySetMapping Name="PROXIMA_CAPACITACION_VIEW">
+            <EntityTypeMapping TypeName="Model.PROXIMA_CAPACITACION_VIEW">
+              <MappingFragment StoreEntitySet="PROXIMA_CAPACITACION_VIEW">
+                <ScalarProperty Name="LUGAR" ColumnName="LUGAR" />
+                <ScalarProperty Name="OBJETIVO" ColumnName="OBJETIVO" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="IDEMPLEADO" ColumnName="IDEMPLEADO" />
+                <ScalarProperty Name="IDCAPACITACION" ColumnName="IDCAPACITACION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

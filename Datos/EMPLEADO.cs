@@ -17,6 +17,7 @@ namespace Datos
         public EMPLEADO()
         {
             this.DIAGNOSTICO = new HashSet<DIAGNOSTICO>();
+            this.DETALLECAPACITACION = new HashSet<DETALLECAPACITACION>();
         }
     
         public string RUTEMPLEADO { get; set; }
@@ -31,5 +32,6 @@ namespace Datos
         public string HABILITADA { get; set; }
     
         public virtual ICollection<DIAGNOSTICO> DIAGNOSTICO { get; set; }
+        public virtual ICollection<DETALLECAPACITACION> DETALLECAPACITACION { get; set; }
     }
 }

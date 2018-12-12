@@ -46,8 +46,9 @@
         <AssociationConnector Association="Model.SYS_C007134" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Model.CERTIFICADO" Width="1.5" PointX="0.75" PointY="15.75" />
         <EntityTypeShape EntityType="Model.CERTIFICADOS_VIEW" Width="1.5" PointX="16.375" PointY="4.75" />
-        <EntityTypeShape EntityType="Model.PROXIMA_CAPACITACION_VIEW" Width="1.5" PointX="16.375" PointY="7.75" />
         <EntityTypeShape EntityType="Model.PROXIMA_CITA_VIEW" Width="1.5" PointX="7.375" PointY="16.75" />
+        <AssociationConnector Association="Model.DETALLECAPACITACION_FK1" />
+        <EntityTypeShape EntityType="Model.PROXIMA_CAPACITACION_VIEW" Width="1.5" PointX="16.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

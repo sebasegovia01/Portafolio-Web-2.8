@@ -18,5 +18,7 @@ namespace Datos
         public int IDCAPACITACION { get; set; }
         public string IDEMPLEADO { get; set; }
         public byte[] FIRMA { get; set; }
+    
+        public virtual EMPLEADO EMPLEADO { get; set; }
     }
 }

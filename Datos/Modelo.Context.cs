@@ -57,8 +57,8 @@ namespace Datos
         public DbSet<VISTA_CITAS_GENERAL> VISTA_CITAS_GENERAL { get; set; }
         public DbSet<CERTIFICADO> CERTIFICADO { get; set; }
         public DbSet<CERTIFICADOS_VIEW> CERTIFICADOS_VIEW { get; set; }
-        public DbSet<PROXIMA_CAPACITACION_VIEW> PROXIMA_CAPACITACION_VIEW { get; set; }
         public DbSet<PROXIMA_CITA_VIEW> PROXIMA_CITA_VIEW { get; set; }
+        public DbSet<PROXIMA_CAPACITACION_VIEW> PROXIMA_CAPACITACION_VIEW { get; set; }
     
         public virtual int DESHABILITAR_CITA(Nullable<decimal> iD, string hABILITADA)
         {

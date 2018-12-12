@@ -199,27 +199,46 @@ namespace Modelo
         }
 
 
-        public List<dynamic> ListarProximaCapacitación(string empresa)
+        /*  public List<dynamic> ListarProximaCapacitación(string rut)
+          {
+              List<dynamic> capacitaciones = new List<dynamic>();
+
+              foreach (PROXIMA_CAPACITACION_VIEW ca in Conexion.Entidades.PROXIMA_CAPACITACION_VIEW.AsNoTracking().Where(
+                  c => c.IDEMPLEADO == rut))
+              {
+                  PROXIMA_CAPACITACION_VIEW capacitacion = new PROXIMA_CAPACITACION_VIEW();
+
+                  capacitacion.IDCAPACITACION = ca.IDCAPACITACION;
+                  capacitacion.IDEMPLEADO = ca.IDEMPLEADO;
+                  capacitacion.FECHA = ca.FECHA;
+                  capacitacion.LUGAR = ca.LUGAR;
+                  capacitacion.OBJETIVO = ca.OBJETIVO;
+
+                  capacitaciones.Add(capacitacion);
+              }
+
+
+              return capacitaciones;
+          }*/
+
+        public bool ListarProximaCapacitación(string rut)
         {
-            List<dynamic> capacitaciones = new List<dynamic>();
-
-            foreach (PROXIMA_CAPACITACION_VIEW ca in Conexion.Entidades.PROXIMA_CAPACITACION_VIEW.AsNoTracking().Where(
-                c => c.EMPRESA.Equals(empresa)))
+            try
             {
-                PROXIMA_CAPACITACION_VIEW capacitacion = new PROXIMA_CAPACITACION_VIEW();
+                Datos.PROXIMA_CAPACITACION_VIEW cp = Conexion.Entidades.PROXIMA_CAPACITACION_VIEW.AsNoTracking().First(
+                      u => u.IDEMPLEADO == rut);
 
-                capacitacion.ID = ca.ID;
-                capacitacion.FECHA = ca.FECHA;
-                capacitacion.LUGAR = ca.LUGAR;
-                capacitacion.OBJETIVO = ca.OBJETIVO;
-                capacitacion.EXPOSITOR = ca.EXPOSITOR;
-                capacitacion.EMPRESA = ca.EMPRESA;
-
-                capacitaciones.Add(capacitacion);
+                this.id_capcitacion = cp.IDCAPACITACION;
+                this.fecha = cp.FECHA;
+                this.lugar = cp.LUGAR;
+                this.objetivo = cp.OBJETIVO;
+                return true;
             }
-
-
-            return capacitaciones;
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
+
     }
 }

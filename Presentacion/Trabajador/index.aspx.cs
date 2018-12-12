@@ -165,14 +165,13 @@ namespace Presentacion.Trabajador
             lblEmpresa.InnerText = emprs.nombre;
 
             //Info capacitaciones
-            foreach (var cap in ca.ListarProximaCapacitación(emprs.nombre))
+            if (ca.ListarProximaCapacitación(Session["rut_emp"].ToString()))
             {
-                lblFechaCapacitacion.InnerText = cap.FECHA.ToShortDateString();
+                lblFechaCapacitacion.InnerText = ca.fecha.ToShortDateString();
                 lblConfirmacion.Visible = true;
-                lblConfirmacion.Attributes["href"] = "Confirmacion.aspx?id_cap="+cap.ID+"&rut="+emp.rut;
+                lblConfirmacion.Attributes["href"] = "Confirmacion.aspx?id_cap=" + ca.id_capcitacion + "&rut=" + Session["rut_emp"].ToString();
             }
-
-            if (lblFechaCapacitacion.InnerHtml.Equals(string.Empty))
+            else
             {
                 lblFechaCapacitacion.InnerHtml = "Sin capacitaciones";
                 lblConfirmacion.Visible = false;
