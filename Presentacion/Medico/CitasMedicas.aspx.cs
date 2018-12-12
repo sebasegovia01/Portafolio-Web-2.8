@@ -14,7 +14,7 @@ namespace Presentacion.Medico
         {
 
 
-            if (Session["usuario"] == null || (int)Session["tipo"] != 1)
+            if (Session["usuario"] == null || (int)Session["tipo"] != 5)
             {
                 Response.Redirect("../Login.aspx");
             }
