@@ -103,7 +103,7 @@ namespace Presentacion.Supervisor
                       "Correo de acceso: " + me.correo + "<br>"+
                       "Contraseña: " + me.clave;
 
-                    if (email.MandarCorreo("skream.skard@gmail.com", "SAFE", "notreply@mail.com",
+                    if (email.MandarCorreo("pruebaportaflio@gmail.com", "SAFE", "notreply@mail.com",
                          "Cita Agendada", mensaje))
                     {
                         this.Alerta("alert alert-success", "Cita agendada correctamente, se envio correo de confirmación.");
