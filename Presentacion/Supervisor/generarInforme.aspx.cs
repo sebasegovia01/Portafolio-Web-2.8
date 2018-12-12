@@ -108,7 +108,7 @@ namespace Presentacion.Supervisor
                 Document documento = new Document(PageSize.LETTER, 50, 100, 20, 100);
 
                 //Ruta donde se genera pdf
-                PdfWriter writePdf = PdfWriter.GetInstance(documento, new FileStream(@"D:\seba\Portafolio de titulo\Iteración ll\Desarrollo\Portafolio Web 2.1\Presentacion\Supervisor\Reportes\" + nombre_doc, FileMode.Create));
+                PdfWriter writePdf = PdfWriter.GetInstance(documento, new FileStream(@"C:\Users\fabio\OneDrive\Escritorio\Portafolio de titulo\Iteración ll\Desarrollo\Portafolio Web 2.1\Presentacion\Supervisor\Reportes\" + nombre_doc, FileMode.Create));
 
                 //Se abre documento
                 documento.Open();
