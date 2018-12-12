@@ -27,7 +27,7 @@ namespace Modelo
              * Direccion de Correo (Gmail o Hotmail)
              * y Contrasena correspondiente
              */
-            server.Credentials = new System.Net.NetworkCredential("sebasegovia01@gmail.com", "7856194nokia11+");
+            server.Credentials = new System.Net.NetworkCredential("pruebaportaflio@gmail.com", "gcZcH27856");
             server.EnableSsl = true;
 
         }
