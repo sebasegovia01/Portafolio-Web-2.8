@@ -17,6 +17,8 @@
     <link href="../assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!-- hide column table -->
+    <link href="../assets/css/hidecolumn.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -74,44 +76,48 @@
                 </div>
                 <!-- Metricas -->
                  <div class="row">
+                     <!-- ultima conexión -->
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-green">
                             <div class="panel-body">
                                 <i class="fa fa-calendar fa-5x"></i>
-                                <h3>05/12/2018</h3>
+                                <h3 id="lblUltimaConexion" runat="server"></h3>
                             </div>
                             <div class="panel-footer back-footer-green">
                                 Ultima Conexión
                             </div>
                         </div>
                     </div>
+                     <!-- empresa -->
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-blue">
                             <div class="panel-body">
                                 <i class="fa fa-building fa-5x"></i>
-                                <h3>Ocaso SPA </h3>
+                                <h3 id="lblEmpresa" runat="server"></h3>
                             </div>
                             <div class="panel-footer back-footer-blue">
                                 Empresa
                             </div>
                         </div>
                     </div>
+                     <!-- proxima capacitación -->
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-red">
                             <div class="panel-body">
                                 <i class="fa fa-briefcase fa-5x"></i>
-                                <h3>11/12/2018 </h3>
+                                <h3 id="lblFechaCapacitacion" runat="server"></h3>
                             </div>
                             <div class="panel-footer back-footer-red">
-                                Proxima Capacitación
+                                Proxima Capacitación<a id="lblConfirmacion" runat="server" style="color:white;font-style:italic"> Confirmar</a>
                             </div>
                         </div>
                     </div>
+                     <!-- proxima cita médica -->
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-brown">
                             <div class="panel-body">
                                 <i class="fa fa-stethoscope fa-5x"></i>
-                                <h3>No existe agendamiento</h3>
+                                <h3 id="lblCitaMedica" runat="server"></h3>
                             </div>
                             <div class="panel-footer back-footer-brown">
                                 Proxima Cita Médica
@@ -124,11 +130,35 @@
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Examenes
+                                Examenes Médicos
                             </div> 
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                        <asp:GridView ID="gvExamenes" runat="server" class="table table-striped table-bordered table-hover" AutoGenerateColumns="False" EmptyDataText="No se han encontrado examenes"></asp:GridView>
+                                        <asp:GridView ID="gvExamenes" runat="server" class="table table-striped table-bordered table-hover" EmptyDataText="No existen examenes disponibles." AutoGenerateColumns="False" OnRowDataBound="gvExamenes_RowDataBound" OnRowCommand="gvExamenes_RowCommand">
+                                             <Columns>
+                                             <asp:BoundField DataField="ID" HeaderText="Código Cita" SortExpression="ID" />
+                                             <asp:BoundField AccessibleHeaderText="RUT" DataField="RUT" HeaderText="Rut" SortExpression="RUT" />
+                                             <asp:BoundField AccessibleHeaderText="NOMBRE" DataField="NOMBRE" HeaderText="Paciente" SortExpression="Paciente" />
+                                             <asp:BoundField AccessibleHeaderText="FECHA" DataField="FECHA" HeaderText="Fecha Examen" SortExpression="FECHA" />
+                                             <asp:BoundField AccessibleHeaderText="DESCRIPCION" DataField="DESCRIPCION" HeaderText="Descripción" SortExpression="DESCRIPCION" />
+                                             <asp:BoundField AccessibleHeaderText="DOCUMENTO" DataField="DOCUMENTO" HeaderText="Documento" SortExpression="DOCUMENTO" HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" >
+                                            <HeaderStyle CssClass="hideGridColumn"></HeaderStyle>
+
+                                                <ItemStyle CssClass="hideGridColumn"></ItemStyle>
+                                             </asp:BoundField>
+                                            <asp:BoundField AccessibleHeaderText="HABILITADO" DataField="HABILITADO" HeaderText="Habilitado" SortExpression="HABILITADO" HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" >
+                                                    <HeaderStyle CssClass="hideGridColumn"></HeaderStyle>
+
+                                                <ItemStyle CssClass="hideGridColumn"></ItemStyle>
+                                             </asp:BoundField>
+                                             <asp:TemplateField headertext="Opciones">
+                                                            <ItemTemplate>
+                                                                <asp:LinkButton CommandName="DescargarExm" CommandArgument='<%# Eval("ID") %>' class="btn btn-primary" runat="server"><i class="fa fa-file-pdf-o"></i> Descargar Examen</asp:LinkButton>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField> 
+
+                                        </Columns>
+                                        </asp:GridView>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +172,21 @@
                             </div> 
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                        <asp:GridView ID="gvCertificados" runat="server" class="table table-striped table-bordered table-hover" AutoGenerateColumns="False" EmptyDataText="No se han encontrado certificados"></asp:GridView>
+                                        <asp:GridView ID="gvCertificados" runat="server" class="table table-striped table-bordered table-hover" AutoGenerateColumns="False" EmptyDataText="No se han encontrado certificados" OnRowCommand="gvCertificados_RowCommand" OnRowDataBound="gvCertificados_RowDataBound">
+                                             <Columns>
+                                             <asp:BoundField DataField="CODIGO" HeaderText="Código" SortExpression="CODIGO" />
+                                             <asp:BoundField AccessibleHeaderText="ID" DataField="ID" HeaderText="Id" SortExpression="ID" HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" />
+                                             <asp:BoundField AccessibleHeaderText="NOMBRE" DataField="NOMBRE" HeaderText="Nombre" SortExpression="NOMBRE" />
+                                             <asp:BoundField AccessibleHeaderText="DOCUMENTO" DataField="DOCUMENTO" HeaderText="Documento" SortExpression="DOCUMENTO" />
+                                             <asp:BoundField AccessibleHeaderText="FECHA" DataField ="FECHA" HeaderText="Fecha Emisión" SortExpression="FECHA" />
+                                             <asp:TemplateField headertext="Opciones">
+                                                            <ItemTemplate>
+                                                                <asp:LinkButton CommandName="DescargarCer" CommandArgument='<%# Eval("DOCUMENTO") %>' class="btn btn-primary" runat="server"><i class="fa fa-file-pdf-o"></i> Descargar Certificado</asp:LinkButton>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField> 
+
+                                        </Columns>
+                                        </asp:GridView>
                                 </div>
                             </div>
                         </div>

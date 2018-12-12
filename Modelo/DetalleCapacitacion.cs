@@ -9,19 +9,20 @@ namespace Modelo
 {
     public class DetalleCapacitacion
     {
-        public char asistencia { get; set; }
+        public string asistencia { get; set; }
         public int id_capacitacion { get; set; }
         public string rut_empleado { get; set; }
-
+        public byte[] firma { get; set; }
 
         public DetalleCapacitacion()
         {
-            this.asistencia = '0';
+            this.asistencia = "0";
             this.id_capacitacion = 0;
             this.rut_empleado = string.Empty;
+            this.firma = new byte[0];
         }
 
-        public DetalleCapacitacion(char asistencia, int id_capacitacion, string rut_empleado)
+        public DetalleCapacitacion(string asistencia, int id_capacitacion, string rut_empleado)
         {
             this.asistencia = asistencia;
             this.id_capacitacion = id_capacitacion;
@@ -42,6 +43,41 @@ namespace Modelo
                 return false;
             }
         }
+
+        public bool Leer()
+        {
+            try
+            {
+                Datos.DETALLECAPACITACION de = Conexion.Entidades.DETALLECAPACITACION.First(
+                    d => d.IDCAPACITACION.Equals(this.id_capacitacion) && d.IDEMPLEADO.Equals(this.rut_empleado));
+
+                this.id_capacitacion = de.IDCAPACITACION;
+                this.rut_empleado = de.IDEMPLEADO;
+                this.firma = de.FIRMA;
+                this.asistencia = de.ASISTENCIA;
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
+
+        public bool Modificar()
+        {
+            try
+            {
+                Conexion.Entidades.MODIFICAR_DETALLE_CAPACITACION(this.id_capacitacion,this.rut_empleado,this.firma);
+                Conexion.Entidades.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
 
         public bool Eliminar()
         {
@@ -70,6 +106,15 @@ namespace Modelo
                 capacitacion.ID = c.ID;
                 capacitacion.EMPLEADO = c.EMPLEADO;
                 capacitacion.ASISTENCIA = c.ASISTENCIA;
+                if (c.FIRMA == null)
+                {
+                    c.FIRMA = new byte[0];
+                }
+                else
+                {
+                    capacitacion.FIRMA = c.FIRMA;
+                }
+                
 
                 capacitaciones.Add(capacitacion);
             }
@@ -102,7 +147,7 @@ namespace Modelo
             List<dynamic> capacitaciones = new List<dynamic>();
 
             foreach (DETALLE_CAP_VIEW c in Conexion.Entidades.DETALLE_CAP_VIEW.AsNoTracking().Where(
-                d => d.ID.Equals(this.id_capacitacion)))
+                d => d.ID.Equals(this.id_capacitacion) && d.ASISTENCIA.Equals("1")))
             {
                 DETALLE_CAP_VIEW capacitacion = new DETALLE_CAP_VIEW();
 

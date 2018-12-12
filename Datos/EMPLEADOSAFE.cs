@@ -16,9 +16,9 @@ namespace Datos
     {
         public EMPLEADOSAFE()
         {
+            this.CAPACITACION = new HashSet<CAPACITACION>();
             this.DETALLE_EVALUACION = new HashSet<DETALLE_EVALUACION>();
             this.EVALUACION = new HashSet<EVALUACION>();
-            this.CAPACITACION = new HashSet<CAPACITACION>();
         }
     
         public string RUTSAFE { get; set; }
@@ -32,8 +32,8 @@ namespace Datos
         public int IDTIPO { get; set; }
         public string HABILITADA { get; set; }
     
+        public virtual ICollection<CAPACITACION> CAPACITACION { get; set; }
         public virtual ICollection<DETALLE_EVALUACION> DETALLE_EVALUACION { get; set; }
         public virtual ICollection<EVALUACION> EVALUACION { get; set; }
-        public virtual ICollection<CAPACITACION> CAPACITACION { get; set; }
     }
 }

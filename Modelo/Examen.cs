@@ -116,6 +116,31 @@ namespace Modelo
             return examenes;
         }
 
+        public List<dynamic> ListarExamenesRutEmpleado()
+        {
+            List<dynamic> examenes = new List<dynamic>();
+
+            foreach (EXAMENES_MEDICO_VIEW ex in Conexion.Entidades.EXAMENES_MEDICO_VIEW.AsNoTracking().Where(
+                e => e.RUT.Equals(this.rut)))
+            {
+
+                EXAMENES_MEDICO_VIEW examen = new EXAMENES_MEDICO_VIEW();
+
+                examen.ID = ex.ID;
+                examen.RUT = ex.RUT;
+                examen.NOMBRE = ex.NOMBRE;
+                examen.FECHA = ex.FECHA;
+                examen.DESCRIPCION = ex.DESCRIPCION;
+                examen.DOCUMENTO = ex.DOCUMENTO;
+                examen.HABILITADO = ex.HABILITADO;
+
+
+                examenes.Add(examen);
+            }
+
+            return examenes;
+        }
+
 
 
     }//../Examen

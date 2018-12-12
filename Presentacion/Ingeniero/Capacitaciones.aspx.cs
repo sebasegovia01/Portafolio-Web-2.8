@@ -13,6 +13,16 @@ namespace Presentacion.Ingeniero
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Session["usuario"] == null || (int)Session["tipo"] != 1)
+            {
+                Response.Redirect("../Login.aspx");
+            }
+            else
+            {
+                lblNombreUs.Text = Convert.ToString(Session["usuario"]);
+            }
+
             if (!IsPostBack)
             {
                 RellenarCapacitaciones();
@@ -55,6 +65,13 @@ namespace Presentacion.Ingeniero
             DetalleCapacitacion det = new DetalleCapacitacion();
             gvDetalleCap.DataSource = det.ListarDetalleCapPorId(id);
             gvDetalleCap.DataBind();
+
+            
+        }
+
+        public string GetImage(object img)
+        {
+            return "data:image/png;base64," + Convert.ToBase64String((byte[])img);
         }
 
         private void DesplegarModal(int id)

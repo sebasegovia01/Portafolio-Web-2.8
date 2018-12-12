@@ -197,5 +197,29 @@ namespace Modelo
 
             return capacitaciones;
         }
+
+
+        public List<dynamic> ListarProximaCapacitación(string empresa)
+        {
+            List<dynamic> capacitaciones = new List<dynamic>();
+
+            foreach (PROXIMA_CAPACITACION_VIEW ca in Conexion.Entidades.PROXIMA_CAPACITACION_VIEW.AsNoTracking().Where(
+                c => c.EMPRESA.Equals(empresa)))
+            {
+                PROXIMA_CAPACITACION_VIEW capacitacion = new PROXIMA_CAPACITACION_VIEW();
+
+                capacitacion.ID = ca.ID;
+                capacitacion.FECHA = ca.FECHA;
+                capacitacion.LUGAR = ca.LUGAR;
+                capacitacion.OBJETIVO = ca.OBJETIVO;
+                capacitacion.EXPOSITOR = ca.EXPOSITOR;
+                capacitacion.EMPRESA = ca.EMPRESA;
+
+                capacitaciones.Add(capacitacion);
+            }
+
+
+            return capacitaciones;
+        }
     }
 }

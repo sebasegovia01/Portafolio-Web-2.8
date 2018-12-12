@@ -7,10 +7,19 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Presentacion.Supervisor {
+namespace Presentacion.Trabajador {
     
     
-    public partial class Informe {
+    public partial class Confirmacion {
+        
+        /// <summary>
+        /// Control lblNombreUs.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNombreUs;
         
         /// <summary>
         /// Control form1.
@@ -22,48 +31,66 @@ namespace Presentacion.Supervisor {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Control lblNombreEmpresa.
+        /// Control alerta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombreEmpresa;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alerta;
         
         /// <summary>
-        /// Control txtNombreEmpresa.
+        /// Control lblAlertMsge.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtNombreEmpresa;
+        protected global::System.Web.UI.WebControls.Label lblAlertMsge;
         
         /// <summary>
-        /// Control lblFecha.
+        /// Control firmaContainer.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFecha;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl firmaContainer;
         
         /// <summary>
-        /// Control txtFecha.
+        /// Control sigCanvas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtFecha;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl sigCanvas;
         
         /// <summary>
-        /// Control gvEmpresaInfo.
+        /// Control sigImage.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvEmpresaInfo;
+        protected global::System.Web.UI.HtmlControls.HtmlImage sigImage;
+        
+        /// <summary>
+        /// Control sigDataUrl.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea sigDataUrl;
+        
+        /// <summary>
+        /// Control btnSubirFirma.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSubirFirma;
     }
 }

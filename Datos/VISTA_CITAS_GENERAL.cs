@@ -21,5 +21,6 @@ namespace Datos
         public System.DateTime HORA { get; set; }
         public string ASISTENCIA { get; set; }
         public string ACTIVA { get; set; }
+        public string EMPRESA { get; set; }
     }
 }

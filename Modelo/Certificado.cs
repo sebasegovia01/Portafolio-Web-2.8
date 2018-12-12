@@ -8,51 +8,58 @@ namespace Modelo
 {
     public class Certificado
     {
-        public int id_certificado { get; set; }
-        public string rut_empleado { get; set; }
-        public string nombre { get; set; }
-        public byte[] documento { get; set; }
+        public int id_capacitacion { get; set; }
+        public string empleado { get; set; }
+        public string nombre_doc { get; set; }
         public string tipo_doc { get; set; }
+        public DateTime fecha { get; set; }
 
         public Certificado()
         {
-            this.id_certificado = 0;
-            this.rut_empleado = string.Empty;
-            this.documento = null;
+            this.id_capacitacion = 0;
+            this.empleado = string.Empty;
+            this.nombre_doc = string.Empty;
             this.tipo_doc = string.Empty;
+            this.fecha = new DateTime();
         }
 
-        public bool Ingresar()
+
+        public bool Insertar()
         {
             try
             {
-                Conexion.Entidades.INGRESAR_CERTIFICADO(this.id_certificado,this.rut_empleado,this.nombre,this.documento,this.tipo_doc);
+                Conexion.Entidades.INGRESAR_CERTIFICADO(this.id_capacitacion, this.empleado,this.nombre_doc,this.tipo_doc,this.fecha);
                 Conexion.Entidades.SaveChanges();
                 return true;
             }
             catch (Exception ex)
             {
+
                 return false;
-                throw;
             }
         }
 
-        public List<dynamic> ListarCertificados()
+        public List<dynamic> ListarCertificadosPorEmpleado()
         {
             List<dynamic> certificados = new List<dynamic>();
 
-            foreach (Datos.CERTIFICADOS_VIEW cer in Conexion.Entidades.CERTIFICADOS_VIEW.AsNoTracking())
+            foreach (Datos.CERTIFICADOS_VIEW cer in Conexion.Entidades.CERTIFICADOS_VIEW.AsNoTracking().Where(
+                c => c.NOMBRE.Equals(this.empleado)))
             {
                 Datos.CERTIFICADOS_VIEW certificado = new Datos.CERTIFICADOS_VIEW();
 
+                certificado.CODIGO = cer.CODIGO;
                 certificado.ID = cer.ID;
-                cer.RUT = cer.RUT;
-                cer.EMPLEADO = cer.EMPLEADO;
-                cer.DOCUMENTO = cer.DOCUMENTO;
+                certificado.NOMBRE = cer.NOMBRE;
+                certificado.DOCUMENTO = cer.DOCUMENTO;
+                certificado.FECHA = cer.FECHA;
 
                 certificados.Add(certificado);
+                
             }
+            
             return certificados;
         }
+
     }
 }

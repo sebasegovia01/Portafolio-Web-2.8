@@ -18,9 +18,9 @@ namespace Datos
         public System.DateTime FECHA { get; set; }
         public string OBSERVACION { get; set; }
         public string DERIVADA { get; set; }
+        public string RECOMENDADA { get; set; }
         public string EMPLEADO { get; set; }
         public string TIPO { get; set; }
         public string EMPRESA { get; set; }
-        public string RECOMENDADA { get; set; }
     }
 }

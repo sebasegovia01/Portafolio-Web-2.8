@@ -120,7 +120,6 @@
     <Content Include="Ingeniero\AgregarDetalle.aspx" />
     <Content Include="Ingeniero\Capacitaciones.aspx" />
     <Content Include="Ingeniero\capacitacion_iniciada.aspx" />
-    <Content Include="Ingeniero\Certificados.aspx" />
     <Content Include="Ingeniero\index.aspx" />
     <Content Include="Medico\AdministrarDiagnosticos.aspx" />
     <Content Include="Medico\AdministrarExamenes.aspx" />
@@ -165,9 +164,9 @@
     <Content Include="Supervisor\agregarVisitaMedica.aspx" />
     <Content Include="Supervisor\generarInforme.aspx" />
     <Content Include="Supervisor\index.aspx" />
-    <Content Include="Supervisor\Informe.aspx" />
     <Content Include="Tecnico\index.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Trabajador\Confirmacion.aspx" />
     <Content Include="Trabajador\index.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -262,13 +261,6 @@
     </Compile>
     <Compile Include="Ingeniero\capacitacion_iniciada.aspx.designer.cs">
       <DependentUpon>capacitacion_iniciada.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Ingeniero\Certificados.aspx.cs">
-      <DependentUpon>Certificados.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Ingeniero\Certificados.aspx.designer.cs">
-      <DependentUpon>Certificados.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ingeniero\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
@@ -387,13 +379,6 @@
     <Compile Include="Supervisor\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Supervisor\Informe.aspx.cs">
-      <DependentUpon>Informe.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Supervisor\Informe.aspx.designer.cs">
-      <DependentUpon>Informe.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Tecnico\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -409,6 +394,13 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Trabajador\Confirmacion.aspx.cs">
+      <DependentUpon>Confirmacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Trabajador\Confirmacion.aspx.designer.cs">
+      <DependentUpon>Confirmacion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Trabajador\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

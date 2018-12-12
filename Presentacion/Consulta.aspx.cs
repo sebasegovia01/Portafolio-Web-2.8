@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -27,7 +29,7 @@ namespace Presentacion
             //Inicia sesión
             if (Session.Count != 0 && closeSession == 0)
             {
-                this.Redireccionar(Session["nombre"].ToString(), Session["rut_emp"].ToString());
+                this.Redireccionar(Session["nombre_emp"].ToString(), Session["rut_emp"].ToString());
             }
             //Cierra sesión
             else if (closeSession > 0)
@@ -47,7 +49,7 @@ namespace Presentacion
             //Inicio trabajador
             Empleado emp = new Empleado();
             emp.rut = txtRut.Value;
-            emp.clave = txtPaswd.Value;
+            emp.clave = Encriptacion(txtPaswd.Value);
 
 
             if (emp.ExisteTrabajador())
@@ -70,6 +72,19 @@ namespace Presentacion
 
         }
 
+        private string Encriptacion(string pass)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(pass));
+            byte[] result = md5.Hash;
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                str.Append(result[i].ToString("x2"));
+            }
+
+            return str.ToString();
+        }
 
     }
 }

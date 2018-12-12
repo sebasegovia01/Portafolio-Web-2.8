@@ -40,6 +40,13 @@
          <div class="row">
              <asp:Button ID="btnLogin" runat="server" class="btn btn-primary" Text="Iniciar sesión" OnClick="btnLogin_Click" />
          </div>
+            <div class="row">
+              <div class="form-group">
+                 <a href="Consulta.aspx">Consulta trabajador</a>
+              </div>
+            </div>
+            
+           
          </form>
     </div><!--container-->
     

@@ -132,14 +132,14 @@
                                              <asp:BoundField AccessibleHeaderText="NOMBRE" DataField="NOMBRE" HeaderText="Paciente" SortExpression="Paciente" />
                                              <asp:BoundField AccessibleHeaderText="DESCRIPCION" DataField="DESCRIPCION" HeaderText="Descripción" SortExpression="DESCRIPCION" />
                                              <asp:BoundField AccessibleHeaderText="DOCUMENTO" DataField="DOCUMENTO" HeaderText="Documento" SortExpression="DOCUMENTO" HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" >
-<HeaderStyle CssClass="hideGridColumn"></HeaderStyle>
+                                            <HeaderStyle CssClass="hideGridColumn"></HeaderStyle>
 
-<ItemStyle CssClass="hideGridColumn"></ItemStyle>
+                                                <ItemStyle CssClass="hideGridColumn"></ItemStyle>
                                              </asp:BoundField>
                                             <asp:BoundField AccessibleHeaderText="HABILITADO" DataField="HABILITADO" HeaderText="Habilitado" SortExpression="HABILITADO" HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" >
-<HeaderStyle CssClass="hideGridColumn"></HeaderStyle>
+                                                    <HeaderStyle CssClass="hideGridColumn"></HeaderStyle>
 
-<ItemStyle CssClass="hideGridColumn"></ItemStyle>
+                                                <ItemStyle CssClass="hideGridColumn"></ItemStyle>
                                              </asp:BoundField>
                                              <asp:TemplateField headertext="Opciones">
                                                             <ItemTemplate>
@@ -147,7 +147,9 @@
                                                                 <asp:LinkButton CommandName="Eliminar"  CommandArgument='<%# Eval("ID") %>' class="btn btn-danger" runat="server" OnClientClick="return Confirmar();"><i class="fa fa-trash"></i> Eliminar</asp:LinkButton>
                                                                 <asp:LinkButton CommandName="Descargar" CommandArgument='<%# Eval("ID") %>' class="btn btn-primary" runat="server"><i class="fa fa-file-pdf-o"></i> Descargar Examen</asp:LinkButton>
                                                             </ItemTemplate>
-                                                        </asp:TemplateField> </Columns>
+                                                        </asp:TemplateField> 
+
+                                        </Columns>
                                         </asp:GridView>
                                     </div>
                                     

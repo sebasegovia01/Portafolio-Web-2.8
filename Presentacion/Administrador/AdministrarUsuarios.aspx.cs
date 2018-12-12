@@ -9,6 +9,7 @@ using System.Data.OracleClient;
 using System.Data.OleDb;
 using Modelo;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace Presentacion.Administrador
 {
@@ -16,14 +17,14 @@ namespace Presentacion.Administrador
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            /* if (Session["usuario"] == null || (int)Session["tipo"] != 1)
+             if (Session["usuario"] == null || (int)Session["tipo"] != 1)
              {
                  Response.Redirect("../Login.aspx");
              }
              else
              {
                  lblNombreUs.Text = Convert.ToString(Session["usuario"]);
-             }*/
+             }
 
             if(!IsPostBack)
             {
@@ -65,7 +66,7 @@ namespace Presentacion.Administrador
                     dtNacimiento.Value = emp.f_nacimiento.ToString("yyyy-MM-dd");
                     txtCorreo.Text = emp.correo;
                     txtFono.Text = emp.numero.ToString();
-                    txtClave.Text = emp.clave;
+                    txtClave.Text = Encriptacion(emp.clave);
                     dpEmpresa.SelectedValue = emp.rutEmpresa;
                     dpTipoUsuarios.Visible = false;
                     tipoUsuarioLabel.Visible = false;
@@ -85,7 +86,7 @@ namespace Presentacion.Administrador
                     dtNacimiento.Value = emps.f_nacimiento.ToString("yyyy-MM-dd");
                     txtCorreo.Text = emps.correo;
                     txtFono.Text = emps.numero.ToString();
-                    txtClave.Text = emps.clave;
+                    txtClave.Text = Encriptacion(emps.clave);
                     RellenarTiposUsuario();
                     dpTipoUsuarios.SelectedValue = emps.id_tipo_us.ToString();
                     dpTipoUsuarios.Visible = true;
@@ -97,6 +98,7 @@ namespace Presentacion.Administrador
                 {
                     //Medico
                     me.Leer();
+                    hdtipoEmpleado.Value = "2";
                     dpEmpresa.SelectedValue = me.rut_empresa;
                     hdnRut.Value = me.rut;
                     txtNombre.Text = me.nombre;
@@ -104,7 +106,7 @@ namespace Presentacion.Administrador
                     txtAmterno.Text = me.apellido_m;
                     dtNacimiento.Value = me.f_nacimiento.ToString("yyyy-MM-dd");
                     txtCorreo.Text = me.correo;
-                    txtClave.Text = me.clave;
+                    txtClave.Text = Encriptacion(me.clave);
                     txtFono.Text = me.telefono.ToString();
                     //Mostrar dropdown tipoUsuario
                     dpTipoUsuarios.Visible = false;
@@ -302,12 +304,12 @@ namespace Presentacion.Administrador
                     emp.f_nacimiento = DateTime.Parse(dtNacimiento.Value);
                     emp.numero = int.Parse(txtFono.Text);
                     emp.correo = txtCorreo.Text;
-                    emp.clave = txtClave.Text;
+                    emp.clave = Encriptacion(txtClave.Text);
                     emp.activo = 1;
 
                     if (emp.Modificar())
                     {
-                        Alerta("alert alert-success", "Actualizando datos, porfavor espere...");
+                        Alerta("alert alert-success", "Actualizando empleado, porfavor espere...");
                         Response.AddHeader("REFRESH", "2;URL=administrarUsuarios.aspx");
                     }
                     else
@@ -327,12 +329,12 @@ namespace Presentacion.Administrador
                     emps.f_nacimiento = DateTime.Parse(dtNacimiento.Value);
                     emps.numero = int.Parse(txtFono.Text);
                     emps.correo = txtCorreo.Text;
-                    emps.clave = txtClave.Text;
+                    emps.clave = Encriptacion(txtClave.Text);
                     emps.activo = 1;
 
                     if (emps.Modificar())
                     {
-                        Alerta("alert alert-success", "Actualizando datos, porfavor espere...");
+                        Alerta("alert alert-success", "Actualizando empleado, porfavor espere...");
                         Response.AddHeader("REFRESH", "2;URL=administrarUsuarios.aspx");
 
                     }
@@ -353,12 +355,12 @@ namespace Presentacion.Administrador
                     me.f_nacimiento = DateTime.Parse(dtNacimiento.Value);
                     me.telefono = int.Parse(txtFono.Text);
                     me.correo = txtCorreo.Text;
-                    me.clave = txtClave.Text;
+                    me.clave = Encriptacion(txtClave.Text);
                     me.activo = 1;
 
                     if (me.Modificar())
                     {
-                        Alerta("alert alert-success", "Actualizando usuario, porfavor espere...");
+                        Alerta("alert alert-success", "Actualizando médico, porfavor espere...");
                         Response.AddHeader("REFRESH", "2;URL=administrarUsuarios.aspx");
 
                     }
@@ -385,7 +387,7 @@ namespace Presentacion.Administrador
             
         }
 
-        public void RellenarEmpresa()
+        private void RellenarEmpresa()
         {
             Empresa e = new Empresa();
 
@@ -394,6 +396,20 @@ namespace Presentacion.Administrador
             dpEmpresa.DataValueField = "RUT";
             dpEmpresa.DataBind();
             dpEmpresa.Items.Insert(0, new ListItem("Selecciona Empresa", "0"));
+        }
+
+        public string Encriptacion(string pass)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(pass));
+            byte[] result = md5.Hash;
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                str.Append(result[i].ToString("x2"));
+            }
+
+            return str.ToString();
         }
 
         private void Alerta(string tipo, string mensaje)

@@ -49,7 +49,7 @@ namespace Presentacion
 
                     if (emp.Insertar())
                     {
-                        this.Alerta("alert alert-danger", "Usuario ingresado con exito, porfavor espere...");
+                        this.Alerta("alert alert-success", "Usuario ingresado con exito, porfavor espere...");
                         Response.AddHeader("REFRESH", "2;URL=agregarUsuario.aspx");
                     }
                     else
@@ -226,6 +226,25 @@ namespace Presentacion
             lblAlertMsge.Text = mensaje;
             alerta.Attributes["class"] = tipo;
             alerta.Visible = true;
+        }
+
+        protected void btnGenerarPassword_Click(object sender, EventArgs e)
+        {
+            txtClave.Text = CrearPassword(10);
+        }
+
+
+
+        private string CrearPassword(int longitud)
+        {
+            string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            while (0 < longitud--)
+            {
+                res.Append(caracteres[rnd.Next(caracteres.Length)]);
+            }
+            return res.ToString();
         }
     }
 }

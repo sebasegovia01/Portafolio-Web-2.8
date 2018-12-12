@@ -16,9 +16,9 @@ namespace Datos
     {
         public EMPRESA()
         {
+            this.CAPACITACION = new HashSet<CAPACITACION>();
             this.MEDICO = new HashSet<MEDICO>();
             this.EVALUACION = new HashSet<EVALUACION>();
-            this.CAPACITACION = new HashSet<CAPACITACION>();
         }
     
         public string RUTEMPRESA { get; set; }
@@ -29,8 +29,8 @@ namespace Datos
         public int IDCOMUNA { get; set; }
         public string HABILITADA { get; set; }
     
+        public virtual ICollection<CAPACITACION> CAPACITACION { get; set; }
         public virtual ICollection<MEDICO> MEDICO { get; set; }
         public virtual ICollection<EVALUACION> EVALUACION { get; set; }
-        public virtual ICollection<CAPACITACION> CAPACITACION { get; set; }
     }
 }

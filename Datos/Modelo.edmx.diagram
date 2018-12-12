@@ -4,32 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2dd87bb9acef4aba8c4a94e708d4de3b" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.CAPACITACION" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.CITA" Width="1.5" PointX="8.25" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.CIUDAD" Width="1.5" PointX="8.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.COMUNA" Width="1.5" PointX="2.75" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DETALLE_EVALUACION" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DIAGNOSTICO" Width="1.5" PointX="10.5" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EMPLEADO" Width="1.5" PointX="8.25" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EMPLEADOSAFE" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EMPRESA" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EVALUACION" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EXAMEN" Width="1.5" PointX="12.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MEDICO" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.TIPOEVALUACION" Width="1.5" PointX="3.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.TIPOUSUARIO" Width="1.5" PointX="10.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DETALLECAPACITACION" Width="1.5" PointX="10.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DIAGNOSTICOS_MEDICO_VIEW" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DIAGNOSTICOS_TRABAJADOR_VIEW" Width="1.5" PointX="2.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EMPLEADO_SAFE_VIEW" Width="1.5" PointX="4.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EMPLEADO_VIEW" Width="1.5" PointX="6.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EMPRESA_VIEW" Width="1.5" PointX="8.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EVALUACIONES_VIEW" Width="1.5" PointX="10.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EXAMENES_MEDICO_VIEW" Width="1.5" PointX="12.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MEDICO_VIEW" Width="1.5" PointX="12.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.RECOMENDADAS_VIEW" Width="1.5" PointX="12.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.VISTA_CITAS_GENERAL" Width="1.5" PointX="14.75" PointY="1.875" IsExpanded="true" />
+      <Diagram DiagramId="8ed9c645905c4ec5a73a20d464776cdd" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.CAPACITACION" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CITA" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CIUDAD" Width="1.5" PointX="5.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.COMUNA" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DETALLE_EVALUACION" Width="1.5" PointX="6" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DIAGNOSTICO" Width="1.5" PointX="7.5" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EMPLEADO" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EMPLEADOSAFE" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EMPRESA" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EVALUACION" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EXAMEN" Width="1.5" PointX="9.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MEDICO" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TIPOEVALUACION" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TIPOUSUARIO" Width="1.5" PointX="8.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DETALLECAPACITACION" Width="1.5" PointX="9.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CAPACITACIONES_VIEW" Width="1.5" PointX="10.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DETALLE_CAP_VIEW" Width="1.5" PointX="11.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DIAGNOSTICOS_MEDICO_VIEW" Width="1.5" PointX="11.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DIAGNOSTICOS_TRABAJADOR_VIEW" Width="1.5" PointX="11.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EMPLEADO_SAFE_VIEW" Width="1.5" PointX="7.75" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EMPLEADO_VIEW" Width="1.5" PointX="9.75" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EMPRESA_VIEW" Width="1.5" PointX="11.75" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EVALUACIONES_VIEW" Width="1.5" PointX="13.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EXAMENES_MEDICO_VIEW" Width="1.5" PointX="13.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MEDICO_VIEW" Width="1.5" PointX="13.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.RECOMENDADAS_VIEW" Width="1.5" PointX="13.75" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.VISTA_CITAS_GENERAL" Width="1.5" PointX="15.75" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="Model.CAPACITACION_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CAPACITACION_FK2" ManuallyRouted="false" />
         <AssociationConnector Association="Model.SYS_C007114" ManuallyRouted="false" />
         <AssociationConnector Association="Model.SYS_C007115" ManuallyRouted="false" />
         <AssociationConnector Association="Model.SYS_C007140" ManuallyRouted="false" />
@@ -40,11 +44,10 @@
         <AssociationConnector Association="Model.MEDICO_FK1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.SYS_C007133" ManuallyRouted="false" />
         <AssociationConnector Association="Model.SYS_C007134" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Model.CAPACITACIONES_VIEW" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.DETALLE_CAP_VIEW" Width="1.5" PointX="15.75" PointY="5.75" />
-        <AssociationConnector Association="Model.CAPACITACION_FK1" />
-        <AssociationConnector Association="Model.CAPACITACION_FK2" />
-        <EntityTypeShape EntityType="Model.CERTIFICADOS_VIEW" Width="1.5" PointX="15.375" PointY="8.75" />
+        <EntityTypeShape EntityType="Model.CERTIFICADO" Width="1.5" PointX="0.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Model.CERTIFICADOS_VIEW" Width="1.5" PointX="16.375" PointY="4.75" />
+        <EntityTypeShape EntityType="Model.PROXIMA_CAPACITACION_VIEW" Width="1.5" PointX="16.375" PointY="7.75" />
+        <EntityTypeShape EntityType="Model.PROXIMA_CITA_VIEW" Width="1.5" PointX="7.375" PointY="16.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

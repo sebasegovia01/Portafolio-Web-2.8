@@ -16,15 +16,17 @@
           <Property Name="EXPOSITOR" Type="varchar2" MaxLength="255" />
           <Property Name="RUTEMPRESA" Type="varchar2" MaxLength="255" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'SEBA.CERTIFICADO' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
         <EntityType Name="CERTIFICADO">
+          <Key>
+            <PropertyRef Name="IDCERTIFICADO" />
+          </Key>
           <Property Name="IDCAPACITACION" Type="number" Precision="38" Scale="0" />
-          <Property Name="RUTEMPLEADO" Type="varchar2" MaxLength="9" />
+          <Property Name="RUTEMPLEADO" Type="varchar2" MaxLength="255" />
           <Property Name="NOMBRE" Type="varchar2" MaxLength="255" />
-          <Property Name="DOCUMENTO" Type="blob" />
           <Property Name="TIPO_DOC" Type="varchar2" MaxLength="20" />
-        </EntityType>-->
+          <Property Name="FECHA" Type="date" />
+          <Property Name="IDCERTIFICADO" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
         <EntityType Name="CITA">
           <Key>
             <PropertyRef Name="ID_CITA" />
@@ -70,9 +72,10 @@ advertencia 6002: La tabla o vista 'SEBA.DETALLECAPACITACION' no tiene definida 
             <PropertyRef Name="IDCAPACITACION" />
             <PropertyRef Name="IDEMPLEADO" />
           </Key>
-          <Property Name="ASISTENCIA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ASISTENCIA" Type="varchar2" MaxLength="2" Nullable="false" />
           <Property Name="IDCAPACITACION" Type="number" Precision="10" Scale="0" Nullable="false" />
           <Property Name="IDEMPLEADO" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="FIRMA" Type="blob" />
         </EntityType>
         <EntityType Name="DIAGNOSTICO">
           <Key>
@@ -94,7 +97,7 @@ advertencia 6002: La tabla o vista 'SEBA.DETALLECAPACITACION' no tiene definida 
           <Property Name="APELLIDOM" Type="varchar2" MaxLength="30" Nullable="false" />
           <Property Name="FNACIMIENTO" Type="date" Nullable="false" />
           <Property Name="CORREO" Type="varchar2" MaxLength="30" Nullable="false" />
-          <Property Name="CLAVE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="CLAVE" Type="varchar2" MaxLength="255" Nullable="false" />
           <Property Name="NUMERO" Type="number" Precision="9" Scale="0" />
           <Property Name="RUTEMPRESA" Type="varchar2" MaxLength="9" Nullable="false" />
           <Property Name="HABILITADA" Type="char" MaxLength="1" />
@@ -109,7 +112,7 @@ advertencia 6002: La tabla o vista 'SEBA.DETALLECAPACITACION' no tiene definida 
           <Property Name="APELLIDOM" Type="varchar2" MaxLength="30" Nullable="false" />
           <Property Name="FNACIMIENTO" Type="date" Nullable="false" />
           <Property Name="CORREO" Type="varchar2" MaxLength="30" Nullable="false" />
-          <Property Name="CLAVE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="CLAVE" Type="varchar2" MaxLength="255" Nullable="false" />
           <Property Name="NUMERO" Type="number" Precision="9" Scale="0" />
           <Property Name="IDTIPO" Type="number" Precision="10" Scale="0" Nullable="false" />
           <Property Name="HABILITADA" Type="char" MaxLength="1" />
@@ -161,7 +164,7 @@ advertencia 6002: La tabla o vista 'SEBA.DETALLECAPACITACION' no tiene definida 
           <Property Name="APELLIDOM" Type="varchar2" MaxLength="30" Nullable="false" />
           <Property Name="FNACIMIENTO" Type="date" Nullable="false" />
           <Property Name="CORREO" Type="varchar2" MaxLength="40" Nullable="false" />
-          <Property Name="CLAVE" Type="varchar2" MaxLength="200" Nullable="false" />
+          <Property Name="CLAVE" Type="varchar2" MaxLength="255" Nullable="false" />
           <Property Name="TELEFONO" Type="number" Precision="15" Scale="0" Nullable="false" />
           <Property Name="ACTIVO" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="RUTEMPRESA" Type="varchar2" MaxLength="9" Nullable="false" />
@@ -203,12 +206,13 @@ advertencia 6002: La tabla o vista 'SEBA.CAPACITACIONES_VIEW' no tiene definida 
 advertencia 6002: La tabla o vista 'SEBA.CERTIFICADOS_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="CERTIFICADOS_VIEW">
           <Key>
-            <PropertyRef Name="RUT" />
+            <PropertyRef Name="CODIGO" />
           </Key>
+          <Property Name="CODIGO" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="ID" Type="number" Precision="38" Scale="0" />
-          <Property Name="RUT" Type="varchar2" MaxLength="9" Nullable="false" />
-          <Property Name="EMPLEADO" Type="varchar2" MaxLength="60" />
-          <Property Name="DOCUMENTO" Type="varchar2" MaxLength="276" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="255" />
+          <Property Name="DOCUMENTO" Type="varchar2" MaxLength="255" />
+          <Property Name="FECHA" Type="date" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SEBA.DETALLE_CAP_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -219,7 +223,8 @@ advertencia 6002: La tabla o vista 'SEBA.DETALLE_CAP_VIEW' no tiene definida nin
           </Key>
           <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
           <Property Name="EMPLEADO" Type="varchar2" MaxLength="61" />
-          <Property Name="ASISTENCIA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FIRMA" Type="blob" />
+          <Property Name="ASISTENCIA" Type="varchar2" MaxLength="2" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SEBA.DIAGNOSTICOS_MEDICO_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -334,12 +339,14 @@ advertencia 6002: La tabla o vista 'SEBA.EXAMENES_MEDICO_VIEW' no tiene definida
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA" />
             <PropertyRef Name="DOCUMENTO" />
             <PropertyRef Name="HABILITADO" />
           </Key>
           <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
           <Property Name="RUT" Type="varchar2" MaxLength="9" Nullable="false" />
-          <Property Name="NOMBRE" Type="varchar2" MaxLength="60" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="61" />
           <Property Name="DESCRIPCION" Type="varchar2" MaxLength="2000" />
           <Property Name="DOCUMENTO" Type="blob" Nullable="false" />
           <Property Name="HABILITADO" Type="char" MaxLength="1" Nullable="false" />
@@ -362,6 +369,43 @@ advertencia 6002: La tabla o vista 'SEBA.MEDICO_VIEW' no tiene definida ninguna 
           <Property Name="NUMERO" Type="number" Precision="15" Scale="0" Nullable="false" />
           <Property Name="RUTEMPRESA" Type="varchar2" MaxLength="9" Nullable="false" />
           <Property Name="HABILITADA" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.PROXIMA_CAPACITACION_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="PROXIMA_CAPACITACION_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="EMPRESA" />
+            <PropertyRef Name="OBJETIVO" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="LUGAR" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="EMPRESA" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="OBJETIVO" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="FECHA" Type="timestamp" Precision="6" Nullable="false" />
+          <Property Name="LUGAR" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="EXPOSITOR" Type="varchar2" MaxLength="61" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SEBA.PROXIMA_CITA_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="PROXIMA_CITA_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="HORA" />
+            <PropertyRef Name="EMPRESA" />
+            <PropertyRef Name="ASISTENCIA" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="RUT" Type="varchar2" MaxLength="9" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="92" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="HORA" Type="timestamp" Precision="6" Nullable="false" />
+          <Property Name="EMPRESA" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="ASISTENCIA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ACTIVA" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SEBA.RECOMENDADAS_VIEW' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -393,6 +437,7 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
             <PropertyRef Name="RUT" />
             <PropertyRef Name="FECHA" />
             <PropertyRef Name="HORA" />
+            <PropertyRef Name="EMPRESA" />
             <PropertyRef Name="ASISTENCIA" />
           </Key>
           <Property Name="ID" Type="number" Precision="10" Scale="0" Nullable="false" />
@@ -400,6 +445,7 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
           <Property Name="NOMBRE" Type="varchar2" MaxLength="92" />
           <Property Name="FECHA" Type="date" Nullable="false" />
           <Property Name="HORA" Type="timestamp" Precision="6" Nullable="false" />
+          <Property Name="EMPRESA" Type="varchar2" MaxLength="30" Nullable="false" />
           <Property Name="ASISTENCIA" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="ACTIVA" Type="char" MaxLength="1" />
         </EntityType>
@@ -427,9 +473,6 @@ advertencia 6002: La tabla o vista 'SEBA.VISTA_CITAS_GENERAL' no tiene definida 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errores durante la generación:
-error 6004: Una relación hace referencia a la tabla 'SEBA.CERTIFICADO', pero no se encuentra la tabla.
-        <Association Name="CERTIFICADO_FK1" />-->
         <Association Name="MEDICO_FK1">
           <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
           <End Role="MEDICO" Type="Self.MEDICO" Multiplicity="*" />
@@ -603,11 +646,11 @@ error 6004: Una relación hace referencia a la tabla 'SEBA.CERTIFICADO', pero no
           <Parameter Name="RUT_EMP" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="INGRESAR_CERTIFICADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
-          <Parameter Name="ID" Type="number" Mode="In" />
-          <Parameter Name="RUTEMPLEADO" Type="varchar2" Mode="In" />
+          <Parameter Name="IDCAPACITACION" Type="number" Mode="In" />
+          <Parameter Name="EMPLEADO" Type="varchar2" Mode="In" />
           <Parameter Name="NOMBRE" Type="varchar2" Mode="In" />
-          <Parameter Name="DOCUMENTO" Type="blob" Mode="In" />
           <Parameter Name="TIPO_DOC" Type="varchar2" Mode="In" />
+          <Parameter Name="FECHA" Type="timestamp" Mode="In" />
         </Function>
         <Function Name="INGRESAR_CITA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
           <Parameter Name="ASISTENCIA" Type="char" Mode="In" />
@@ -737,6 +780,11 @@ error 6004: Una relación hace referencia a la tabla 'SEBA.CERTIFICADO', pero no
           <Parameter Name="ID_CIUDAD" Type="number" Mode="In" />
           <Parameter Name="ACTIVA" Type="char" Mode="In" />
         </Function>
+        <Function Name="MODIFICAR_DETALLE_CAPACITACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
+          <Parameter Name="ID_CAP" Type="number" Mode="In" />
+          <Parameter Name="ID_EMPLEADO" Type="varchar2" Mode="In" />
+          <Parameter Name="FIRMADO" Type="blob" Mode="In" />
+        </Function>
         <Function Name="MODIFICAR_DETALLE_EVALUACION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SEBA">
           <Parameter Name="ID_EVAL" Type="number" Mode="In" />
           <Parameter Name="RECOMND" Type="varchar2" Mode="In" />
@@ -824,6 +872,7 @@ error 6004: Una relación hace referencia a la tabla 'SEBA.CERTIFICADO', pero no
         </Function>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="CAPACITACION" EntityType="Self.CAPACITACION" Schema="SEBA" store:Type="Tables" />
+          <EntitySet Name="CERTIFICADO" EntityType="Self.CERTIFICADO" Schema="SEBA" store:Type="Tables" />
           <EntitySet Name="CITA" EntityType="Self.CITA" Schema="SEBA" store:Type="Tables" />
           <EntitySet Name="CIUDAD" EntityType="Self.CIUDAD" Schema="SEBA" store:Type="Tables" />
           <EntitySet Name="COMUNA" EntityType="Self.COMUNA" Schema="SEBA" store:Type="Tables" />
@@ -841,7 +890,8 @@ error 6004: Una relación hace referencia a la tabla 'SEBA.CERTIFICADO', pero no
             <DefiningQuery>SELECT 
 "DETALLECAPACITACION"."ASISTENCIA" AS "ASISTENCIA", 
 "DETALLECAPACITACION"."IDCAPACITACION" AS "IDCAPACITACION", 
-"DETALLECAPACITACION"."IDEMPLEADO" AS "IDEMPLEADO"
+"DETALLECAPACITACION"."IDEMPLEADO" AS "IDEMPLEADO", 
+"DETALLECAPACITACION"."FIRMA" AS "FIRMA"
 FROM "SEBA"."DETALLECAPACITACION" "DETALLECAPACITACION"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="CAPACITACIONES_VIEW" EntityType="Self.CAPACITACIONES_VIEW" store:Type="Views" store:Schema="SEBA">
@@ -856,16 +906,18 @@ FROM "SEBA"."CAPACITACIONES_VIEW" "CAPACITACIONES_VIEW"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="CERTIFICADOS_VIEW" EntityType="Self.CERTIFICADOS_VIEW" store:Type="Views" store:Schema="SEBA">
             <DefiningQuery>SELECT 
+"CERTIFICADOS_VIEW"."CODIGO" AS "CODIGO", 
 "CERTIFICADOS_VIEW"."ID" AS "ID", 
-"CERTIFICADOS_VIEW"."RUT" AS "RUT", 
-"CERTIFICADOS_VIEW"."EMPLEADO" AS "EMPLEADO", 
-"CERTIFICADOS_VIEW"."DOCUMENTO" AS "DOCUMENTO"
+"CERTIFICADOS_VIEW"."NOMBRE" AS "NOMBRE", 
+"CERTIFICADOS_VIEW"."DOCUMENTO" AS "DOCUMENTO", 
+"CERTIFICADOS_VIEW"."FECHA" AS "FECHA"
 FROM "SEBA"."CERTIFICADOS_VIEW" "CERTIFICADOS_VIEW"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="DETALLE_CAP_VIEW" EntityType="Self.DETALLE_CAP_VIEW" store:Type="Views" store:Schema="SEBA">
             <DefiningQuery>SELECT 
 "DETALLE_CAP_VIEW"."ID" AS "ID", 
 "DETALLE_CAP_VIEW"."EMPLEADO" AS "EMPLEADO", 
+"DETALLE_CAP_VIEW"."FIRMA" AS "FIRMA", 
 "DETALLE_CAP_VIEW"."ASISTENCIA" AS "ASISTENCIA"
 FROM "SEBA"."DETALLE_CAP_VIEW" "DETALLE_CAP_VIEW"</DefiningQuery>
           </EntitySet>
@@ -938,6 +990,7 @@ FROM "SEBA"."EVALUACIONES_VIEW" "EVALUACIONES_VIEW"</DefiningQuery>
             <DefiningQuery>SELECT 
 "EXAMENES_MEDICO_VIEW"."ID" AS "ID", 
 "EXAMENES_MEDICO_VIEW"."RUT" AS "RUT", 
+"EXAMENES_MEDICO_VIEW"."FECHA" AS "FECHA", 
 "EXAMENES_MEDICO_VIEW"."NOMBRE" AS "NOMBRE", 
 "EXAMENES_MEDICO_VIEW"."DESCRIPCION" AS "DESCRIPCION", 
 "EXAMENES_MEDICO_VIEW"."DOCUMENTO" AS "DOCUMENTO", 
@@ -954,6 +1007,28 @@ FROM "SEBA"."EXAMENES_MEDICO_VIEW" "EXAMENES_MEDICO_VIEW"</DefiningQuery>
 "MEDICO_VIEW"."RUTEMPRESA" AS "RUTEMPRESA", 
 "MEDICO_VIEW"."HABILITADA" AS "HABILITADA"
 FROM "SEBA"."MEDICO_VIEW" "MEDICO_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PROXIMA_CAPACITACION_VIEW" EntityType="Self.PROXIMA_CAPACITACION_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"PROXIMA_CAPACITACION_VIEW"."ID" AS "ID", 
+"PROXIMA_CAPACITACION_VIEW"."EMPRESA" AS "EMPRESA", 
+"PROXIMA_CAPACITACION_VIEW"."OBJETIVO" AS "OBJETIVO", 
+"PROXIMA_CAPACITACION_VIEW"."FECHA" AS "FECHA", 
+"PROXIMA_CAPACITACION_VIEW"."LUGAR" AS "LUGAR", 
+"PROXIMA_CAPACITACION_VIEW"."EXPOSITOR" AS "EXPOSITOR"
+FROM "SEBA"."PROXIMA_CAPACITACION_VIEW" "PROXIMA_CAPACITACION_VIEW"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PROXIMA_CITA_VIEW" EntityType="Self.PROXIMA_CITA_VIEW" store:Type="Views" store:Schema="SEBA">
+            <DefiningQuery>SELECT 
+"PROXIMA_CITA_VIEW"."ID" AS "ID", 
+"PROXIMA_CITA_VIEW"."RUT" AS "RUT", 
+"PROXIMA_CITA_VIEW"."NOMBRE" AS "NOMBRE", 
+"PROXIMA_CITA_VIEW"."FECHA" AS "FECHA", 
+"PROXIMA_CITA_VIEW"."HORA" AS "HORA", 
+"PROXIMA_CITA_VIEW"."EMPRESA" AS "EMPRESA", 
+"PROXIMA_CITA_VIEW"."ASISTENCIA" AS "ASISTENCIA", 
+"PROXIMA_CITA_VIEW"."ACTIVA" AS "ACTIVA"
+FROM "SEBA"."PROXIMA_CITA_VIEW" "PROXIMA_CITA_VIEW"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="RECOMENDADAS_VIEW" EntityType="Self.RECOMENDADAS_VIEW" store:Type="Views" store:Schema="SEBA">
             <DefiningQuery>SELECT 
@@ -974,6 +1049,7 @@ FROM "SEBA"."RECOMENDADAS_VIEW" "RECOMENDADAS_VIEW"</DefiningQuery>
 "VISTA_CITAS_GENERAL"."NOMBRE" AS "NOMBRE", 
 "VISTA_CITAS_GENERAL"."FECHA" AS "FECHA", 
 "VISTA_CITAS_GENERAL"."HORA" AS "HORA", 
+"VISTA_CITAS_GENERAL"."EMPRESA" AS "EMPRESA", 
 "VISTA_CITAS_GENERAL"."ASISTENCIA" AS "ASISTENCIA", 
 "VISTA_CITAS_GENERAL"."ACTIVA" AS "ACTIVA"
 FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
@@ -1040,9 +1116,9 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="FECHA" Type="DateTime" Precision="6" Nullable="false" />
           <Property Name="LUGAR" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EXPOSITOR" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="RUTEMPRESA" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EMPRESA" Relationship="Model.CAPACITACION_FK1" FromRole="CAPACITACION" ToRole="EMPRESA" />
-          <NavigationProperty Name="EMPLEADOSAFE" Relationship="Model.CAPACITACION_FK2" FromRole="CAPACITACION" ToRole="EMPLEADOSAFE" />
+          <Property Name="RUTEMPRESA" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EMPRESA" Relationship="Self.CAPACITACION_FK1" FromRole="CAPACITACION" ToRole="EMPRESA" />
+          <NavigationProperty Name="EMPLEADOSAFE" Relationship="Self.CAPACITACION_FK2" FromRole="CAPACITACION" ToRole="EMPLEADOSAFE" />
         </EntityType>
         <EntityType Name="CITA">
           <Key>
@@ -1108,7 +1184,7 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="APELLIDOM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FNACIMIENTO" Type="DateTime" Nullable="false" />
           <Property Name="CORREO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CLAVE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLAVE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NUMERO" Type="Int32" />
           <Property Name="RUTEMPRESA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
@@ -1124,13 +1200,13 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="APELLIDOM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FNACIMIENTO" Type="DateTime" Nullable="false" />
           <Property Name="CORREO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CLAVE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLAVE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NUMERO" Type="Int32" />
           <Property Name="IDTIPO" Type="Int32" Nullable="false" />
           <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="CAPACITACION" Relationship="Self.CAPACITACION_FK2" FromRole="EMPLEADOSAFE" ToRole="CAPACITACION" />
           <NavigationProperty Name="DETALLE_EVALUACION" Relationship="Self.SYS_C007141" FromRole="EMPLEADOSAFE" ToRole="DETALLE_EVALUACION" />
           <NavigationProperty Name="EVALUACION" Relationship="Self.SYS_C007135" FromRole="EMPLEADOSAFE" ToRole="EVALUACION" />
-          <NavigationProperty Name="CAPACITACION" Relationship="Model.CAPACITACION_FK2" FromRole="EMPLEADOSAFE" ToRole="CAPACITACION" />
         </EntityType>
         <EntityType Name="EMPRESA">
           <Key>
@@ -1143,9 +1219,9 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="NUMERO" Type="Int64" Nullable="false" />
           <Property Name="IDCOMUNA" Type="Int32" Nullable="false" />
           <Property Name="HABILITADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="CAPACITACION" Relationship="Self.CAPACITACION_FK1" FromRole="EMPRESA" ToRole="CAPACITACION" />
           <NavigationProperty Name="MEDICO" Relationship="Self.MEDICO_FK1" FromRole="EMPRESA" ToRole="MEDICO" />
           <NavigationProperty Name="EVALUACION" Relationship="Self.SYS_C007133" FromRole="EMPRESA" ToRole="EVALUACION" />
-          <NavigationProperty Name="CAPACITACION" Relationship="Model.CAPACITACION_FK1" FromRole="EMPRESA" ToRole="CAPACITACION" />
         </EntityType>
         <EntityType Name="EVALUACION">
           <Key>
@@ -1187,7 +1263,7 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="APELLIDOM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FNACIMIENTO" Type="DateTime" Nullable="false" />
           <Property Name="CORREO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CLAVE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLAVE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TELEFONO" Type="Int64" Nullable="false" />
           <Property Name="ACTIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="RUTEMPRESA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
@@ -1217,9 +1293,35 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <PropertyRef Name="IDCAPACITACION" />
             <PropertyRef Name="IDEMPLEADO" />
           </Key>
-          <Property Name="ASISTENCIA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ASISTENCIA" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IDCAPACITACION" Type="Int32" Nullable="false" />
           <Property Name="IDEMPLEADO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FIRMA" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="CAPACITACIONES_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="EMPRESA" />
+            <PropertyRef Name="OBJETIVO" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="LUGAR" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EMPRESA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OBJETIVO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="LUGAR" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EXPOSITOR" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DETALLE_CAP_VIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ASISTENCIA" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EMPLEADO" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="ASISTENCIA" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FIRMA" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="DIAGNOSTICOS_MEDICO_VIEW">
           <Key>
@@ -1303,29 +1405,31 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <PropertyRef Name="FECHA" />
             <PropertyRef Name="OBSERVACION" />
             <PropertyRef Name="DERIVADA" />
+            <PropertyRef Name="RECOMENDADA" />
             <PropertyRef Name="TIPO" />
             <PropertyRef Name="EMPRESA" />
-            <PropertyRef Name="RECOMENDADA" />
           </Key>
           <Property Name="CLAVE" Type="Int32" Nullable="false" />
           <Property Name="FECHA" Type="DateTime" Nullable="false" />
           <Property Name="OBSERVACION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DERIVADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="RECOMENDADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="EMPLEADO" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
           <Property Name="TIPO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EMPRESA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RECOMENDADA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="EXAMENES_MEDICO_VIEW">
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA" />
             <PropertyRef Name="DOCUMENTO" />
             <PropertyRef Name="HABILITADO" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="RUT" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NOMBRE" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
           <Property Name="DESCRIPCION" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="DOCUMENTO" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="HABILITADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
@@ -1365,7 +1469,7 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="AUTORIZADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="EMPLEADO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EMPRESA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TIPO" Type="String" Nullable="false" />
+          <Property Name="TIPO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="VISTA_CITAS_GENERAL">
           <Key>
@@ -1374,6 +1478,7 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <PropertyRef Name="FECHA" />
             <PropertyRef Name="HORA" />
             <PropertyRef Name="ASISTENCIA" />
+            <PropertyRef Name="EMPRESA" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="RUT" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
@@ -1382,7 +1487,32 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="HORA" Type="DateTime" Precision="6" Nullable="false" />
           <Property Name="ASISTENCIA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ACTIVA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="EMPRESA" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="CAPACITACION_FK1">
+          <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
+          <End Role="CAPACITACION" Type="Self.CAPACITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPRESA">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Principal>
+            <Dependent Role="CAPACITACION">
+              <PropertyRef Name="RUTEMPRESA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CAPACITACION_FK2">
+          <End Role="EMPLEADOSAFE" Type="Self.EMPLEADOSAFE" Multiplicity="0..1" />
+          <End Role="CAPACITACION" Type="Self.CAPACITACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADOSAFE">
+              <PropertyRef Name="RUTSAFE" />
+            </Principal>
+            <Dependent Role="CAPACITACION">
+              <PropertyRef Name="EXPOSITOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="SYS_C007114">
           <End Role="MEDICO" Type="Self.MEDICO" Multiplicity="0..1" />
           <End Role="CITA" Type="Self.CITA" Multiplicity="*" />
@@ -1408,7 +1538,9 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="SYS_C007140">
-          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="DETALLE_EVALUACION" Type="Self.DETALLE_EVALUACION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EVALUACION">
@@ -1519,6 +1651,8 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <EntitySet Name="TIPOEVALUACION" EntityType="Self.TIPOEVALUACION" />
           <EntitySet Name="TIPOUSUARIO" EntityType="Self.TIPOUSUARIO" />
           <EntitySet Name="DETALLECAPACITACION" EntityType="Self.DETALLECAPACITACION" />
+          <EntitySet Name="CAPACITACIONES_VIEW" EntityType="Self.CAPACITACIONES_VIEW" />
+          <EntitySet Name="DETALLE_CAP_VIEW" EntityType="Self.DETALLE_CAP_VIEW" />
           <EntitySet Name="DIAGNOSTICOS_MEDICO_VIEW" EntityType="Self.DIAGNOSTICOS_MEDICO_VIEW" />
           <EntitySet Name="DIAGNOSTICOS_TRABAJADOR_VIEW" EntityType="Self.DIAGNOSTICOS_TRABAJADOR_VIEW" />
           <EntitySet Name="EMPLEADO_SAFE_VIEW" EntityType="Self.EMPLEADO_SAFE_VIEW" />
@@ -1529,6 +1663,14 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <EntitySet Name="MEDICO_VIEW" EntityType="Self.MEDICO_VIEW" />
           <EntitySet Name="RECOMENDADAS_VIEW" EntityType="Self.RECOMENDADAS_VIEW" />
           <EntitySet Name="VISTA_CITAS_GENERAL" EntityType="Self.VISTA_CITAS_GENERAL" />
+          <AssociationSet Name="CAPACITACION_FK1" Association="Self.CAPACITACION_FK1">
+            <End Role="EMPRESA" EntitySet="EMPRESA" />
+            <End Role="CAPACITACION" EntitySet="CAPACITACION" />
+          </AssociationSet>
+          <AssociationSet Name="CAPACITACION_FK2" Association="Self.CAPACITACION_FK2">
+            <End Role="EMPLEADOSAFE" EntitySet="EMPLEADOSAFE" />
+            <End Role="CAPACITACION" EntitySet="CAPACITACION" />
+          </AssociationSet>
           <AssociationSet Name="SYS_C007114" Association="Self.SYS_C007114">
             <End Role="MEDICO" EntitySet="MEDICO" />
             <End Role="CITA" EntitySet="CITA" />
@@ -1593,6 +1735,15 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <Parameter Name="RUT" Mode="In" Type="String" />
             <Parameter Name="HABILITADO" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ELIMINAR_CAPACITACION">
+          <Parameter Name="ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="ELIMINAR_DETALLE_CAPACITACION">
+          <Parameter Name="ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="ELIMINAR_DETALLE_EVALUACION">
+          <Parameter Name="ID_EV" Mode="In" Type="Decimal" />
+          </FunctionImport>
           <FunctionImport Name="ELIMINAR_EVALUACION">
           <Parameter Name="ID_EV" Mode="In" Type="Decimal" />
           </FunctionImport>
@@ -1609,6 +1760,13 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <Parameter Name="LUGAR" Mode="In" Type="String" />
             <Parameter Name="EXPOSITOR" Mode="In" Type="String" />
             <Parameter Name="RUT_EMP" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INGRESAR_CERTIFICADO">
+            <Parameter Name="IDCAPACITACION" Mode="In" Type="Decimal" />
+            <Parameter Name="EMPLEADO" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="TIPO_DOC" Mode="In" Type="String" />
+            <Parameter Name="FECHA" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="INGRESAR_CITA">
             <Parameter Name="ASISTENCIA" Mode="In" Type="String" />
@@ -1697,6 +1855,10 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <Parameter Name="ACTIVO" Mode="In" Type="String" />
             <Parameter Name="RUTEMPRESA" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="INGRESAR_RIESGO">
+            <Parameter Name="RUT_EMPLEADO" Mode="In" Type="String" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="INGRESAR_TIPO_EVALUACION">
           <Parameter Name="NOMBRE" Mode="In" Type="String" />
           </FunctionImport>
@@ -1707,6 +1869,13 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <FunctionImport Name="MODIFICAR_ASISTENCIA_CITA">
             <Parameter Name="ID" Mode="In" Type="Decimal" />
             <Parameter Name="ASIS" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_CAPACITACION">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="OBJTV" Mode="In" Type="String" />
+            <Parameter Name="FECH" Mode="In" Type="DateTime" />
+            <Parameter Name="EXPO" Mode="In" Type="String" />
+            <Parameter Name="SITIO" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MODIFICAR_CITA">
             <Parameter Name="ID" Mode="In" Type="Decimal" />
@@ -1726,6 +1895,11 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <Parameter Name="NAME" Mode="In" Type="String" />
             <Parameter Name="ID_CIUDAD" Mode="In" Type="Decimal" />
             <Parameter Name="ACTIVA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MODIFICAR_DETALLE_EVALUACION">
+            <Parameter Name="ID_EVAL" Mode="In" Type="Decimal" />
+            <Parameter Name="RECOMND" Mode="In" Type="String" />
+            <Parameter Name="AUTORITATION" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MODIFICAR_DIAGNOSTICO">
             <Parameter Name="ID" Mode="In" Type="Decimal" />
@@ -1807,51 +1981,38 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
             <Parameter Name="NAME" Mode="In" Type="String" />
             <Parameter Name="HABILITADO" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ELIMINAR_DETALLE_EVALUACION">
-          <Parameter Name="ID_EV" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="MODIFICAR_DETALLE_EVALUACION">
-            <Parameter Name="ID_EVAL" Mode="In" Type="Decimal" />
-            <Parameter Name="RECOMND" Mode="In" Type="String" />
-            <Parameter Name="AUTORITATION" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="CAPACITACIONES_VIEW" EntityType="Model.CAPACITACIONES_VIEW" />
-          <EntitySet Name="DETALLE_CAP_VIEW" EntityType="Model.DETALLE_CAP_VIEW" />
-          <AssociationSet Name="CAPACITACION_FK1" Association="Model.CAPACITACION_FK1">
-            <End Role="EMPRESA" EntitySet="EMPRESA" />
-            <End Role="CAPACITACION" EntitySet="CAPACITACION" />
-          </AssociationSet>
-          <AssociationSet Name="CAPACITACION_FK2" Association="Model.CAPACITACION_FK2">
-            <End Role="EMPLEADOSAFE" EntitySet="EMPLEADOSAFE" />
-            <End Role="CAPACITACION" EntitySet="CAPACITACION" />
-          </AssociationSet>
-          <FunctionImport Name="MODIFICAR_CAPACITACION">
-            <Parameter Name="ID" Mode="In" Type="Decimal" />
-            <Parameter Name="OBJTV" Mode="In" Type="String" />
-            <Parameter Name="FECH" Mode="In" Type="DateTime" />
-            <Parameter Name="EXPO" Mode="In" Type="String" />
-            <Parameter Name="SITIO" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ELIMINAR_CAPACITACION">
-          <Parameter Name="ID" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="ELIMINAR_DETALLE_CAPACITACION">
-          <Parameter Name="ID" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="INGRESAR_RIESGO">
-            <Parameter Name="RUT_EMPLEADO" Mode="In" Type="String" />
-            <Parameter Name="NOMBRE" Mode="In" Type="String" />
-          </FunctionImport>
+          <EntitySet Name="CERTIFICADO" EntityType="Model.CERTIFICADO" />
           <EntitySet Name="CERTIFICADOS_VIEW" EntityType="Model.CERTIFICADOS_VIEW" />
-          <FunctionImport Name="INGRESAR_CERTIFICADO">
-            <Parameter Name="ID" Mode="In" Type="Decimal" />
-            <Parameter Name="RUTEMPLEADO" Mode="In" Type="String" />
-            <Parameter Name="NOMBRE" Mode="In" Type="String" />
-            <Parameter Name="DOCUMENTO" Mode="In" Type="Binary" />
-            <Parameter Name="TIPO_DOC" Mode="In" Type="String" />
+          <EntitySet Name="PROXIMA_CAPACITACION_VIEW" EntityType="Model.PROXIMA_CAPACITACION_VIEW" />
+          <EntitySet Name="PROXIMA_CITA_VIEW" EntityType="Model.PROXIMA_CITA_VIEW" />
+          <FunctionImport Name="MODIFICAR_DETALLE_CAPACITACION">
+            <Parameter Name="ID_CAP" Mode="In" Type="Decimal" />
+            <Parameter Name="ID_EMPLEADO" Mode="In" Type="String" />
+            <Parameter Name="FIRMADO" Mode="In" Type="Binary" />
           </FunctionImport>
         </EntityContainer>
-        <EntityType Name="CAPACITACIONES_VIEW">
+        <EntityType Name="CERTIFICADO">
+          <Key>
+            <PropertyRef Name="IDCERTIFICADO" />
+          </Key>
+          <Property Name="IDCAPACITACION" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="RUTEMPLEADO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TIPO_DOC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" />
+          <Property Name="IDCERTIFICADO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="CERTIFICADOS_VIEW">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="NOMBRE" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="DOCUMENTO" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="PROXIMA_CAPACITACION_VIEW">
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="EMPRESA" />
@@ -1866,47 +2027,23 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <Property Name="LUGAR" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EXPOSITOR" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="DETALLE_CAP_VIEW">
+        <EntityType Name="PROXIMA_CITA_VIEW">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="RUT" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="HORA" />
+            <PropertyRef Name="EMPRESA" />
             <PropertyRef Name="ASISTENCIA" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="EMPLEADO" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
-          <Property Name="ASISTENCIA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <Association Name="CAPACITACION_FK1">
-          <End Type="Model.EMPRESA" Role="EMPRESA" Multiplicity="1" />
-          <End Type="Model.CAPACITACION" Role="CAPACITACION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPRESA">
-              <PropertyRef Name="RUTEMPRESA" />
-            </Principal>
-            <Dependent Role="CAPACITACION">
-              <PropertyRef Name="RUTEMPRESA" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CAPACITACION_FK2">
-          <End Type="Model.EMPLEADOSAFE" Role="EMPLEADOSAFE" Multiplicity="0..1" />
-          <End Type="Model.CAPACITACION" Role="CAPACITACION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLEADOSAFE">
-              <PropertyRef Name="RUTSAFE" />
-            </Principal>
-            <Dependent Role="CAPACITACION">
-              <PropertyRef Name="EXPOSITOR" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CERTIFICADOS_VIEW">
-          <Key>
-            <PropertyRef Name="RUT" />
-          </Key>
-          <Property Name="ID" Type="Decimal" Precision="38" Scale="0" />
           <Property Name="RUT" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="EMPLEADO" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="DOCUMENTO" Type="String" MaxLength="276" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="92" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="HORA" Type="DateTime" Nullable="false" Precision="6" />
+          <Property Name="EMPRESA" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ASISTENCIA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ACTIVA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1917,12 +2054,12 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <EntitySetMapping Name="CAPACITACION">
             <EntityTypeMapping TypeName="Model.CAPACITACION">
               <MappingFragment StoreEntitySet="CAPACITACION">
-                <ScalarProperty Name="RUTEMPRESA" ColumnName="RUTEMPRESA" />
-                <ScalarProperty Name="EXPOSITOR" ColumnName="EXPOSITOR" />
                 <ScalarProperty Name="IDCAPACITACION" ColumnName="IDCAPACITACION" />
                 <ScalarProperty Name="OBJETIVO" ColumnName="OBJETIVO" />
                 <ScalarProperty Name="FECHA" ColumnName="FECHA" />
                 <ScalarProperty Name="LUGAR" ColumnName="LUGAR" />
+                <ScalarProperty Name="EXPOSITOR" ColumnName="EXPOSITOR" />
+                <ScalarProperty Name="RUTEMPRESA" ColumnName="RUTEMPRESA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2087,9 +2224,32 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <EntitySetMapping Name="DETALLECAPACITACION">
             <EntityTypeMapping TypeName="Model.DETALLECAPACITACION">
               <MappingFragment StoreEntitySet="DETALLECAPACITACION">
+                <ScalarProperty Name="FIRMA" ColumnName="FIRMA" />
                 <ScalarProperty Name="ASISTENCIA" ColumnName="ASISTENCIA" />
                 <ScalarProperty Name="IDCAPACITACION" ColumnName="IDCAPACITACION" />
                 <ScalarProperty Name="IDEMPLEADO" ColumnName="IDEMPLEADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAPACITACIONES_VIEW">
+            <EntityTypeMapping TypeName="Model.CAPACITACIONES_VIEW">
+              <MappingFragment StoreEntitySet="CAPACITACIONES_VIEW">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+                <ScalarProperty Name="OBJETIVO" ColumnName="OBJETIVO" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="LUGAR" ColumnName="LUGAR" />
+                <ScalarProperty Name="EXPOSITOR" ColumnName="EXPOSITOR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLE_CAP_VIEW">
+            <EntityTypeMapping TypeName="Model.DETALLE_CAP_VIEW">
+              <MappingFragment StoreEntitySet="DETALLE_CAP_VIEW">
+                <ScalarProperty Name="FIRMA" ColumnName="FIRMA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
+                <ScalarProperty Name="ASISTENCIA" ColumnName="ASISTENCIA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2159,11 +2319,11 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <EntitySetMapping Name="EVALUACIONES_VIEW">
             <EntityTypeMapping TypeName="Model.EVALUACIONES_VIEW">
               <MappingFragment StoreEntitySet="EVALUACIONES_VIEW">
-                <ScalarProperty Name="RECOMENDADA" ColumnName="RECOMENDADA" />
                 <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
                 <ScalarProperty Name="FECHA" ColumnName="FECHA" />
                 <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
                 <ScalarProperty Name="DERIVADA" ColumnName="DERIVADA" />
+                <ScalarProperty Name="RECOMENDADA" ColumnName="RECOMENDADA" />
                 <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
                 <ScalarProperty Name="TIPO" ColumnName="TIPO" />
                 <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
@@ -2175,6 +2335,7 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
               <MappingFragment StoreEntitySet="EXAMENES_MEDICO_VIEW">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
                 <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
                 <ScalarProperty Name="DOCUMENTO" ColumnName="DOCUMENTO" />
@@ -2212,6 +2373,7 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <EntitySetMapping Name="VISTA_CITAS_GENERAL">
             <EntityTypeMapping TypeName="Model.VISTA_CITAS_GENERAL">
               <MappingFragment StoreEntitySet="VISTA_CITAS_GENERAL">
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RUT" ColumnName="RUT" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
@@ -2228,10 +2390,14 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <FunctionImportMapping FunctionImportName="DESHABILITAR_EMPLEADOSAFE" FunctionName="Model.Store.DESHABILITAR_EMPLEADOSAFE" />
           <FunctionImportMapping FunctionImportName="DESHABILITAR_EMPRESA" FunctionName="Model.Store.DESHABILITAR_EMPRESA" />
           <FunctionImportMapping FunctionImportName="DESHABILITAR_MEDICO" FunctionName="Model.Store.DESHABILITAR_MEDICO" />
+          <FunctionImportMapping FunctionImportName="ELIMINAR_CAPACITACION" FunctionName="Model.Store.ELIMINAR_CAPACITACION" />
+          <FunctionImportMapping FunctionImportName="ELIMINAR_DETALLE_CAPACITACION" FunctionName="Model.Store.ELIMINAR_DETALLE_CAPACITACION" />
+          <FunctionImportMapping FunctionImportName="ELIMINAR_DETALLE_EVALUACION" FunctionName="Model.Store.ELIMINAR_DETALLE_EVALUACION" />
           <FunctionImportMapping FunctionImportName="ELIMINAR_EVALUACION" FunctionName="Model.Store.ELIMINAR_EVALUACION" />
           <FunctionImportMapping FunctionImportName="ELIMINAR_EXAMEN" FunctionName="Model.Store.ELIMINAR_EXAMEN" />
           <FunctionImportMapping FunctionImportName="ELIMINAR_TIPO_EVALUACION" FunctionName="Model.Store.ELIMINAR_TIPO_EVALUACION" />
           <FunctionImportMapping FunctionImportName="INGRESAR_CAPACITACION" FunctionName="Model.Store.INGRESAR_CAPACITACION" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_CERTIFICADO" FunctionName="Model.Store.INGRESAR_CERTIFICADO" />
           <FunctionImportMapping FunctionImportName="INGRESAR_CITA" FunctionName="Model.Store.INGRESAR_CITA" />
           <FunctionImportMapping FunctionImportName="INGRESAR_CIUDAD" FunctionName="Model.Store.INGRESAR_CIUDAD" />
           <FunctionImportMapping FunctionImportName="INGRESAR_COMUNA" FunctionName="Model.Store.INGRESAR_COMUNA" />
@@ -2244,12 +2410,15 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <FunctionImportMapping FunctionImportName="INGRESAR_EVALUACION" FunctionName="Model.Store.INGRESAR_EVALUACION" />
           <FunctionImportMapping FunctionImportName="INGRESAR_EXAMEN" FunctionName="Model.Store.INGRESAR_EXAMEN" />
           <FunctionImportMapping FunctionImportName="INGRESAR_MEDICO" FunctionName="Model.Store.INGRESAR_MEDICO" />
+          <FunctionImportMapping FunctionImportName="INGRESAR_RIESGO" FunctionName="Model.Store.INGRESAR_RIESGO" />
           <FunctionImportMapping FunctionImportName="INGRESAR_TIPO_EVALUACION" FunctionName="Model.Store.INGRESAR_TIPO_EVALUACION" />
           <FunctionImportMapping FunctionImportName="INGRESAR_TIPO_USUARIO" FunctionName="Model.Store.INGRESAR_TIPO_USUARIO" />
           <FunctionImportMapping FunctionImportName="MODIFICAR_ASISTENCIA_CITA" FunctionName="Model.Store.MODIFICAR_ASISTENCIA_CITA" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_CAPACITACION" FunctionName="Model.Store.MODIFICAR_CAPACITACION" />
           <FunctionImportMapping FunctionImportName="MODIFICAR_CITA" FunctionName="Model.Store.MODIFICAR_CITA" />
           <FunctionImportMapping FunctionImportName="MODIFICAR_CIUDAD" FunctionName="Model.Store.MODIFICAR_CIUDAD" />
           <FunctionImportMapping FunctionImportName="MODIFICAR_COMUNA" FunctionName="Model.Store.MODIFICAR_COMUNA" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_DETALLE_EVALUACION" FunctionName="Model.Store.MODIFICAR_DETALLE_EVALUACION" />
           <FunctionImportMapping FunctionImportName="MODIFICAR_DIAGNOSTICO" FunctionName="Model.Store.MODIFICAR_DIAGNOSTICO" />
           <FunctionImportMapping FunctionImportName="MODIFICAR_EMPLEADO" FunctionName="Model.Store.MODIFICAR_EMPLEADO" />
           <FunctionImportMapping FunctionImportName="MODIFICAR_EMPLEADOSAFE" FunctionName="Model.Store.MODIFICAR_EMPLEADOSAFE" />
@@ -2261,11 +2430,32 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
           <FunctionImportMapping FunctionImportName="MODIFICAR_RECOMENDADO" FunctionName="Model.Store.MODIFICAR_RECOMENDADO" />
           <FunctionImportMapping FunctionImportName="MODIFICAR_TIPO_EVALUACION" FunctionName="Model.Store.MODIFICAR_TIPO_EVALUACION" />
           <FunctionImportMapping FunctionImportName="MODIFICAR_TIPO_USUARIO" FunctionName="Model.Store.MODIFICAR_TIPO_USUARIO" />
-          <FunctionImportMapping FunctionImportName="ELIMINAR_DETALLE_EVALUACION" FunctionName="Model.Store.ELIMINAR_DETALLE_EVALUACION" />
-          <FunctionImportMapping FunctionImportName="MODIFICAR_DETALLE_EVALUACION" FunctionName="Model.Store.MODIFICAR_DETALLE_EVALUACION" />
-          <EntitySetMapping Name="CAPACITACIONES_VIEW">
-            <EntityTypeMapping TypeName="Model.CAPACITACIONES_VIEW">
-              <MappingFragment StoreEntitySet="CAPACITACIONES_VIEW">
+          <EntitySetMapping Name="CERTIFICADO">
+            <EntityTypeMapping TypeName="Model.CERTIFICADO">
+              <MappingFragment StoreEntitySet="CERTIFICADO">
+                <ScalarProperty Name="IDCERTIFICADO" ColumnName="IDCERTIFICADO" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="TIPO_DOC" ColumnName="TIPO_DOC" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="RUTEMPLEADO" ColumnName="RUTEMPLEADO" />
+                <ScalarProperty Name="IDCAPACITACION" ColumnName="IDCAPACITACION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CERTIFICADOS_VIEW">
+            <EntityTypeMapping TypeName="Model.CERTIFICADOS_VIEW">
+              <MappingFragment StoreEntitySet="CERTIFICADOS_VIEW">
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="DOCUMENTO" ColumnName="DOCUMENTO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROXIMA_CAPACITACION_VIEW">
+            <EntityTypeMapping TypeName="Model.PROXIMA_CAPACITACION_VIEW">
+              <MappingFragment StoreEntitySet="PROXIMA_CAPACITACION_VIEW">
                 <ScalarProperty Name="EXPOSITOR" ColumnName="EXPOSITOR" />
                 <ScalarProperty Name="LUGAR" ColumnName="LUGAR" />
                 <ScalarProperty Name="FECHA" ColumnName="FECHA" />
@@ -2275,30 +2465,21 @@ FROM "SEBA"."VISTA_CITAS_GENERAL" "VISTA_CITAS_GENERAL"</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DETALLE_CAP_VIEW">
-            <EntityTypeMapping TypeName="Model.DETALLE_CAP_VIEW">
-              <MappingFragment StoreEntitySet="DETALLE_CAP_VIEW">
+          <EntitySetMapping Name="PROXIMA_CITA_VIEW">
+            <EntityTypeMapping TypeName="Model.PROXIMA_CITA_VIEW">
+              <MappingFragment StoreEntitySet="PROXIMA_CITA_VIEW">
+                <ScalarProperty Name="ACTIVA" ColumnName="ACTIVA" />
                 <ScalarProperty Name="ASISTENCIA" ColumnName="ASISTENCIA" />
-                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="MODIFICAR_CAPACITACION" FunctionName="Model.Store.MODIFICAR_CAPACITACION" />
-          <FunctionImportMapping FunctionImportName="ELIMINAR_CAPACITACION" FunctionName="Model.Store.ELIMINAR_CAPACITACION" />
-          <FunctionImportMapping FunctionImportName="ELIMINAR_DETALLE_CAPACITACION" FunctionName="Model.Store.ELIMINAR_DETALLE_CAPACITACION" />
-          <FunctionImportMapping FunctionImportName="INGRESAR_RIESGO" FunctionName="Model.Store.INGRESAR_RIESGO" />
-          <EntitySetMapping Name="CERTIFICADOS_VIEW">
-            <EntityTypeMapping TypeName="Model.CERTIFICADOS_VIEW">
-              <MappingFragment StoreEntitySet="CERTIFICADOS_VIEW">
-                <ScalarProperty Name="DOCUMENTO" ColumnName="DOCUMENTO" />
-                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+                <ScalarProperty Name="HORA" ColumnName="HORA" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
                 <ScalarProperty Name="RUT" ColumnName="RUT" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="INGRESAR_CERTIFICADO" FunctionName="Model.Store.INGRESAR_CERTIFICADO" />
+          <FunctionImportMapping FunctionImportName="MODIFICAR_DETALLE_CAPACITACION" FunctionName="Model.Store.MODIFICAR_DETALLE_CAPACITACION" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -16,6 +16,16 @@ namespace Presentacion.Ingeniero
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Session["usuario"] == null || (int)Session["tipo"] != 1)
+            {
+                Response.Redirect("../Login.aspx");
+            }
+            else
+            {
+                lblNombreUs.Text = Convert.ToString(Session["usuario"]);
+            }
+
             if (!IsPostBack)
             {
                 //Recuperar parametro URL
@@ -66,7 +76,7 @@ namespace Presentacion.Ingeniero
             foreach (var item in dc.ListarDetalleCapConfirmados())
             {
                 //Generamos certificados participantes y los guardamos en la bd
-                GenerarCertificadoPdf(item.EMPLEADO);
+                GenerarCertificadoPdf(int.Parse(Request.QueryString["id"]), item.EMPLEADO);
             }
 
             if (dc.Eliminar())
@@ -94,14 +104,14 @@ namespace Presentacion.Ingeniero
 
         }
 
-        private void GenerarCertificadoPdf(string participante)
+        private void GenerarCertificadoPdf(int id_capacitacion, string participante)
         {
 
             string nombre_doc = "";
 
 
-            //Se define nombre del archivo           
-            nombre_doc = "Certificado_" + participante.Replace(' ','_') +".pdf";
+            //Se define nombre del archivo con id de capacitación, participante y fecha de emisión          
+            nombre_doc = id_capacitacion+"_Certificado_" + participante.Replace(' ','_') + "_" + DateTime.Today.Day + "_"+ DateTime.Today.Month + "_" + DateTime.Today.Year +".pdf";
 
 
             try
@@ -130,9 +140,24 @@ namespace Presentacion.Ingeniero
                 ct.Go();
 
 
+                //Guardamos certificado en la bd
+                Certificado cer = new Certificado();
+                cer.id_capacitacion = id_capacitacion;
+                cer.empleado = participante;
+                cer.nombre_doc = nombre_doc;
+                cer.tipo_doc = ".pdf";
+                cer.fecha = DateTime.Today;
 
-                //Cerramos el documento
-                documento.Close();
+                if (cer.Insertar())
+                {
+                    //Cerramos el documento
+                    documento.Close();
+
+                }
+                else
+                {
+                    this.Alerta("alert alert-danger","Error al insertar documento en bd");
+                }
 
                 
             }

@@ -50,9 +50,13 @@
          </div><!--row-->
          <!--- row -->
          <div class="row">
-        <asp:Button ID="btnConsultar" runat="server" class="btn btn-primary" Text="Consultar" OnClick="btnConsultar_Click" />
-              </div><!-- /btn-row -->
-
+           <asp:Button ID="btnConsultar" runat="server" class="btn btn-primary" Text="Consultar" OnClick="btnConsultar_Click" />
+         </div><!-- /btn-row -->
+          <div class="row">
+              <div class="form-group">
+                 <a href="Login.aspx">Ingreso empleado</a>
+              </div>
+            </div>
         </form><!-- /form -->
 
     </div><!--container-->

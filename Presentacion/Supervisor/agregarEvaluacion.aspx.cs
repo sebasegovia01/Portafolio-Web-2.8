@@ -26,7 +26,7 @@ namespace Presentacion.Supervisor
 
             if (Session["usuario"] == null || (int)Session["tipo"] != 2)
             {
-                //Response.Redirect("../Login.aspx");
+                Response.Redirect("../Login.aspx");
             }
             else
             {

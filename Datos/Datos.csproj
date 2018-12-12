@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D5F49A7D-8B9D-4117-A3E3-512679BE6BA0}</ProjectGuid>
+    <ProjectGuid>{9953D8AE-671F-4258-BDE3-4A1410021472}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Datos</RootNamespace>
@@ -56,6 +56,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="CAPACITACIONES_VIEW.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CERTIFICADO.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="CERTIFICADOS_VIEW.cs">
@@ -140,6 +143,12 @@
       <DependentUpon>Modelo.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PROXIMA_CAPACITACION_VIEW.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROXIMA_CITA_VIEW.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="RECOMENDADAS_VIEW.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

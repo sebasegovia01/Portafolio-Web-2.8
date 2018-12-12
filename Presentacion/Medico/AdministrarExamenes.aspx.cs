@@ -15,7 +15,18 @@ namespace Presentacion.Medico
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+
+            if (Session["usuario"] == null || (int)Session["tipo"] != 1)
+            {
+                Response.Redirect("../Login.aspx");
+            }
+            else
+            {
+                lblNombreUs.Text = Convert.ToString(Session["usuario"]);
+            }
+
+
+            if (!IsPostBack)
             {
                 CargarExamenes();
             }

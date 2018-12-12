@@ -12,14 +12,15 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class EXAMENES_MEDICO_VIEW
+    public partial class PROXIMA_CITA_VIEW
     {
         public int ID { get; set; }
         public string RUT { get; set; }
-        public System.DateTime FECHA { get; set; }
         public string NOMBRE { get; set; }
-        public string DESCRIPCION { get; set; }
-        public byte[] DOCUMENTO { get; set; }
-        public string HABILITADO { get; set; }
+        public System.DateTime FECHA { get; set; }
+        public System.DateTime HORA { get; set; }
+        public string EMPRESA { get; set; }
+        public string ASISTENCIA { get; set; }
+        public string ACTIVA { get; set; }
     }
 }

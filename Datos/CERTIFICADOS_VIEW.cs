@@ -14,9 +14,10 @@ namespace Datos
     
     public partial class CERTIFICADOS_VIEW
     {
+        public decimal CODIGO { get; set; }
         public Nullable<decimal> ID { get; set; }
-        public string RUT { get; set; }
-        public string EMPLEADO { get; set; }
+        public string NOMBRE { get; set; }
         public string DOCUMENTO { get; set; }
+        public Nullable<System.DateTime> FECHA { get; set; }
     }
 }

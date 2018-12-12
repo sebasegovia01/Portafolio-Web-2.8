@@ -17,5 +17,6 @@ namespace Datos
         public int ID { get; set; }
         public string EMPLEADO { get; set; }
         public string ASISTENCIA { get; set; }
+        public byte[] FIRMA { get; set; }
     }
 }

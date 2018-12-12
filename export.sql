@@ -1,5 +1,5 @@
 --------------------------------------------------------
--- Archivo creado  - domingo-diciembre-09-2018   
+-- Archivo creado  - martes-diciembre-11-2018   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Type MIGR_FILTER
@@ -101,7 +101,12 @@
 --  DDL for Sequence CAPACITACION_SEQUENCE
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "SEBA"."CAPACITACION_SEQUENCE"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 44 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "SEBA"."CAPACITACION_SEQUENCE"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 64 CACHE 20 NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence CERTIFICADO_SEQUENCE
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SEBA"."CERTIFICADO_SEQUENCE"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence CITA_SEQUENCE
 --------------------------------------------------------
@@ -118,15 +123,10 @@
 
    CREATE SEQUENCE  "SEBA"."COMUNA_SEQUENCE"  MINVALUE 1 MAXVALUE 10000 INCREMENT BY 1 START WITH 3 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence DBOBJECTID_SEQUENCE
---------------------------------------------------------
-
-   CREATE SEQUENCE  "SEBA"."DBOBJECTID_SEQUENCE"  MINVALUE 1 MAXVALUE 999999999999999999999999 INCREMENT BY 50 START WITH 1 CACHE 50 NOORDER  NOCYCLE ;
---------------------------------------------------------
 --  DDL for Sequence DIAGNOSTICO_SEQUENCE
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "SEBA"."DIAGNOSTICO_SEQUENCE"  MINVALUE 1 MAXVALUE 10000 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "SEBA"."DIAGNOSTICO_SEQUENCE"  MINVALUE 1 MAXVALUE 10000 INCREMENT BY 1 START WITH 41 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence EVALUACION_SEQUENCE
 --------------------------------------------------------
@@ -168,6 +168,54 @@
 	"LUGAR" VARCHAR2(255 BYTE), 
 	"EXPOSITOR" VARCHAR2(255 BYTE), 
 	"RUTEMPRESA" VARCHAR2(255 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table CERTIFICADO
+--------------------------------------------------------
+
+  CREATE TABLE "SEBA"."CERTIFICADO" 
+   (	"IDCAPACITACION" NUMBER, 
+	"RUTEMPLEADO" VARCHAR2(255 BYTE), 
+	"NOMBRE" VARCHAR2(255 BYTE), 
+	"TIPO_DOC" VARCHAR2(20 BYTE), 
+	"FECHA" DATE, 
+	"IDCERTIFICADO" NUMBER
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table MEDICO
+--------------------------------------------------------
+
+  CREATE TABLE "SEBA"."MEDICO" 
+   (	"RUT_MEDICO" VARCHAR2(9 BYTE), 
+	"NOMBRE" VARCHAR2(30 BYTE), 
+	"APELLIDOP" VARCHAR2(30 BYTE), 
+	"APELLIDOM" VARCHAR2(30 BYTE), 
+	"FNACIMIENTO" DATE, 
+	"CORREO" VARCHAR2(40 BYTE), 
+	"CLAVE" VARCHAR2(255 BYTE), 
+	"TELEFONO" NUMBER(15,0), 
+	"ACTIVO" CHAR(1 BYTE), 
+	"RUTEMPRESA" VARCHAR2(9 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table RIESGO
+--------------------------------------------------------
+
+  CREATE TABLE "SEBA"."RIESGO" 
+   (	"RUT_EMPLEADO" VARCHAR2(10 BYTE), 
+	"NOMBRE" VARCHAR2(200 BYTE)
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
@@ -221,14 +269,20 @@
 --------------------------------------------------------
 
   CREATE TABLE "SEBA"."DETALLECAPACITACION" 
-   (	"ASISTENCIA" CHAR(1 BYTE), 
+   (	"ASISTENCIA" VARCHAR2(2 BYTE), 
 	"IDCAPACITACION" NUMBER(10,0), 
-	"IDEMPLEADO" VARCHAR2(9 BYTE)
+	"IDEMPLEADO" VARCHAR2(9 BYTE), 
+	"FIRMA" BLOB
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
-  TABLESPACE "SYSTEM" ;
+  TABLESPACE "SYSTEM" 
+ LOB ("FIRMA") STORE AS BASICFILE (
+  TABLESPACE "SYSTEM" ENABLE STORAGE IN ROW CHUNK 8192 RETENTION 
+  NOCACHE LOGGING 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
 --------------------------------------------------------
 --  DDL for Table DETALLE_EVALUACION
 --------------------------------------------------------
@@ -269,7 +323,7 @@
 	"APELLIDOM" VARCHAR2(30 BYTE), 
 	"FNACIMIENTO" DATE, 
 	"CORREO" VARCHAR2(30 BYTE), 
-	"CLAVE" VARCHAR2(30 BYTE), 
+	"CLAVE" VARCHAR2(255 BYTE), 
 	"NUMERO" NUMBER(9,0), 
 	"RUTEMPRESA" VARCHAR2(9 BYTE), 
 	"HABILITADA" CHAR(1 BYTE)
@@ -289,7 +343,7 @@
 	"APELLIDOM" VARCHAR2(30 BYTE), 
 	"FNACIMIENTO" DATE, 
 	"CORREO" VARCHAR2(30 BYTE), 
-	"CLAVE" VARCHAR2(30 BYTE), 
+	"CLAVE" VARCHAR2(255 BYTE), 
 	"NUMERO" NUMBER(9,0), 
 	"IDTIPO" NUMBER(10,0), 
 	"HABILITADA" CHAR(1 BYTE)
@@ -356,26 +410,6 @@
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
 --------------------------------------------------------
---  DDL for Table MEDICO
---------------------------------------------------------
-
-  CREATE TABLE "SEBA"."MEDICO" 
-   (	"RUT_MEDICO" VARCHAR2(9 BYTE), 
-	"NOMBRE" VARCHAR2(30 BYTE), 
-	"APELLIDOP" VARCHAR2(30 BYTE), 
-	"APELLIDOM" VARCHAR2(30 BYTE), 
-	"FNACIMIENTO" DATE, 
-	"CORREO" VARCHAR2(40 BYTE), 
-	"CLAVE" VARCHAR2(200 BYTE), 
-	"TELEFONO" NUMBER(15,0), 
-	"ACTIVO" CHAR(1 BYTE), 
-	"RUTEMPRESA" VARCHAR2(9 BYTE)
-   ) SEGMENT CREATION IMMEDIATE 
-  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
-  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
-  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
-  TABLESPACE "SYSTEM" ;
---------------------------------------------------------
 --  DDL for Table TIPOEVALUACION
 --------------------------------------------------------
 
@@ -410,13 +444,23 @@
   emps.pnombre || ' ' || emps.apellidop as EXPOSITOR
 from empresa emp, capacitacion cap, empleadosafe emps
 where emp.rutempresa = cap.rutempresa and emps.rutsafe = cap.expositor
+ORDER BY cap.fecha
+;
+--------------------------------------------------------
+--  DDL for View CERTIFICADOS_VIEW
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "SEBA"."CERTIFICADOS_VIEW" ("CODIGO", "ID", "NOMBRE", "DOCUMENTO", "FECHA") AS 
+  select cer.idcertificado as CODIGO, cer.IDCAPACITACION as ID, cer.rutempleado  AS NOMBRE, cer.nombre AS DOCUMENTO,
+  cer.FECHA
+from  certificado cer
 ;
 --------------------------------------------------------
 --  DDL for View DETALLE_CAP_VIEW
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "SEBA"."DETALLE_CAP_VIEW" ("ID", "EMPLEADO", "ASISTENCIA") AS 
-  SELECT dt.idcapacitacion as ID, emp.pnombre || ' ' || emp.apellidop as EMPLEADO, dt.asistencia as ASISTENCIA
+  CREATE OR REPLACE FORCE VIEW "SEBA"."DETALLE_CAP_VIEW" ("ID", "EMPLEADO", "FIRMA", "ASISTENCIA") AS 
+  SELECT dt.idcapacitacion as ID, emp.pnombre || ' ' || emp.apellidop as EMPLEADO, dt.firma, dt.asistencia as ASISTENCIA
     
 FROM DETALLECAPACITACION dt, EMPLEADO emp
 WHERE dt.idempleado = emp.rutempleado
@@ -490,11 +534,12 @@ and nvl(eva.RUT_SAFE,0) != 0
 --  DDL for View EXAMENES_MEDICO_VIEW
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "SEBA"."EXAMENES_MEDICO_VIEW" ("ID", "RUT", "NOMBRE", "DESCRIPCION", "DOCUMENTO", "HABILITADO") AS 
-  SELECT ex.id_examen AS ID, emp.rutempleado AS RUT, emp.pnombre || '' || emp.apellidop as NOMBRE, ex.anotacion as DESCRIPCION,
+  CREATE OR REPLACE FORCE VIEW "SEBA"."EXAMENES_MEDICO_VIEW" ("ID", "RUT", "FECHA", "NOMBRE", "DESCRIPCION", "DOCUMENTO", "HABILITADO") AS 
+  SELECT ex.id_examen AS ID, emp.rutempleado AS RUT, ct.fecha AS FECHA, emp.pnombre || ' ' || emp.apellidop as NOMBRE, ex.anotacion as DESCRIPCION,
    ex.documento, ex.habilitado
-   FROM EXAMEN ex, DIAGNOSTICO dg, EMPLEADO emp
+   FROM EXAMEN ex, DIAGNOSTICO dg, EMPLEADO emp, CITA ct
    WHERE dg.ID_DIAGNOSTICO = ex.ID_DIAGNOSTICO AND dg.RUTEMPLEADO = emp.rutempleado
+   AND ct.id_cita = dg.id_cita
 ;
 --------------------------------------------------------
 --  DDL for View MEDICO_VIEW
@@ -504,6 +549,28 @@ and nvl(eva.RUT_SAFE,0) != 0
   select rut_medico RUT, NOMBRE || ' ' || apellidop || ' ' || apellidom AS NOMBRE,
 fnacimiento FECHA_NACIMIENTO, CORREO, TELEFONO as NUMERO, RUTEMPRESA, ACTIVO AS HABILITADA
 from medico
+;
+--------------------------------------------------------
+--  DDL for View PROXIMA_CAPACITACION_VIEW
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "SEBA"."PROXIMA_CAPACITACION_VIEW" ("ID", "EMPRESA", "OBJETIVO", "FECHA", "LUGAR", "EXPOSITOR") AS 
+  select "ID","EMPRESA","OBJETIVO","FECHA","LUGAR","EXPOSITOR" from(select IDCAPACITACION as ID, emp.nombre as EMPRESA, cap.objetivo as OBJETIVO , cap.fecha as FECHA , cap.lugar as LUGAR,
+  emps.pnombre || ' ' || emps.apellidop as EXPOSITOR
+from empresa emp, capacitacion cap, empleadosafe emps
+where emp.rutempresa = cap.rutempresa and emps.rutsafe = cap.expositor
+order by fecha asc) where rownum = 1
+;
+--------------------------------------------------------
+--  DDL for View PROXIMA_CITA_VIEW
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "SEBA"."PROXIMA_CITA_VIEW" ("ID", "RUT", "NOMBRE", "FECHA", "HORA", "EMPRESA", "ASISTENCIA", "ACTIVA") AS 
+  select "ID","RUT","NOMBRE","FECHA","HORA","EMPRESA","ASISTENCIA","ACTIVA" from (SELECT cta.id_cita ID, med.RUT_MEDICO as RUT, med.NOMBRE || ' ' || med.APELLIDOP || ' ' || med.APELLIDOM AS NOMBRE, cta.FECHA,
+cta.HORA, emp.nombre as EMPRESA, cta.asistencia, cta.activa
+FROM MEDICO med, CITA cta, EMPRESA emp
+WHERE cta.rut_medico = med.rut_medico and med.rutempresa = emp.rutempresa
+ORDER BY cta.fecha asc) where rownum = 1 and asistencia = 1
 ;
 --------------------------------------------------------
 --  DDL for View RECOMENDADAS_VIEW
@@ -519,11 +586,11 @@ where eva.id_evaluacion = det.id_evaluacion and eva.id_tipo = tp.idtipo
 --  DDL for View VISTA_CITAS_GENERAL
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "SEBA"."VISTA_CITAS_GENERAL" ("ID", "RUT", "NOMBRE", "FECHA", "HORA", "ASISTENCIA", "ACTIVA") AS 
+  CREATE OR REPLACE FORCE VIEW "SEBA"."VISTA_CITAS_GENERAL" ("ID", "RUT", "NOMBRE", "FECHA", "HORA", "EMPRESA", "ASISTENCIA", "ACTIVA") AS 
   SELECT cta.id_cita ID, med.RUT_MEDICO as RUT, med.NOMBRE || ' ' || med.APELLIDOP || ' ' || med.APELLIDOM AS NOMBRE, cta.FECHA,
-cta.HORA, cta.asistencia, cta.activa
-FROM MEDICO med, CITA cta
-WHERE cta.rut_medico = med.rut_medico
+cta.HORA, emp.nombre as EMPRESA, cta.asistencia, cta.activa
+FROM MEDICO med, CITA cta, EMPRESA emp
+WHERE cta.rut_medico = med.rut_medico and med.rutempresa = emp.rutempresa
 ;
 --------------------------------------------------------
 --  DDL for Materialized View MD_REGEX_CATALOG_MVIEW
@@ -599,11 +666,23 @@ and regexp_count(p.native_sql,rg.REGEX,1,'ix')>0;
    COMMENT ON MATERIALIZED VIEW "SEBA"."MD_REGEX_SCHEMA_MVIEW"  IS 'snapshot table for snapshot SEBA.MD_REGEX_SCHEMA_MVIEW';
 REM INSERTING into SEBA.CAPACITACION
 SET DEFINE OFF;
-Insert into SEBA.CAPACITACION (IDCAPACITACION,OBJETIVO,FECHA,LUGAR,EXPOSITOR,RUTEMPRESA) values ('22','cxvxcvds',to_timestamp('19/12/18 19:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'sfxcxd','12345677','1234567');
-Insert into SEBA.CAPACITACION (IDCAPACITACION,OBJETIVO,FECHA,LUGAR,EXPOSITOR,RUTEMPRESA) values ('25','sadasd',to_timestamp('12/12/18 17:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'patio central','12345677','3215467');
-Insert into SEBA.CAPACITACION (IDCAPACITACION,OBJETIVO,FECHA,LUGAR,EXPOSITOR,RUTEMPRESA) values ('26','daasd',to_timestamp('15/12/18 17:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'asdas','12345677','3215467');
-Insert into SEBA.CAPACITACION (IDCAPACITACION,OBJETIVO,FECHA,LUGAR,EXPOSITOR,RUTEMPRESA) values ('20','xzcxzczx',to_timestamp('12/12/18 17:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'zxcxzcxz','12345677','1234567');
-Insert into SEBA.CAPACITACION (IDCAPACITACION,OBJETIVO,FECHA,LUGAR,EXPOSITOR,RUTEMPRESA) values ('21','ewrewrwe',to_timestamp('14/12/18 20:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'werwe','12345677','1234567');
+Insert into SEBA.CAPACITACION (IDCAPACITACION,OBJETIVO,FECHA,LUGAR,EXPOSITOR,RUTEMPRESA) values ('53','Capacitación sobre nuevas tecnologias',to_timestamp('12/12/18 11:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Patio central','12345677','3215467');
+Insert into SEBA.CAPACITACION (IDCAPACITACION,OBJETIVO,FECHA,LUGAR,EXPOSITOR,RUTEMPRESA) values ('54','Capacitación sobre uso de herramientas de trabajao',to_timestamp('11/12/18 10:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Patio central','12345677','3215467');
+REM INSERTING into SEBA.CERTIFICADO
+SET DEFINE OFF;
+Insert into SEBA.CERTIFICADO (IDCAPACITACION,RUTEMPLEADO,NOMBRE,TIPO_DOC,FECHA,IDCERTIFICADO) values ('52','Daniel Garrido','52_Certificado_Daniel_Garrido_11_12_2018.pdf','.pdf',to_date('11/12/18','DD/MM/RR'),'1');
+REM INSERTING into SEBA.MEDICO
+SET DEFINE OFF;
+Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('12344456k','Juan','Gonzalez','Perez',to_date('12/04/82','DD/MM/RR'),'perezg@doctor.cl','827ccb0eea8a706c4c34a16891f84e7b','2343243','1','3215467');
+Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('34534543','Carlos','soto','Yañez',to_date('12/10/87','DD/MM/RR'),'yasoto@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','2323232','1','3215467');
+Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('34548872','Ana','Cespedes','Sepulveda',to_date('22/01/58','DD/MM/RR'),'anasep@doctor.cl','827ccb0eea8a706c4c34a16891f84e7b','112323232','1','3333222');
+Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('84923382','Diego','asdas','Rivera',to_date('23/12/90','DD/MM/RR'),'asdas@sadasdas.cl','827ccb0eea8a706c4c34a16891f84e7b','12312322','1','12312312');
+Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('3456786k','Horacio','Segovia','Davila',to_date('11/11/65','DD/MM/RR'),'hodavila@gmail.com','tyLz1l4XMC','993386447','0','1234567');
+Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('12312312','asdas','Maria','Angeles',to_date('11/05/83','DD/MM/RR'),'maangeles@doctor.cl','827ccb0eea8a706c4c34a16891f84e7b','23123434','1','3215467');
+REM INSERTING into SEBA.RIESGO
+SET DEFINE OFF;
+Insert into SEBA.RIESGO (RUT_EMPLEADO,NOMBRE) values ('1','Fisico');
+Insert into SEBA.RIESGO (RUT_EMPLEADO,NOMBRE) values ('1','Biológico');
 REM INSERTING into SEBA.CITA
 SET DEFINE OFF;
 Insert into SEBA.CITA (ID_CITA,ASISTENCIA,RUT_MEDICO,FECHA,HORA,ACTIVA) values ('1','0','12344456k',to_date('02/11/18','DD/MM/RR'),to_timestamp('23/10/18 14:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0');
@@ -633,16 +712,10 @@ Insert into SEBA.COMUNA (IDCOMUNA,NOMBRE,IDCIUDAD,HABILITADA) values ('1','Cerri
 Insert into SEBA.COMUNA (IDCOMUNA,NOMBRE,IDCIUDAD,HABILITADA) values ('2','Maipú','1',null);
 REM INSERTING into SEBA.DETALLECAPACITACION
 SET DEFINE OFF;
-Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','21','3');
-Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','21','1236547');
-Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','22','3');
-Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','22','1236547');
-Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','25','2');
-Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','25','1');
-Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','26','2');
-Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','26','1');
-Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','20','3');
-Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','20','1236547');
+Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','53','2');
+Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('0','53','1');
+Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('1','54','2');
+Insert into SEBA.DETALLECAPACITACION (ASISTENCIA,IDCAPACITACION,IDEMPLEADO) values ('1','54','1');
 REM INSERTING into SEBA.DETALLE_EVALUACION
 SET DEFINE OFF;
 Insert into SEBA.DETALLE_EVALUACION (RECOMENDACION,AUTORIZACION,ID_EVALUACION,RUT_SAFE) values ('Personal usar casco protector.','1','30','12345677');
@@ -650,29 +723,28 @@ Insert into SEBA.DETALLE_EVALUACION (RECOMENDACION,AUTORIZACION,ID_EVALUACION,RU
 REM INSERTING into SEBA.DIAGNOSTICO
 SET DEFINE OFF;
 Insert into SEBA.DIAGNOSTICO (ID_DIAGNOSTICO,DESCRIPCION,RUTEMPLEADO,HABILITADO,ID_CITA) values ('4','Empleado con contusión generada por un ladrillo','1','1','10');
-Insert into SEBA.DIAGNOSTICO (ID_DIAGNOSTICO,DESCRIPCION,RUTEMPLEADO,HABILITADO,ID_CITA) values ('3','Empleado derivado a realizar exámenes','2','1','10');
+Insert into SEBA.DIAGNOSTICO (ID_DIAGNOSTICO,DESCRIPCION,RUTEMPLEADO,HABILITADO,ID_CITA) values ('21','gfgfg','1','0','10');
+Insert into SEBA.DIAGNOSTICO (ID_DIAGNOSTICO,DESCRIPCION,RUTEMPLEADO,HABILITADO,ID_CITA) values ('3','Empleado derivado a realizar exámenes.','2','1','10');
+Insert into SEBA.DIAGNOSTICO (ID_DIAGNOSTICO,DESCRIPCION,RUTEMPLEADO,HABILITADO,ID_CITA) values ('22','probando riesgs','1','0','10');
 REM INSERTING into SEBA.EMPLEADO
 SET DEFINE OFF;
-Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('1236547','Gloria','Linares','Sotomayor',to_date('01/01/91','DD/MM/RR'),'cliente2@gmail.com','12345','12341567','1234567','1');
-Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('1','test 2','test 2','test 2',to_date('01/01/91','DD/MM/RR'),'empleado@gmail.com','12345','12341567','3215467','1');
-Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('2','test 3','test 3','test 3',to_date('01/01/91','DD/MM/RR'),'empleado2@gmail.com','12345','12341567','3215467','1');
-Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('3','Pedro','Perez','Piedra',to_date('01/01/91','DD/MM/RR'),'peperez@gmail.com','12345','12341567','1234567','1');
-Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('1231231','prueba','sds','sdasd',to_date('11/02/86','DD/MM/RR'),'asqasd@asd.cl','12345','234323','3333222','1');
+Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('1236547','Gloria','Linares','Sotomayor',to_date('01/01/91','DD/MM/RR'),'cliente2@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','12341567','1234567','1');
+Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('1','Aurora','Carrasco','Cortazar',to_date('01/01/91','DD/MM/RR'),'empleado@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','12341567','3215467','1');
+Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('2','Daniel','Garrido','Lopez',to_date('01/01/91','DD/MM/RR'),'empleado2@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','12341567','3215467','1');
+Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('3','Pedro','Perez','Piedra',to_date('01/01/91','DD/MM/RR'),'peperez@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','12341567','1234567','1');
+Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('1231231','Lucas','Ruiz','Arce',to_date('11/02/86','DD/MM/RR'),'lucasr@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','234323','3333222','1');
+Insert into SEBA.EMPLEADO (RUTEMPLEADO,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,RUTEMPRESA,HABILITADA) values ('78965432','Raul','Perez','Gonzalez',to_date('18/04/71','DD/MM/RR'),'raulg@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','34567523','12312312','1');
 REM INSERTING into SEBA.EMPLEADOSAFE
 SET DEFINE OFF;
-Insert into SEBA.EMPLEADOSAFE (RUTSAFE,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,IDTIPO,HABILITADA) values ('12345677','ingeniero','ingeniero','ingeniero',to_date('01/01/91','DD/MM/RR'),'ingeniero@gmail.com','12345','1234567','3','1');
-Insert into SEBA.EMPLEADOSAFE (RUTSAFE,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,IDTIPO,HABILITADA) values ('12345676','tecnico','tecnico','tecnico',to_date('01/01/91','DD/MM/RR'),'tecnico@gmail.com','12345','1234567','4','1');
-Insert into SEBA.EMPLEADOSAFE (RUTSAFE,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,IDTIPO,HABILITADA) values ('195651086','Matías','Ramirez','Leyton',to_date('27/03/97','DD/MM/RR'),'matiasnicolasrl@gmail.com','12345','79950027','1','1');
-Insert into SEBA.EMPLEADOSAFE (RUTSAFE,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,IDTIPO,HABILITADA) values ('12345678','supervisor','supervisor','supervisor',to_date('01/01/91','DD/MM/RR'),'supervisor@gmail.com','12345','1234567','2','1');
-Insert into SEBA.EMPLEADOSAFE (RUTSAFE,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,IDTIPO,HABILITADA) values ('185697495','Seba','Segovia','Sanchez',to_date('23/09/93','DD/MM/RR'),'sebasegovia@gmail.com','12345','3433532','1','1');
-Insert into SEBA.EMPLEADOSAFE (RUTSAFE,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,IDTIPO,HABILITADA) values ('193623824','Francisco','soto','ramirez',to_date('11/03/93','DD/MM/RR'),'fasda@asd.cl','12345','123121232','2','1');
-Insert into SEBA.EMPLEADOSAFE (RUTSAFE,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,IDTIPO,HABILITADA) values ('876545564','Pablo','Perez','Pereira',to_date('30/04/81','DD/MM/RR'),'tecnico@gmail.com','12345','23432','4','1');
+Insert into SEBA.EMPLEADOSAFE (RUTSAFE,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,IDTIPO,HABILITADA) values ('12345677','ingeniero','ingeniero','ingeniero',to_date('01/01/91','DD/MM/RR'),'ingeniero@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','1234567','3','1');
+Insert into SEBA.EMPLEADOSAFE (RUTSAFE,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,IDTIPO,HABILITADA) values ('12345678','supervisor','supervisor','supervisor',to_date('01/01/91','DD/MM/RR'),'supervisor@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','1234567','2','1');
+Insert into SEBA.EMPLEADOSAFE (RUTSAFE,PNOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,NUMERO,IDTIPO,HABILITADA) values ('185697495','Seba','Segovia','Sanchez',to_date('23/09/93','DD/MM/RR'),'sebasegovia@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','993386447','1','1');
 REM INSERTING into SEBA.EMPRESA
 SET DEFINE OFF;
-Insert into SEBA.EMPRESA (RUTEMPRESA,NOMBRE,DIRECCION,CORREO,NUMERO,IDCOMUNA,HABILITADA) values ('1234567','OCASO SPA','Camino Lonquen 334#','ventas@ocaso.cl','881234567','1','1');
-Insert into SEBA.EMPRESA (RUTEMPRESA,NOMBRE,DIRECCION,CORREO,NUMERO,IDCOMUNA,HABILITADA) values ('3215467','COLOMBO CO','Providencia 1232#','colombo@colombo.cl','43534343','2','1');
-Insert into SEBA.EMPRESA (RUTEMPRESA,NOMBRE,DIRECCION,CORREO,NUMERO,IDCOMUNA,HABILITADA) values ('3333222','Chile Spa','santiago 223','chilespa@spa.spa','234232121','2','0');
-Insert into SEBA.EMPRESA (RUTEMPRESA,NOMBRE,DIRECCION,CORREO,NUMERO,IDCOMUNA,HABILITADA) values ('12312312','SANTIAGO SA','asdas 2322','santiago@asdas.cl','44324234','1','1');
+Insert into SEBA.EMPRESA (RUTEMPRESA,NOMBRE,DIRECCION,CORREO,NUMERO,IDCOMUNA,HABILITADA) values ('1234567','Ocaso Spa','Camino Lonquen 334#','ventas@ocaso.cl','881234567','1','1');
+Insert into SEBA.EMPRESA (RUTEMPRESA,NOMBRE,DIRECCION,CORREO,NUMERO,IDCOMUNA,HABILITADA) values ('3215467','Colombo Ltda','Providencia 1232#','colombo@colombo.cl','43534343','2','1');
+Insert into SEBA.EMPRESA (RUTEMPRESA,NOMBRE,DIRECCION,CORREO,NUMERO,IDCOMUNA,HABILITADA) values ('3333222','Chile Spa','santiago 223','chilespa@spa.spa','234232121','2','1');
+Insert into SEBA.EMPRESA (RUTEMPRESA,NOMBRE,DIRECCION,CORREO,NUMERO,IDCOMUNA,HABILITADA) values ('12312312','Santiago Spa','asdas 2322','santiago@asdas.cl','44324234','1','1');
 REM INSERTING into SEBA.EVALUACION
 SET DEFINE OFF;
 Insert into SEBA.EVALUACION (ID_EVALUACION,FECHA,OBSERVACION,DERIVADA,RUT_SAFE,ID_TIPO,RUT_EMPRESA,RECOMENDADA) values ('30',to_date('24/10/18','DD/MM/RR'),'asdasdadas','1','12345678','1','3215467','1');
@@ -680,15 +752,7 @@ Insert into SEBA.EVALUACION (ID_EVALUACION,FECHA,OBSERVACION,DERIVADA,RUT_SAFE,I
 Insert into SEBA.EVALUACION (ID_EVALUACION,FECHA,OBSERVACION,DERIVADA,RUT_SAFE,ID_TIPO,RUT_EMPRESA,RECOMENDADA) values ('33',to_date('03/12/18','DD/MM/RR'),'Se requiere evaluación inmediata','1','12345678','21','1234567','1');
 REM INSERTING into SEBA.EXAMEN
 SET DEFINE OFF;
-Insert into SEBA.EXAMEN (ID_EXAMEN,NOMBRE,TIPO_DOC,ID_DIAGNOSTICO,HABILITADO,ANOTACION) values ('21','examen2.pdf','.pdf','4','1','examen realizado el dia 22 de octubre');
-REM INSERTING into SEBA.MEDICO
-SET DEFINE OFF;
-Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('12344456k','Juan','Gonzalez','Perez',to_date('12/04/82','DD/MM/RR'),'perezg@doctor.cl','12345','2343243','1','3215467');
-Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('34534543','Carlos','soto','Yañez',to_date('12/10/87','DD/MM/RR'),'yasoto@gmail.com','qK8FvLeM2f','2323232','1','3215467');
-Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('34548872','Ana','Cespedes','Sepulveda',to_date('22/01/58','DD/MM/RR'),'anasep@doctor.cl','bT9LNbTsaQ','112323232','1','3333222');
-Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('84923382','Diego','asdas','Rivera',to_date('23/12/90','DD/MM/RR'),'asdas@sadasdas.cl','b2EXicD0WB','12312322','1','12312312');
-Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('3456786k','Horacio','Segovia','Davila',to_date('11/11/65','DD/MM/RR'),'hodavila@gmail.com','tyLz1l4XMC','993386447','0','1234567');
-Insert into SEBA.MEDICO (RUT_MEDICO,NOMBRE,APELLIDOP,APELLIDOM,FNACIMIENTO,CORREO,CLAVE,TELEFONO,ACTIVO,RUTEMPRESA) values ('12312312','asdas','asda','dsds',to_date('11/05/83','DD/MM/RR'),'sdsa@sdas.cl','gBMCQNNazl','2312','1','3215467');
+Insert into SEBA.EXAMEN (ID_EXAMEN,NOMBRE,TIPO_DOC,ID_DIAGNOSTICO,HABILITADO,ANOTACION) values ('21','examen2.pdf','.pdf','4','1','examen sobre riesgo químico');
 REM INSERTING into SEBA.TIPOEVALUACION
 SET DEFINE OFF;
 Insert into SEBA.TIPOEVALUACION (IDTIPO,NOMBRE,HABILITADO) values ('1','Personal','1');
@@ -705,61 +769,56 @@ Insert into SEBA.TIPOUSUARIO (IDTIPO,NOMBRE,HABILITADA) values ('5','Médico','1'
 Insert into SEBA.TIPOUSUARIO (IDTIPO,NOMBRE,HABILITADA) values ('6','Empleado','1');
 REM INSERTING into SEBA.CAPACITACIONES_VIEW
 SET DEFINE OFF;
-Insert into SEBA.CAPACITACIONES_VIEW (ID,EMPRESA,OBJETIVO,FECHA,LUGAR,EXPOSITOR) values ('21','OCASO SPA','ewrewrwe',to_timestamp('14/12/18 20:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'werwe','ingeniero ingeniero');
-Insert into SEBA.CAPACITACIONES_VIEW (ID,EMPRESA,OBJETIVO,FECHA,LUGAR,EXPOSITOR) values ('20','OCASO SPA','xzcxzczx',to_timestamp('12/12/18 17:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'zxcxzcxz','ingeniero ingeniero');
-Insert into SEBA.CAPACITACIONES_VIEW (ID,EMPRESA,OBJETIVO,FECHA,LUGAR,EXPOSITOR) values ('26','COLOMBO CO','daasd',to_timestamp('15/12/18 17:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'asdas','ingeniero ingeniero');
-Insert into SEBA.CAPACITACIONES_VIEW (ID,EMPRESA,OBJETIVO,FECHA,LUGAR,EXPOSITOR) values ('25','COLOMBO CO','sadasd',to_timestamp('12/12/18 17:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'patio central','ingeniero ingeniero');
-Insert into SEBA.CAPACITACIONES_VIEW (ID,EMPRESA,OBJETIVO,FECHA,LUGAR,EXPOSITOR) values ('22','OCASO SPA','cxvxcvds',to_timestamp('19/12/18 19:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'sfxcxd','ingeniero ingeniero');
+Insert into SEBA.CAPACITACIONES_VIEW (ID,EMPRESA,OBJETIVO,FECHA,LUGAR,EXPOSITOR) values ('54','Colombo Ltda','Capacitación sobre uso de herramientas de trabajao',to_timestamp('11/12/18 10:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Patio central','ingeniero ingeniero');
+Insert into SEBA.CAPACITACIONES_VIEW (ID,EMPRESA,OBJETIVO,FECHA,LUGAR,EXPOSITOR) values ('53','Colombo Ltda','Capacitación sobre nuevas tecnologias',to_timestamp('12/12/18 11:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Patio central','ingeniero ingeniero');
+REM INSERTING into SEBA.CERTIFICADOS_VIEW
+SET DEFINE OFF;
+Insert into SEBA.CERTIFICADOS_VIEW (CODIGO,ID,NOMBRE,DOCUMENTO,FECHA) values ('1','52','Daniel Garrido','52_Certificado_Daniel_Garrido_11_12_2018.pdf',to_date('11/12/18','DD/MM/RR'));
 REM INSERTING into SEBA.DETALLE_CAP_VIEW
 SET DEFINE OFF;
-Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('21','Pedro Perez','0');
-Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('21','Gloria Linares','0');
-Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('22','Pedro Perez','0');
-Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('22','Gloria Linares','0');
-Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('25','test 3 test 3','0');
-Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('25','test 2 test 2','0');
-Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('26','test 3 test 3','0');
-Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('26','test 2 test 2','0');
-Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('20','Pedro Perez','0');
-Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('20','Gloria Linares','0');
+Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('53','Daniel Garrido','0');
+Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('53','Aurora Carrasco','0');
+Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('54','Daniel Garrido','1');
+Insert into SEBA.DETALLE_CAP_VIEW (ID,EMPLEADO,ASISTENCIA) values ('54','Aurora Carrasco','1');
 REM INSERTING into SEBA.DIAGNOSTICOS_MEDICO_VIEW
 SET DEFINE OFF;
-Insert into SEBA.DIAGNOSTICOS_MEDICO_VIEW (ID,DESCRIPCION,NOMBRE,CORREO,FECHA,HABILITADO) values ('4','Empleado con contusión generada por un ladrillo','test 2 test 2 test 2','empleado@gmail.com',to_date('28/11/18','DD/MM/RR'),'1');
-Insert into SEBA.DIAGNOSTICOS_MEDICO_VIEW (ID,DESCRIPCION,NOMBRE,CORREO,FECHA,HABILITADO) values ('3','Empleado derivado a realizar exámenes','test 3 test 3 test 3','empleado2@gmail.com',to_date('28/11/18','DD/MM/RR'),'1');
+Insert into SEBA.DIAGNOSTICOS_MEDICO_VIEW (ID,DESCRIPCION,NOMBRE,CORREO,FECHA,HABILITADO) values ('3','Empleado derivado a realizar exámenes.','Daniel Garrido Lopez','empleado2@gmail.com',to_date('28/11/18','DD/MM/RR'),'1');
+Insert into SEBA.DIAGNOSTICOS_MEDICO_VIEW (ID,DESCRIPCION,NOMBRE,CORREO,FECHA,HABILITADO) values ('4','Empleado con contusión generada por un ladrillo','Aurora Carrasco Cortazar','empleado@gmail.com',to_date('28/11/18','DD/MM/RR'),'1');
+Insert into SEBA.DIAGNOSTICOS_MEDICO_VIEW (ID,DESCRIPCION,NOMBRE,CORREO,FECHA,HABILITADO) values ('21','gfgfg','Aurora Carrasco Cortazar','empleado@gmail.com',to_date('28/11/18','DD/MM/RR'),'0');
+Insert into SEBA.DIAGNOSTICOS_MEDICO_VIEW (ID,DESCRIPCION,NOMBRE,CORREO,FECHA,HABILITADO) values ('22','probando riesgs','Aurora Carrasco Cortazar','empleado@gmail.com',to_date('28/11/18','DD/MM/RR'),'0');
 REM INSERTING into SEBA.DIAGNOSTICOS_TRABAJADOR_VIEW
 SET DEFINE OFF;
-Insert into SEBA.DIAGNOSTICOS_TRABAJADOR_VIEW (ID,DESCRIPCION,NOMBRE,HABILITADO,FECHA,MEDICO) values ('4','Empleado con contusión generada por un ladrillo','test 2 test 2 test 2','1',to_date('28/11/18','DD/MM/RR'),'Juan Gonzalez Perez');
-Insert into SEBA.DIAGNOSTICOS_TRABAJADOR_VIEW (ID,DESCRIPCION,NOMBRE,HABILITADO,FECHA,MEDICO) values ('3','Empleado derivado a realizar exámenes','test 3 test 3 test 3','1',to_date('28/11/18','DD/MM/RR'),'Juan Gonzalez Perez');
+Insert into SEBA.DIAGNOSTICOS_TRABAJADOR_VIEW (ID,DESCRIPCION,NOMBRE,HABILITADO,FECHA,MEDICO) values ('22','probando riesgs','Aurora Carrasco Cortazar','0',to_date('28/11/18','DD/MM/RR'),'Juan Gonzalez Perez');
+Insert into SEBA.DIAGNOSTICOS_TRABAJADOR_VIEW (ID,DESCRIPCION,NOMBRE,HABILITADO,FECHA,MEDICO) values ('21','gfgfg','Aurora Carrasco Cortazar','0',to_date('28/11/18','DD/MM/RR'),'Juan Gonzalez Perez');
+Insert into SEBA.DIAGNOSTICOS_TRABAJADOR_VIEW (ID,DESCRIPCION,NOMBRE,HABILITADO,FECHA,MEDICO) values ('4','Empleado con contusión generada por un ladrillo','Aurora Carrasco Cortazar','1',to_date('28/11/18','DD/MM/RR'),'Juan Gonzalez Perez');
+Insert into SEBA.DIAGNOSTICOS_TRABAJADOR_VIEW (ID,DESCRIPCION,NOMBRE,HABILITADO,FECHA,MEDICO) values ('3','Empleado derivado a realizar exámenes.','Daniel Garrido Lopez','1',to_date('28/11/18','DD/MM/RR'),'Juan Gonzalez Perez');
 REM INSERTING into SEBA.EMPLEADO_SAFE_VIEW
 SET DEFINE OFF;
 Insert into SEBA.EMPLEADO_SAFE_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,TIPO_USUARIO,HABILITADA) values ('12345677','ingeniero ingeniero ingeniero',to_date('01/01/91','DD/MM/RR'),'ingeniero@gmail.com','1234567','Ingeniero','1');
-Insert into SEBA.EMPLEADO_SAFE_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,TIPO_USUARIO,HABILITADA) values ('12345676','tecnico tecnico tecnico',to_date('01/01/91','DD/MM/RR'),'tecnico@gmail.com','1234567','Técnico','1');
-Insert into SEBA.EMPLEADO_SAFE_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,TIPO_USUARIO,HABILITADA) values ('195651086','Matías Ramirez Leyton',to_date('27/03/97','DD/MM/RR'),'matiasnicolasrl@gmail.com','79950027','Administrador','1');
 Insert into SEBA.EMPLEADO_SAFE_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,TIPO_USUARIO,HABILITADA) values ('12345678','supervisor supervisor supervisor',to_date('01/01/91','DD/MM/RR'),'supervisor@gmail.com','1234567','Supervisor','1');
-Insert into SEBA.EMPLEADO_SAFE_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,TIPO_USUARIO,HABILITADA) values ('185697495','Seba Segovia Sanchez',to_date('23/09/93','DD/MM/RR'),'sebasegovia@gmail.com','3433532','Administrador','1');
-Insert into SEBA.EMPLEADO_SAFE_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,TIPO_USUARIO,HABILITADA) values ('193623824','Francisco soto ramirez',to_date('11/03/93','DD/MM/RR'),'fasda@asd.cl','123121232','Supervisor','1');
-Insert into SEBA.EMPLEADO_SAFE_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,TIPO_USUARIO,HABILITADA) values ('876545564','Pablo Perez Pereira',to_date('30/04/81','DD/MM/RR'),'tecnico@gmail.com','23432','Técnico','1');
+Insert into SEBA.EMPLEADO_SAFE_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,TIPO_USUARIO,HABILITADA) values ('185697495','Seba Segovia Sanchez',to_date('23/09/93','DD/MM/RR'),'sebasegovia@gmail.com','993386447','Administrador','1');
 REM INSERTING into SEBA.EMPLEADO_VIEW
 SET DEFINE OFF;
-Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('1236547','Gloria Linares Sotomayor',to_date('01/01/91','DD/MM/RR'),'cliente2@gmail.com','12341567','OCASO SPA','1');
-Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('1','test 2 test 2 test 2',to_date('01/01/91','DD/MM/RR'),'empleado@gmail.com','12341567','COLOMBO CO','1');
-Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('2','test 3 test 3 test 3',to_date('01/01/91','DD/MM/RR'),'empleado2@gmail.com','12341567','COLOMBO CO','1');
-Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('3','Pedro Perez Piedra',to_date('01/01/91','DD/MM/RR'),'peperez@gmail.com','12341567','OCASO SPA','1');
-Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('1231231','prueba sds sdasd',to_date('11/02/86','DD/MM/RR'),'asqasd@asd.cl','234323','Chile Spa','1');
+Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('1236547','Gloria Linares Sotomayor',to_date('01/01/91','DD/MM/RR'),'cliente2@gmail.com','12341567','Ocaso Spa','1');
+Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('1','Aurora Carrasco Cortazar',to_date('01/01/91','DD/MM/RR'),'empleado@gmail.com','12341567','Colombo Ltda','1');
+Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('2','Daniel Garrido Lopez',to_date('01/01/91','DD/MM/RR'),'empleado2@gmail.com','12341567','Colombo Ltda','1');
+Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('3','Pedro Perez Piedra',to_date('01/01/91','DD/MM/RR'),'peperez@gmail.com','12341567','Ocaso Spa','1');
+Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('1231231','Lucas Ruiz Arce',to_date('11/02/86','DD/MM/RR'),'lucasr@gmail.com','234323','Chile Spa','1');
+Insert into SEBA.EMPLEADO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,EMPRESA,HABILITADA) values ('78965432','Raul Perez Gonzalez',to_date('18/04/71','DD/MM/RR'),'raulg@gmail.com','34567523','Santiago Spa','1');
 REM INSERTING into SEBA.EMPRESA_VIEW
 SET DEFINE OFF;
-Insert into SEBA.EMPRESA_VIEW (RUT,NOMBRE,DIRECCION,CORREO,NUMERO,COMUNA,HABILITADA) values ('1234567','OCASO SPA','Camino Lonquen 334#','ventas@ocaso.cl','881234567','Cerrillos','1');
-Insert into SEBA.EMPRESA_VIEW (RUT,NOMBRE,DIRECCION,CORREO,NUMERO,COMUNA,HABILITADA) values ('3215467','COLOMBO CO','Providencia 1232#','colombo@colombo.cl','43534343','Maipú','1');
-Insert into SEBA.EMPRESA_VIEW (RUT,NOMBRE,DIRECCION,CORREO,NUMERO,COMUNA,HABILITADA) values ('3333222','Chile Spa','santiago 223','chilespa@spa.spa','234232121','Maipú','0');
-Insert into SEBA.EMPRESA_VIEW (RUT,NOMBRE,DIRECCION,CORREO,NUMERO,COMUNA,HABILITADA) values ('12312312','SANTIAGO SA','asdas 2322','santiago@asdas.cl','44324234','Cerrillos','1');
+Insert into SEBA.EMPRESA_VIEW (RUT,NOMBRE,DIRECCION,CORREO,NUMERO,COMUNA,HABILITADA) values ('1234567','Ocaso Spa','Camino Lonquen 334#','ventas@ocaso.cl','881234567','Cerrillos','1');
+Insert into SEBA.EMPRESA_VIEW (RUT,NOMBRE,DIRECCION,CORREO,NUMERO,COMUNA,HABILITADA) values ('3215467','Colombo Ltda','Providencia 1232#','colombo@colombo.cl','43534343','Maipú','1');
+Insert into SEBA.EMPRESA_VIEW (RUT,NOMBRE,DIRECCION,CORREO,NUMERO,COMUNA,HABILITADA) values ('3333222','Chile Spa','santiago 223','chilespa@spa.spa','234232121','Maipú','1');
+Insert into SEBA.EMPRESA_VIEW (RUT,NOMBRE,DIRECCION,CORREO,NUMERO,COMUNA,HABILITADA) values ('12312312','Santiago Spa','asdas 2322','santiago@asdas.cl','44324234','Cerrillos','1');
 REM INSERTING into SEBA.EVALUACIONES_VIEW
 SET DEFINE OFF;
-Insert into SEBA.EVALUACIONES_VIEW (CLAVE,FECHA,OBSERVACION,DERIVADA,RECOMENDADA,EMPLEADO,TIPO,EMPRESA) values ('33',to_date('03/12/18','DD/MM/RR'),'Se requiere evaluación inmediata','1','1','supervisor supervisor','Maquinaria','OCASO SPA');
-Insert into SEBA.EVALUACIONES_VIEW (CLAVE,FECHA,OBSERVACION,DERIVADA,RECOMENDADA,EMPLEADO,TIPO,EMPRESA) values ('31',to_date('24/10/18','DD/MM/RR'),'evaluacion para mañana','1','0','supervisor supervisor','Instalaciones','SANTIAGO SA');
-Insert into SEBA.EVALUACIONES_VIEW (CLAVE,FECHA,OBSERVACION,DERIVADA,RECOMENDADA,EMPLEADO,TIPO,EMPRESA) values ('30',to_date('24/10/18','DD/MM/RR'),'asdasdadas','1','1','supervisor supervisor','Personal','COLOMBO CO');
+Insert into SEBA.EVALUACIONES_VIEW (CLAVE,FECHA,OBSERVACION,DERIVADA,RECOMENDADA,EMPLEADO,TIPO,EMPRESA) values ('33',to_date('03/12/18','DD/MM/RR'),'Se requiere evaluación inmediata','1','1','supervisor supervisor','Maquinaria','Ocaso Spa');
+Insert into SEBA.EVALUACIONES_VIEW (CLAVE,FECHA,OBSERVACION,DERIVADA,RECOMENDADA,EMPLEADO,TIPO,EMPRESA) values ('31',to_date('24/10/18','DD/MM/RR'),'evaluacion para mañana','1','0','supervisor supervisor','Instalaciones','Santiago Spa');
+Insert into SEBA.EVALUACIONES_VIEW (CLAVE,FECHA,OBSERVACION,DERIVADA,RECOMENDADA,EMPLEADO,TIPO,EMPRESA) values ('30',to_date('24/10/18','DD/MM/RR'),'asdasdadas','1','1','supervisor supervisor','Personal','Colombo Ltda');
 REM INSERTING into SEBA.EXAMENES_MEDICO_VIEW
 SET DEFINE OFF;
-Insert into SEBA.EXAMENES_MEDICO_VIEW (ID,RUT,NOMBRE,DESCRIPCION,HABILITADO) values ('21','1','test 2test 2','examen realizado el dia 22 de octubre','1');
+Insert into SEBA.EXAMENES_MEDICO_VIEW (ID,RUT,FECHA,NOMBRE,DESCRIPCION,HABILITADO) values ('21','1',to_date('28/11/18','DD/MM/RR'),'Aurora Carrasco','examen sobre riesgo químico','1');
 REM INSERTING into SEBA.MEDICO_VIEW
 SET DEFINE OFF;
 Insert into SEBA.MEDICO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,RUTEMPRESA,HABILITADA) values ('12344456k','Juan Gonzalez Perez',to_date('12/04/82','DD/MM/RR'),'perezg@doctor.cl','2343243','3215467','1');
@@ -767,30 +826,45 @@ Insert into SEBA.MEDICO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,RUTEMPRE
 Insert into SEBA.MEDICO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,RUTEMPRESA,HABILITADA) values ('34548872','Ana Cespedes Sepulveda',to_date('22/01/58','DD/MM/RR'),'anasep@doctor.cl','112323232','3333222','1');
 Insert into SEBA.MEDICO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,RUTEMPRESA,HABILITADA) values ('84923382','Diego asdas Rivera',to_date('23/12/90','DD/MM/RR'),'asdas@sadasdas.cl','12312322','12312312','1');
 Insert into SEBA.MEDICO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,RUTEMPRESA,HABILITADA) values ('3456786k','Horacio Segovia Davila',to_date('11/11/65','DD/MM/RR'),'hodavila@gmail.com','993386447','1234567','0');
-Insert into SEBA.MEDICO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,RUTEMPRESA,HABILITADA) values ('12312312','asdas asda dsds',to_date('11/05/83','DD/MM/RR'),'sdsa@sdas.cl','2312','3215467','1');
+Insert into SEBA.MEDICO_VIEW (RUT,NOMBRE,FECHA_NACIMIENTO,CORREO,NUMERO,RUTEMPRESA,HABILITADA) values ('12312312','asdas Maria Angeles',to_date('11/05/83','DD/MM/RR'),'maangeles@doctor.cl','23123434','3215467','1');
+REM INSERTING into SEBA.PROXIMA_CAPACITACION_VIEW
+SET DEFINE OFF;
+Insert into SEBA.PROXIMA_CAPACITACION_VIEW (ID,EMPRESA,OBJETIVO,FECHA,LUGAR,EXPOSITOR) values ('54','Colombo Ltda','Capacitación sobre uso de herramientas de trabajao',to_timestamp('11/12/18 10:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Patio central','ingeniero ingeniero');
+REM INSERTING into SEBA.PROXIMA_CITA_VIEW
+SET DEFINE OFF;
+Insert into SEBA.PROXIMA_CITA_VIEW (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('4','12344456k','Juan Gonzalez Perez',to_date('09/10/18','DD/MM/RR'),to_timestamp('20/11/18 11:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Colombo Ltda','1','0');
 REM INSERTING into SEBA.RECOMENDADAS_VIEW
 SET DEFINE OFF;
 Insert into SEBA.RECOMENDADAS_VIEW (EVALUACION,FECHA,OBSERVACION,RECOMENDACION,AUTORIZADA,EMPLEADO,EMPRESA,TIPO) values ('30',to_date('24/10/18','DD/MM/RR'),'asdasdadas','Personal usar casco protector.','1','12345678','3215467','Personal');
 Insert into SEBA.RECOMENDADAS_VIEW (EVALUACION,FECHA,OBSERVACION,RECOMENDACION,AUTORIZADA,EMPLEADO,EMPRESA,TIPO) values ('33',to_date('03/12/18','DD/MM/RR'),'Se requiere evaluación inmediata','se recomienda revisar maquina n°5','0','12345678','1234567','Maquinaria');
 REM INSERTING into SEBA.VISTA_CITAS_GENERAL
 SET DEFINE OFF;
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('1','12344456k','Juan Gonzalez Perez',to_date('02/11/18','DD/MM/RR'),to_timestamp('23/10/18 14:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','0');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('4','12344456k','Juan Gonzalez Perez',to_date('09/10/18','DD/MM/RR'),to_timestamp('20/11/18 11:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'1','0');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('5','34534543','Carlos soto Yañez',to_date('26/10/18','DD/MM/RR'),to_timestamp('23/10/18 12:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'1','1');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('6','34548872','Ana Cespedes Sepulveda',to_date('24/10/18','DD/MM/RR'),to_timestamp('23/10/18 13:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','0');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('7','34534543','Carlos soto Yañez',to_date('24/10/18','DD/MM/RR'),to_timestamp('23/10/18 13:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','0');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('8','12344456k','Juan Gonzalez Perez',to_date('24/10/18','DD/MM/RR'),to_timestamp('23/10/18 14:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','0');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('9','84923382','Diego asdas Rivera',to_date('26/10/18','DD/MM/RR'),to_timestamp('23/10/18 15:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','0');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('10','12344456k','Juan Gonzalez Perez',to_date('28/11/18','DD/MM/RR'),to_timestamp('20/11/18 13:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'1','1');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('11','34548872','Ana Cespedes Sepulveda',to_date('22/11/18','DD/MM/RR'),to_timestamp('20/11/18 13:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','1');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('12','34534543','Carlos soto Yañez',to_date('23/11/18','DD/MM/RR'),to_timestamp('20/11/18 13:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','0');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('13','34548872','Ana Cespedes Sepulveda',to_date('05/12/18','DD/MM/RR'),to_timestamp('20/11/18 17:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','1');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('14','84923382','Diego asdas Rivera',to_date('20/11/18','DD/MM/RR'),to_timestamp('20/11/18 11:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','1');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('15','84923382','Diego asdas Rivera',to_date('07/12/18','DD/MM/RR'),to_timestamp('20/11/18 16:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','0');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('16','84923382','Diego asdas Rivera',to_date('07/12/18','DD/MM/RR'),to_timestamp('20/11/18 16:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','0');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('17','84923382','Diego asdas Rivera',to_date('07/12/18','DD/MM/RR'),to_timestamp('20/11/18 16:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','1');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('18','12312312','asdas asda dsds',to_date('28/11/18','DD/MM/RR'),to_timestamp('20/11/18 17:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','1');
-Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,ASISTENCIA,ACTIVA) values ('30','34548872','Ana Cespedes Sepulveda',to_date('31/12/18','DD/MM/RR'),to_timestamp('02/12/18 14:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'0','0');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('1','12344456k','Juan Gonzalez Perez',to_date('02/11/18','DD/MM/RR'),to_timestamp('23/10/18 14:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Colombo Ltda','0','0');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('4','12344456k','Juan Gonzalez Perez',to_date('09/10/18','DD/MM/RR'),to_timestamp('20/11/18 11:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Colombo Ltda','1','0');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('5','34534543','Carlos soto Yañez',to_date('26/10/18','DD/MM/RR'),to_timestamp('23/10/18 12:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Colombo Ltda','1','1');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('6','34548872','Ana Cespedes Sepulveda',to_date('24/10/18','DD/MM/RR'),to_timestamp('23/10/18 13:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Chile Spa','0','0');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('7','34534543','Carlos soto Yañez',to_date('24/10/18','DD/MM/RR'),to_timestamp('23/10/18 13:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Colombo Ltda','0','0');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('8','12344456k','Juan Gonzalez Perez',to_date('24/10/18','DD/MM/RR'),to_timestamp('23/10/18 14:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Colombo Ltda','0','0');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('9','84923382','Diego asdas Rivera',to_date('26/10/18','DD/MM/RR'),to_timestamp('23/10/18 15:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Santiago Spa','0','0');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('10','12344456k','Juan Gonzalez Perez',to_date('28/11/18','DD/MM/RR'),to_timestamp('20/11/18 13:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Colombo Ltda','1','1');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('11','34548872','Ana Cespedes Sepulveda',to_date('22/11/18','DD/MM/RR'),to_timestamp('20/11/18 13:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Chile Spa','0','1');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('12','34534543','Carlos soto Yañez',to_date('23/11/18','DD/MM/RR'),to_timestamp('20/11/18 13:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Colombo Ltda','0','0');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('13','34548872','Ana Cespedes Sepulveda',to_date('05/12/18','DD/MM/RR'),to_timestamp('20/11/18 17:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Chile Spa','0','1');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('14','84923382','Diego asdas Rivera',to_date('20/11/18','DD/MM/RR'),to_timestamp('20/11/18 11:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Santiago Spa','0','1');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('15','84923382','Diego asdas Rivera',to_date('07/12/18','DD/MM/RR'),to_timestamp('20/11/18 16:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Santiago Spa','0','0');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('16','84923382','Diego asdas Rivera',to_date('07/12/18','DD/MM/RR'),to_timestamp('20/11/18 16:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Santiago Spa','0','0');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('17','84923382','Diego asdas Rivera',to_date('07/12/18','DD/MM/RR'),to_timestamp('20/11/18 16:30:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Santiago Spa','0','1');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('18','12312312','asdas Maria Angeles',to_date('28/11/18','DD/MM/RR'),to_timestamp('20/11/18 17:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Colombo Ltda','0','1');
+Insert into SEBA.VISTA_CITAS_GENERAL (ID,RUT,NOMBRE,FECHA,HORA,EMPRESA,ASISTENCIA,ACTIVA) values ('30','34548872','Ana Cespedes Sepulveda',to_date('31/12/18','DD/MM/RR'),to_timestamp('02/12/18 14:00:00,000000000','DD/MM/RR HH24:MI:SSXFF'),'Chile Spa','0','0');
+--------------------------------------------------------
+--  DDL for Index CERTIFICADO_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SEBA"."CERTIFICADO_PK" ON "SEBA"."CERTIFICADO" ("IDCERTIFICADO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
 --------------------------------------------------------
 --  DDL for Index PK_ID_CITA
 --------------------------------------------------------
@@ -1096,6 +1170,19 @@ END;
 
 /
 --------------------------------------------------------
+--  DDL for Procedure INGRESAR_CERTIFICADO
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE PROCEDURE "SEBA"."INGRESAR_CERTIFICADO" (IDCAPACITACION NUMBER,EMPLEADO VARCHAR2, NOMBRE VARCHAR2,
+TIPO_DOC VARCHAR2, FECHA TIMESTAMP)
+IS
+BEGIN
+  insert into CERTIFICADO VALUES(IDCAPACITACION, EMPLEADO, NOMBRE, TIPO_DOC, FECHA, CERTIFICADO_SEQUENCE.nextval);
+END;
+
+/
+--------------------------------------------------------
 --  DDL for Procedure INGRESAR_CITA
 --------------------------------------------------------
 set define off;
@@ -1189,7 +1276,6 @@ BEGIN
      VALUES (rut, nombre, apellido_p, apellido_m, to_date(f_nacimiento,'DD/MM/YY'), correo, clave, numero, rut_empresa, 1);
 END;
 
-
 /
 --------------------------------------------------------
 --  DDL for Procedure INGRESAR_EMPLEADOSAFE
@@ -1203,7 +1289,6 @@ BEGIN
   INSERT INTO empleadosafe(RUTSAFE, PNOMBRE, APELLIDOP, APELLIDOM, FNACIMIENTO, CORREO, CLAVE, NUMERO, IDTIPO, HABILITADA)
      VALUES (rut, nombre, apellido_p, apellido_m, to_date(f_nacimiento,'DD/MM/YY'), correo, clave, numero, id_tipo_usuario, 1);
 END;
-
 
 /
 --------------------------------------------------------
@@ -1260,6 +1345,17 @@ BEGIN
   INSERT INTO MEDICO VALUES (RUT_MEDICO, NOMBRE, APELLIDOP, APELLIDOM, FNACIMIENTO, CORREO, CLAVE, TELEFONO, ACTIVO, RUTEMPRESA);
 END;
 
+/
+--------------------------------------------------------
+--  DDL for Procedure INGRESAR_RIESGO
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE PROCEDURE "SEBA"."INGRESAR_RIESGO" (RUT_EMPLEADO VARCHAR2, NOMBRE VARCHAR2)
+IS
+BEGIN
+    INSERT INTO RIESGO VALUES(RUT_EMPLEADO, NOMBRE);
+END;
 
 /
 --------------------------------------------------------
@@ -1372,6 +1468,21 @@ BEGIN
      WHERE IDCOMUNA = id;
 END;
 
+
+/
+--------------------------------------------------------
+--  DDL for Procedure MODIFICAR_DETALLE_CAPACITACION
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE PROCEDURE "SEBA"."MODIFICAR_DETALLE_CAPACITACION" (ID_CAP NUMBER, ID_EMPLEADO VARCHAR2, firmado BLOB)
+IS
+BEGIN
+  UPDATE DETALLECAPACITACION
+  SET FIRMA = firmado,
+  ASISTENCIA = '1'
+  WHERE IDCAPACITACION = ID_CAP AND IDEMPLEADO = ID_EMPLEADO;
+END;
 
 /
 --------------------------------------------------------
@@ -14224,6 +14335,35 @@ END TDALLPLATFORM;
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
 --------------------------------------------------------
+--  Constraints for Table CERTIFICADO
+--------------------------------------------------------
+
+  ALTER TABLE "SEBA"."CERTIFICADO" ADD CONSTRAINT "CERTIFICADO_PK" PRIMARY KEY ("IDCERTIFICADO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SEBA"."CERTIFICADO" MODIFY ("IDCERTIFICADO" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table MEDICO
+--------------------------------------------------------
+
+  ALTER TABLE "SEBA"."MEDICO" MODIFY ("RUTEMPRESA" NOT NULL ENABLE);
+  ALTER TABLE "SEBA"."MEDICO" ADD CONSTRAINT "PK_RUT_MEDICO" PRIMARY KEY ("RUT_MEDICO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SEBA"."MEDICO" MODIFY ("ACTIVO" NOT NULL ENABLE);
+  ALTER TABLE "SEBA"."MEDICO" MODIFY ("TELEFONO" NOT NULL ENABLE);
+  ALTER TABLE "SEBA"."MEDICO" MODIFY ("CLAVE" NOT NULL ENABLE);
+  ALTER TABLE "SEBA"."MEDICO" MODIFY ("CORREO" NOT NULL ENABLE);
+  ALTER TABLE "SEBA"."MEDICO" MODIFY ("FNACIMIENTO" NOT NULL ENABLE);
+  ALTER TABLE "SEBA"."MEDICO" MODIFY ("APELLIDOM" NOT NULL ENABLE);
+  ALTER TABLE "SEBA"."MEDICO" MODIFY ("APELLIDOP" NOT NULL ENABLE);
+  ALTER TABLE "SEBA"."MEDICO" MODIFY ("NOMBRE" NOT NULL ENABLE);
+  ALTER TABLE "SEBA"."MEDICO" MODIFY ("RUT_MEDICO" NOT NULL ENABLE);
+--------------------------------------------------------
 --  Constraints for Table CITA
 --------------------------------------------------------
 
@@ -14372,25 +14512,6 @@ END TDALLPLATFORM;
   ALTER TABLE "SEBA"."EXAMEN" MODIFY ("TIPO_DOC" NOT NULL ENABLE);
   ALTER TABLE "SEBA"."EXAMEN" MODIFY ("NOMBRE" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table MEDICO
---------------------------------------------------------
-
-  ALTER TABLE "SEBA"."MEDICO" MODIFY ("RUTEMPRESA" NOT NULL ENABLE);
-  ALTER TABLE "SEBA"."MEDICO" ADD CONSTRAINT "PK_RUT_MEDICO" PRIMARY KEY ("RUT_MEDICO")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
-  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
-  TABLESPACE "SYSTEM"  ENABLE;
-  ALTER TABLE "SEBA"."MEDICO" MODIFY ("ACTIVO" NOT NULL ENABLE);
-  ALTER TABLE "SEBA"."MEDICO" MODIFY ("TELEFONO" NOT NULL ENABLE);
-  ALTER TABLE "SEBA"."MEDICO" MODIFY ("CLAVE" NOT NULL ENABLE);
-  ALTER TABLE "SEBA"."MEDICO" MODIFY ("CORREO" NOT NULL ENABLE);
-  ALTER TABLE "SEBA"."MEDICO" MODIFY ("FNACIMIENTO" NOT NULL ENABLE);
-  ALTER TABLE "SEBA"."MEDICO" MODIFY ("APELLIDOM" NOT NULL ENABLE);
-  ALTER TABLE "SEBA"."MEDICO" MODIFY ("APELLIDOP" NOT NULL ENABLE);
-  ALTER TABLE "SEBA"."MEDICO" MODIFY ("NOMBRE" NOT NULL ENABLE);
-  ALTER TABLE "SEBA"."MEDICO" MODIFY ("RUT_MEDICO" NOT NULL ENABLE);
---------------------------------------------------------
 --  Constraints for Table TIPOEVALUACION
 --------------------------------------------------------
 
@@ -14420,6 +14541,12 @@ END TDALLPLATFORM;
 	  REFERENCES "SEBA"."EMPRESA" ("RUTEMPRESA") ENABLE;
   ALTER TABLE "SEBA"."CAPACITACION" ADD CONSTRAINT "CAPACITACION_FK2" FOREIGN KEY ("EXPOSITOR")
 	  REFERENCES "SEBA"."EMPLEADOSAFE" ("RUTSAFE") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table MEDICO
+--------------------------------------------------------
+
+  ALTER TABLE "SEBA"."MEDICO" ADD CONSTRAINT "MEDICO_FK1" FOREIGN KEY ("RUTEMPRESA")
+	  REFERENCES "SEBA"."EMPRESA" ("RUTEMPRESA") ENABLE;
 --------------------------------------------------------
 --  Ref Constraints for Table CITA
 --------------------------------------------------------
@@ -14458,9 +14585,3 @@ END TDALLPLATFORM;
 
   ALTER TABLE "SEBA"."EXAMEN" ADD FOREIGN KEY ("ID_DIAGNOSTICO")
 	  REFERENCES "SEBA"."DIAGNOSTICO" ("ID_DIAGNOSTICO") ENABLE;
---------------------------------------------------------
---  Ref Constraints for Table MEDICO
---------------------------------------------------------
-
-  ALTER TABLE "SEBA"."MEDICO" ADD CONSTRAINT "MEDICO_FK1" FOREIGN KEY ("RUTEMPRESA")
-	  REFERENCES "SEBA"."EMPRESA" ("RUTEMPRESA") ENABLE;

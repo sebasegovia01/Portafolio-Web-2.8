@@ -209,5 +209,29 @@ namespace Modelo
             return citas;
         }
 
+
+        //Proxima cita médica
+        public List<dynamic> ListarProximaCita(string empresa)
+        {
+            List<dynamic> citas = new List<dynamic>();
+
+            foreach (Datos.PROXIMA_CITA_VIEW vsg in Conexion.Entidades.PROXIMA_CITA_VIEW.AsNoTracking().Where(
+                a => a.EMPRESA.Equals(empresa)))
+            {
+                PROXIMA_CITA_VIEW cita = new PROXIMA_CITA_VIEW();
+
+                cita.ID = vsg.ID;
+                cita.RUT = vsg.RUT;
+                cita.NOMBRE = vsg.NOMBRE;
+                cita.FECHA = DateTime.Parse(vsg.FECHA.ToShortDateString());
+                cita.HORA = vsg.HORA;
+                cita.ASISTENCIA = vsg.ASISTENCIA;
+
+                citas.Add(cita);
+            }
+
+            return citas;
+        }
+
     }
 }

@@ -82,7 +82,6 @@
                     <ul class="nav nav-second-level collapse in">
                         <li>
                             <a href="Capacitaciones.aspx">Mis capacitaciones</a>
-                            <a href="Certificados.aspx">Certificados</a>
                         </li>
                     </ul>
                 </li>
@@ -142,11 +141,11 @@
           <h4 class="modal-title">Detalle Asistencia</h4>
         </div>
            <div class="modal-body">
-               <asp:GridView ID="gvDetalleCap" runat="server" class="table table-striped table-bordered table-hover" AutoGenerateColumns="false" OnRowDataBound="gvDetalleCap_RowDataBound">
+               <asp:GridView ID="gvDetalleCap" runat="server" class="table table-striped table-bordered table-hover" DataKeyNames="ID" AutoGenerateColumns="false" OnRowDataBound="gvDetalleCap_RowDataBound">
                      <Columns>
                         <asp:BoundField DataField="ID" HeaderText="Id" SortExpression="ID" Visible="false" />
                         <asp:BoundField DataField="EMPLEADO" HeaderText="Empleado" SortExpression="EMPLEADO" />
-                        <asp:BoundField DataField="ASISTENCIA" HeaderText="Asistencia" SortExpression="Asistencia" />                                       
+                        <asp:BoundField DataField="ASISTENCIA" HeaderText="Asistencia" SortExpression="Asistencia" />                                  
                      </Columns>
                </asp:GridView>
            </div>
@@ -179,6 +178,8 @@
  <script src="../assets/js/dataTables/jquery.dataTables.js"></script>
  <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
      <script>
+           $(document).ready(function () {
+
          $(document).ready(function () {
              $('#dataTables-example').dataTable();
          });
@@ -187,6 +188,7 @@
              return confirm('¿Desea modificar este usuario?') == true;
          }
  </script>
+
       <!-- Custom Js -->
  <script src="../assets/js/custom-scripts.js"></script>
       <!-- user Script -->
