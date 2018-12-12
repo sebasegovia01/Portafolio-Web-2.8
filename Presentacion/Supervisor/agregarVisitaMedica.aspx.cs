@@ -3,6 +3,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Modelo;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace Presentacion.Supervisor
 {
@@ -101,7 +102,7 @@ namespace Presentacion.Supervisor
                       " <a href='http://localhost:64705/login.aspx'>Confirmar asistencía<a/><br> " +
                       "Los datos de autenticación de su cuenta son: <br>" +
                       "Correo de acceso: " + me.correo + "<br>"+
-                      "Contraseña: " + me.clave;
+                      "Contraseña: " + Encriptacion(me.clave);
 
                     if (email.MandarCorreo("pruebaportaflio@gmail.com", "SAFE", "notreply@mail.com",
                          "Cita Agendada", mensaje))
@@ -120,6 +121,20 @@ namespace Presentacion.Supervisor
                 }
 
             }
+        }
+
+        public string Encriptacion(string pass)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(Encoding.ASCII.GetBytes(pass));
+            byte[] result = md5.Hash;
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                str.Append(result[i].ToString("x2"));
+            }
+
+            return str.ToString();
         }
 
         private bool validarComboBoxes()
