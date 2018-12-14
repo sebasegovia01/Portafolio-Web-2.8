@@ -77,7 +77,7 @@
                  <div class="row">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Añadir Usuario
+                                    Firmar asistencia a capacitación
                                 </div>
                                 <div class="panel-body">   
                                     <form id="form1" runat="server">

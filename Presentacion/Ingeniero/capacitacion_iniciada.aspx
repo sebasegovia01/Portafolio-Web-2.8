@@ -75,7 +75,6 @@
                     <ul class="nav nav-second-level collapse in">
                         <li>
                             <a href="Capacitaciones.aspx">Mis capacitaciones</a>
-                            <a href="Certificados.aspx">Certificados</a>
                         </li>
                     </ul>
                 </li>
