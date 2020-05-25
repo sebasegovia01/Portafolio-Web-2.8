@@ -6,4 +6,5 @@ Requisitos:
 Antes de iniciar :
 
 .-Hacer un drop table a la tabla certificados 
+<br>
 .-Eliminar los certificados generados en la carpeta Certificados
